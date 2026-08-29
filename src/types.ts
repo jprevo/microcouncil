@@ -21,6 +21,7 @@ export interface AppState {
   /** Titre de l'environnement sélectionné, ou null. */
   selectedEnvironment: string | null;
   customInstructions: string;
+  subject: string;
   randomCount: number;
   theme: Theme;
 }

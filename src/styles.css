@@ -203,14 +203,38 @@ code {
   align-items: start;
 }
 
+.output {
+  display: grid;
+  gap: clamp(16px, 2vw, 22px);
+  min-width: 0;
+}
+
 @media (min-width: 1060px) {
   .columns {
     grid-template-columns: minmax(0, 1fr) minmax(380px, 460px);
   }
 
+  /*
+   * La colonne tient dans la fenêtre : l'aperçu se comprime et scrolle en interne,
+   * de sorte que le bouton « Copier » reste atteignable sans dérouler toute la page.
+   */
   .output {
     position: sticky;
     top: 86px;
+    max-height: calc(100vh - 110px);
+    max-height: calc(100dvh - 110px);
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: auto;
+  }
+
+  .card--output {
+    min-height: 0;
+  }
+
+  .card--output .prompt {
+    flex: 1 1 auto;
+    min-height: 100px;
+    max-height: none;
   }
 }
 
@@ -286,6 +310,13 @@ code {
   border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
+.pill--soft {
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  border-color: var(--border);
+  font-weight: 550;
+}
+
 /* -------------------------------------------------------------- controls */
 .field {
   width: 100%;
@@ -321,6 +352,10 @@ code {
   resize: vertical;
   min-height: 96px;
   line-height: 1.6;
+}
+
+.field--subject {
+  min-height: 78px;
 }
 
 .button {
@@ -468,7 +503,7 @@ code {
 }
 
 .grid--environments {
-  grid-template-columns: repeat(auto-fill, minmax(196px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(212px, 1fr));
 }
 
 .tile {
@@ -533,19 +568,11 @@ code {
 .tile__job {
   font-size: 12.5px;
   color: var(--text-muted);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .tile__desc {
   font-size: 12.5px;
   color: var(--text-muted);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .tile__traits {

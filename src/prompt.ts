@@ -28,29 +28,54 @@ export interface PromptInput {
   readonly members: readonly Member[];
   readonly environment: Environment | null;
   readonly customInstructions: string;
+  readonly subject: string;
+}
+
+/**
+ * Retire du gabarit la section `##` dont le corps se résume à ce jeton : une section
+ * restée vide n'apporte rien au modèle. Opère avant substitution, donc le contenu
+ * saisi par l'utilisateur ne peut jamais être confondu avec un titre.
+ */
+function dropSection(template: string, placeholder: string): string {
+  const lines = template.split('\n');
+  const tokenIndex = lines.findIndex((line) => line.trim() === `{{${placeholder}}}`);
+  if (tokenIndex === -1) return template;
+
+  // `## ` (avec l'espace) ne peut pas confondre un titre de section et un `###` de fiche.
+  let start = tokenIndex;
+  while (start > 0 && !(lines[start] ?? '').startsWith('## ')) start -= 1;
+  if (!(lines[start] ?? '').startsWith('## ')) return template;
+
+  let end = tokenIndex + 1;
+  while (end < lines.length && (lines[end] ?? '').trim() === '') end += 1;
+
+  lines.splice(start, end - start);
+  return lines.join('\n');
 }
 
 /** Construit le prompt final à partir du gabarit de docs/data/prompt.md. */
 export function buildPrompt(input: PromptInput): string {
   const username = input.username.trim() === '' ? USERNAME_FALLBACK : input.username.trim();
   const custom = input.customInstructions.trim();
+  const subject = input.subject.trim();
 
-  const compagnons =
+  const membres =
     input.members.length > 0
       ? input.members.map(renderMember).join('\n\n')
-      : '_Aucun compagnon sélectionné._';
+      : '_Aucun membre sélectionné._';
   const environment =
     input.environment === null ? '_Aucun environnement sélectionné._' : renderEnvironment(input.environment);
 
   let output = PROMPT_TEMPLATE;
-  output = fill(output, 'compagnons', compagnons);
+  if (custom === '') output = dropSection(output, 'custom');
+  if (subject === '') output = dropSection(output, 'subject');
+
+  output = fill(output, 'membres', membres);
   output = fill(output, 'environment', environment);
   output = fill(output, 'custom', custom);
+  output = fill(output, 'subject', subject);
   // En dernier : le nom peut aussi apparaître dans les fiches et l'environnement.
   output = fill(output, 'username', username);
-
-  // Une section « Autres instructions » vide n'apporte rien au modèle.
-  output = output.replace(/\n*##\s*Autres instructions\s*\n+(?=\n*$)/u, '\n');
 
   return `${output.trimEnd()}\n`;
 }

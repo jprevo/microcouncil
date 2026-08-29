@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Micro-conseil — Générateur de prompt</title>
+    <title>Micro Council — Générateur de prompt</title>
     <meta
       name="description"
-      content="Composez votre conseil de compagnons, choisissez un environnement, et générez un prompt prêt à coller dans Claude, ChatGPT ou Gemini."
+      content="Composez votre conseil, choisissez un environnement, et générez un prompt prêt à coller dans Claude, ChatGPT ou Gemini."
     />
     <link
       rel="icon"
@@ -22,7 +22,7 @@
         <div class="brand">
           <span class="brand__mark" aria-hidden="true">💬</span>
           <span class="brand__text">
-            <strong>Micro-conseil</strong>
+            <strong>Micro Council</strong>
             <small>Générateur de prompt</small>
           </span>
         </div>
@@ -40,7 +40,6 @@
             <div class="card__head">
               <div>
                 <h2 id="title-identity"><span aria-hidden="true">🙋</span> Votre nom</h2>
-                <p class="card__hint">Il remplace <code>{{username}}</code> partout dans le prompt.</p>
               </div>
             </div>
             <input
@@ -49,7 +48,7 @@
               type="text"
               autocomplete="given-name"
               spellcheck="false"
-              placeholder="Par exemple : Jonathan"
+              placeholder="Votre prénom"
             />
           </section>
 
@@ -60,7 +59,7 @@
                   <span aria-hidden="true">🪑</span> Les membres du conseil
                   <span id="members-count" class="pill">0 sélectionné</span>
                 </h2>
-                <p class="card__hint">Cliquez pour ajouter ou retirer un compagnon.</p>
+                <p class="card__hint">Cliquez pour ajouter ou retirer un membre.</p>
               </div>
               <div class="card__actions">
                 <div class="stepper" role="group" aria-label="Nombre de membres à tirer au sort">
@@ -90,7 +89,7 @@
               aria-label="Filtrer les membres"
             />
             <div id="members-grid" class="grid grid--members"></div>
-            <p id="members-empty" class="empty" hidden>Aucun compagnon ne correspond à ce filtre.</p>
+            <p id="members-empty" class="empty" hidden>Aucun membre ne correspond à ce filtre.</p>
           </section>
 
           <section class="card" aria-labelledby="title-environment">
@@ -130,6 +129,27 @@
         </div>
 
         <aside class="output" aria-labelledby="title-output">
+          <section class="card" aria-labelledby="title-subject">
+            <div class="card__head">
+              <div>
+                <h2 id="title-subject">
+                  <span aria-hidden="true">🎯</span> Le sujet de votre demande
+                  <span class="pill pill--soft">optionnel</span>
+                </h2>
+                <p class="card__hint">Si vous le laissez vide, un membre vous le demandera.</p>
+              </div>
+              <div class="card__actions">
+                <button id="subject-clear" class="button button--quiet" type="button">Effacer</button>
+              </div>
+            </div>
+            <textarea
+              id="subject"
+              class="field field--area field--subject"
+              rows="3"
+              placeholder="Par exemple : je dois choisir entre deux offres d'emploi et je n'arrive pas à trancher."
+            ></textarea>
+          </section>
+
           <div class="card card--output">
             <div class="card__head">
               <div>

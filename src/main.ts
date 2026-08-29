@@ -33,6 +33,8 @@ const dom = {
   randomEnvironment: el('random-environment', HTMLButtonElement),
   clearEnvironment: el('clear-environment', HTMLButtonElement),
   custom: el('custom', HTMLTextAreaElement),
+  subject: el('subject', HTMLTextAreaElement),
+  subjectClear: el('subject-clear', HTMLButtonElement),
   customExample: el('custom-example', HTMLButtonElement),
   customClear: el('custom-clear', HTMLButtonElement),
   output: el('output', HTMLPreElement),
@@ -105,6 +107,7 @@ function renderOutput(): void {
     members,
     environment,
     customInstructions: state.customInstructions,
+    subject: state.subject,
   });
 
   dom.output.textContent = prompt;
@@ -115,7 +118,7 @@ function renderOutput(): void {
   )} mots`;
 
   const missing: string[] = [];
-  if (members.length === 0) missing.push('au moins un compagnon');
+  if (members.length === 0) missing.push('au moins un membre');
   if (environment === null) missing.push('un environnement');
   if (state.username.trim() === '') missing.push('votre nom');
 
@@ -241,7 +244,7 @@ function downloadPrompt(): void {
   const link = document.createElement('a');
   const slug = normalize(state.username).replace(/[^a-z0-9]+/gu, '-').replace(/^-|-$/gu, '');
   link.href = url;
-  link.download = slug === '' ? 'micro-conseil.md' : `micro-conseil-${slug}.md`;
+  link.download = slug === '' ? 'microcouncil.md' : `microcouncil-${slug}.md`;
   link.click();
   URL.revokeObjectURL(url);
   toast('Prompt téléchargé');
@@ -313,7 +316,7 @@ function bindEvents(): void {
   dom.randomMembers.addEventListener('click', () => {
     const drawn = pickMany(MEMBERS, state.randomCount).map((member) => member.name);
     setMembers(drawn);
-    toast(`${drawn.length} ${plural(drawn.length, 'compagnon')} ${plural(drawn.length, 'tiré')} au sort`);
+    toast(`${drawn.length} ${plural(drawn.length, 'membre')} ${plural(drawn.length, 'tiré')} au sort`);
   });
 
   dom.clearMembers.addEventListener('click', () => setMembers([]));
@@ -329,6 +332,18 @@ function bindEvents(): void {
 
   dom.clearEnvironment.addEventListener('click', () => setEnvironment(null));
   dom.environmentsGrid.addEventListener('keydown', handleEnvironmentKeys);
+
+  dom.subject.addEventListener('input', () => {
+    state.subject = dom.subject.value;
+    commit();
+  });
+
+  dom.subjectClear.addEventListener('click', () => {
+    dom.subject.value = '';
+    state.subject = '';
+    commit();
+    dom.subject.focus();
+  });
 
   dom.custom.addEventListener('input', () => {
     state.customInstructions = dom.custom.value;
@@ -363,6 +378,7 @@ function hydrate(): void {
   applyTheme(state.theme);
   dom.username.value = state.username;
   dom.custom.value = state.customInstructions;
+  dom.subject.value = state.subject;
   dom.randomCount.max = String(MEMBERS.length);
   dom.randomCount.value = String(clampCount(state.randomCount));
   syncMembers();

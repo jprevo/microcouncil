@@ -10,7 +10,7 @@ export const ENVIRONMENTS: readonly Environment[] = environmentsJson;
 /** Gabarit du prompt : source unique de vérité, partagée avec la documentation. */
 export const PROMPT_TEMPLATE: string = promptTemplateRaw.trim();
 
-/** Exemple d'instructions additionnelles proposé au premier lancement. */
+/** Exemple d'instructions additionnelles, inséré à la demande via le bouton « Exemple ». */
 export const CUSTOM_EXAMPLE: string = customExampleRaw.trim();
 
 export function findMember(name: string): Member | undefined {

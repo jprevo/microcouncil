@@ -1,4 +1,4 @@
-import { ENVIRONMENTS, MEMBERS, CUSTOM_EXAMPLE } from './data';
+import { ENVIRONMENTS, MEMBERS } from './data';
 import type { AppState, Theme } from './types';
 
 const STORAGE_KEY = 'microcouncil.state.v1';
@@ -18,7 +18,8 @@ export function defaultState(): AppState {
     username: '',
     selectedMembers: [],
     selectedEnvironment: null,
-    customInstructions: CUSTOM_EXAMPLE,
+    customInstructions: '',
+    subject: '',
     randomCount: DEFAULT_RANDOM_COUNT,
     theme: preferredTheme(),
   };
@@ -62,6 +63,7 @@ export function loadState(): AppState {
       typeof record['customInstructions'] === 'string'
         ? record['customInstructions']
         : fallback.customInstructions,
+    subject: typeof record['subject'] === 'string' ? record['subject'] : fallback.subject,
     randomCount:
       typeof count === 'number' && Number.isFinite(count)
         ? Math.min(Math.max(Math.round(count), 1), MEMBERS.length)
