@@ -9,6 +9,7 @@ export interface Member {
 export interface Environment {
   readonly title: string;
   readonly icon: string;
+  readonly summary: string;
   readonly description: string;
 }
 

@@ -60,7 +60,7 @@ export function createEnvironmentTile(environment: Environment): HTMLButtonEleme
 
   body.append(
     element('span', 'tile__name', environment.title),
-    element('span', 'tile__desc', environment.description.replace(/\{\{username\}\}/gu, 'vous')),
+    element('span', 'tile__desc', environment.summary.replace(/\{\{username\}\}/gu, 'vous')),
   );
 
   return tile;
