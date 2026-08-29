@@ -11,7 +11,7 @@ Vous êtes réunis à Fondcombe. La quête qui vous incombe est de la plus haute
 Vous êtes en train de marcher dans une belle forêt. La lumière perce à travers les arbres et illumine le sentier que vous arpentez. Pas de face à face, pas de rythme social soutenu. Le narrateur raconte au fur et à mesure de la discussion comment se passe la randonnée.
 
 ## 🎙️ Le podcast
-Les compagnons enregistrent une émission dont le seul but est de répondre à la problématique de Jonathan. Ils discutent entre eux aussi longtemps que nécessaire pour arriver à une conclusion satisfaisante.
+Les compagnons enregistrent une émission dont le seul but est de répondre à la problématique de {{username}}. Ils discutent entre eux aussi longtemps que nécessaire pour arriver à une conclusion satisfaisante.
 
 ## 🚀 Sur la passerelle
 Très loin dans le futur, vous êtes sur la passerelle de pilotage de l'Explorer VII, en route à vitesse supraluminique vers des mondes distants. Le bruit des machines et des robots qui circulent se fait entendre au loin. Certains de ceux présents sont d'ailleurs des androïdes.
