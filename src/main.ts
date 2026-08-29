@@ -1,5 +1,5 @@
 import { CUSTOM_EXAMPLE, ENVIRONMENTS, MEMBERS, findEnvironment } from './data';
-import { buildPrompt } from './prompt';
+import { buildPrompt, estimateTokens } from './prompt';
 import { pickMany, pickOne } from './random';
 import { createEnvironmentTile, createMemberTile } from './render';
 import { loadState, saveState } from './storage';
@@ -112,10 +112,10 @@ function renderOutput(): void {
 
   dom.output.textContent = prompt;
 
-  const words = prompt.trim() === '' ? 0 : prompt.trim().split(/\s+/u).length;
-  dom.outputMeta.textContent = `${prompt.length.toLocaleString('fr-FR')} caractères · ${words.toLocaleString(
-    'fr-FR',
-  )} mots`;
+  const nombre = (value: number): string => value.toLocaleString('fr-FR');
+  dom.outputMeta.textContent = `${nombre(prompt.length)} caractères · ~${nombre(
+    estimateTokens(prompt),
+  )} tokens`;
 
   const missing: string[] = [];
   if (members.length === 0) missing.push('au moins un membre');

@@ -28,6 +28,10 @@
     </header>
 
     <main class="shell">
+      <p class="lede">
+        Générez un prompt pour discuter dans votre IA favorite avec un conseil de spécialistes.
+      </p>
+
       <div class="columns">
         <div class="config">
           <section class="card" aria-labelledby="title-identity">
@@ -42,7 +46,7 @@
               type="text"
               autocomplete="given-name"
               spellcheck="false"
-              placeholder="Votre prénom"
+              placeholder="Votre nom"
             />
           </section>
 
@@ -53,7 +57,7 @@
                   Les membres du conseil
                   <span id="members-count" class="pill">0 sélectionné</span>
                 </h2>
-                <p class="card__hint">Cliquez pour ajouter ou retirer un membre.</p>
+                <p class="card__hint">Idéalement entre 3 et 7 membres.</p>
               </div>
               <div class="card__actions">
                 <div class="stepper" role="group" aria-label="Nombre de membres à tirer au sort">
@@ -166,6 +170,11 @@
         </aside>
       </div>
     </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 Micro Council &middot; Ce projet a pour objectif de devenir entièrement open source</p>
+      <p>Aucun cookie n'est utilisé. Vos réglages ne quittent jamais votre navigateur.</p>
+    </footer>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 

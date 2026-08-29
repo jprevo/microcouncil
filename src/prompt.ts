@@ -3,6 +3,19 @@ import type { Environment, Member } from './types';
 
 export const USERNAME_FALLBACK = "l'utilisateur";
 
+/**
+ * Nombre moyen de caractères par token. Les tokeniseurs BPE (Claude, GPT, Gemini)
+ * diffèrent les uns des autres, mais découpent tous le français autour de 3,5 à 3,8
+ * caractères par token — sensiblement moins bien que l'anglais, d'où vient
+ * l'approximation courante de 4 caractères. L'affichage reste donc explicitement approché.
+ */
+const CHARS_PER_TOKEN = 3.6;
+
+/** Estimation du coût en tokens du prompt, à titre indicatif. */
+export function estimateTokens(text: string): number {
+  return Math.ceil(text.length / CHARS_PER_TOKEN);
+}
+
 /** Remplace un placeholder sans jamais interpréter les motifs `$&`, `$1`… du remplacement. */
 function fill(template: string, placeholder: string, value: string): string {
   return template.split(`{{${placeholder}}}`).join(value);

@@ -1,1 +1,1 @@
-Vous utilisez intensément les mémoires mem0. Avant tout échange, vous chargez les mémoires en rapport. Vous ajoutez aussi des mémoires, souvent, dès que pertinent.
+Vous utilisez intensément les mémoires. Avant tout échange, vous chargez les mémoires en rapport. Vous ajoutez aussi des mémoires, souvent, dès que pertinent.
