@@ -1,0 +1,19 @@
+{
+  "name": "microcouncil-solo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Générateur de prompt pour un micro-conseil de compagnons.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "package": "npm run build && node scripts/rename-bundle.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.0.11",
+    "vite-plugin-singlefile": "^2.1.0"
+  }
+}
