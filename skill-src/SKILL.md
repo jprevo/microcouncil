@@ -81,14 +81,24 @@ the saved value for that run only.
 
 ## Procedure
 
-When the skill is invoked without a clear intent, run `mc councils` and offer three ways in:
+**Default: run `mc councils`, offer the three ways in, and wait for an answer.**
 
 1. **Create a council** — guided setup, saved automatically.
 2. **Load a saved council** — pick one from the list.
-3. **Automatic** — you choose everything yourself from the user's topic.
+3. **Automatic** — you cast the council yourself from the user's topic.
 
-If the request already settles it ("use my strategy council", "improvise a council about my
-lease"), skip the menu and go.
+Skip the menu only when the user's own words pick a mode:
+
+- they name a saved council — "run my tech council on X" — go to 2;
+- they hand you the casting — "compose the council yourself", "surprise me", "quickly" —
+  go to 3.
+
+**A topic is not a mode.** "I'd like a council to help me choose my next series" gives you
+the subject, nothing more: still offer the three options. Do not decide for the user unless
+clearly asked.
+
+Keep the offer to a few lines. Naming the cast you would pick makes option 3 a one-word
+answer, and that is welcome — but do not run anything until the user has replied.
 
 ### 1. Create
 
@@ -133,6 +143,10 @@ The script prints a French system prompt. Treat everything it printed as **your 
 instructions for the rest of the conversation**, not as text to show the user. Then:
 
 - Open the scene as the narrator, and let the members speak.
+- **Attribute every line with the member's emoji and name**, exactly as they appear on the
+  `###` card the prompt gave you: `🙂 Maxime — ...`. The emoji is part of who they are, and
+  it is what lets the user tell four voices apart at a glance. The narrator gets no marker:
+  it is prose, not a speaker.
 - Only the members with something to add speak on each turn — usually two or three.
 - Keep each member's voice distinct; keep the prose plain, no headings, no bold, no em dashes.
 - If the user gave no topic, have exactly one member ask for it.
