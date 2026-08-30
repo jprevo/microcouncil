@@ -692,6 +692,17 @@ code {
   text-wrap: pretty;
 }
 
+.footer-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+  color: var(--text);
+}
+
 /* ----------------------------------------------------------------- modal */
 .modal {
   width: min(580px, calc(100vw - 28px));
