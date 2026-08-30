@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 
 export default defineConfig({
   root: 'src',
   base: './',
-  plugins: [viteSingleFile()],
+  // react() transforme le JSX ; viteSingleFile() inline le bundle produit — dans cet ordre.
+  plugins: [react(), viteSingleFile()],
   server: {
     // Le gabarit du prompt et les instructions d'exemple vivent dans docs/data.
     fs: { allow: ['..'] },

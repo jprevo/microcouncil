@@ -27,6 +27,26 @@ npm install
 npm run package
 ```
 
+## Architecture
+
+L'interface est une application **React 19 + TypeScript**, compilée par Vite puis inlinée en un
+fichier unique par `vite-plugin-singlefile` (React inclus : aucune requête réseau à l'exécution).
+
+Le découpage privilégie des composants très courts, à responsabilité unique :
+
+- `src/state/` — `reducer.ts` (toutes les transitions), `AppStateProvider.tsx` (état + persistance),
+  `selectors.ts` et `usePrompt.ts` (dérivations mémoïsées). L'état et le `dispatch` voyagent dans
+  deux contextes distincts, pour que les composants qui n'écrivent que via `dispatch` ne se
+  re-rendent pas à chaque frappe ;
+- `src/components/ui/` — les primitives sans logique métier (`Button`, `Card`, `TextField`,
+  `Stepper`…) ;
+- `src/components/tiles/` — la coquille commune aux fiches (`Tile`) et ses fragments ;
+- `src/components/<domaine>/` — une carte par section du formulaire (`members`, `environments`,
+  `identity`, `custom`, `subject`, `output`), chacune accompagnée de ses propres hooks
+  (`useDrawMembers`, `useEnvironmentKeys`, `useCopyPrompt`…) ;
+- `src/lib/` et `src/prompt.ts`, `src/random.ts`, `src/storage.ts` — la logique pure, sans React,
+  testable et réutilisable telle quelle.
+
 ## Sources de données
 
 Tout le contenu éditorial vit hors du code :
