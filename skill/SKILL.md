@@ -94,9 +94,8 @@ Skip the menu only when the user's own words pick a mode:
   go to 3.
 
 **A topic is not a mode.** "I'd like a council to help me choose my next series" gives you
-the subject, nothing more: still offer the three options. Deciding for the user is the one
-failure this skill cannot recover from — the council is already convened by the time they
-see the cast they did not choose.
+the subject, nothing more: still offer the three options. Do not decide for the user unless
+clearly asked.
 
 Keep the offer to a few lines. Naming the cast you would pick makes option 3 a one-word
 answer, and that is welcome — but do not run anything until the user has replied.
