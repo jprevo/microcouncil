@@ -22,10 +22,58 @@ npm install
 | `npm run typecheck` | Vérification TypeScript stricte, sans émission. |
 | `npm run build` | Typecheck puis build dans `dist/`. |
 | `npm run package` | **Produit `dist/microcouncil.html`** : un fichier unique (HTML + CSS + données + JS inlinés), sans aucune dépendance externe, à partager ou à ouvrir directement depuis le disque. |
+| `npm run skill` | **Régénère `skill/`** : le skill agent, à jour des compagnons, des environnements et du gabarit. |
 
 ```bash
 npm run package
 ```
+
+## Skill agent
+
+`skill/` est un [skill](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills)
+autonome : un `SKILL.md` standard, un script Python sans dépendance et une copie des données.
+Il s'installe directement depuis GitHub, sans cloner le dépôt :
+
+```bash
+hermes skills install jprevo/microcouncil/skill
+```
+
+Il suit le format `SKILL.md` commun (Hermes, Claude Code, agentskills.io), donc il se copie
+tel quel dans le répertoire de skills de n'importe quel autre harnais. Aucun jeton propre à
+un harnais n'est nécessaire : le `SKILL.md` note les commandes avec un placeholder
+`<SKILL_DIR>` et donne trois façons de le résoudre, de la substitution Hermes au repli par
+recherche dans les racines d'installation usuelles. Le script se localise lui-même, donc il
+tourne depuis n'importe quel répertoire courant, et la commande `where` sert de poignée de
+main : elle échoue si le chemin retenu n'est pas le bon.
+
+À l'invocation, l'agent propose trois entrées : **créer** un conseil (guidé), **charger** un
+conseil déjà enregistré, ou **automatique** (l'agent compose le conseil lui-même à partir du
+sujet). Un conseil créé est toujours enregistré, en JSON, dans le répertoire de données de
+l'utilisateur — `%APPDATA%\microcouncil\councils` sous Windows, `~/Library/Application
+Support/microcouncil/councils` sous macOS, `${XDG_DATA_HOME:-~/.local/share}/microcouncil/councils`
+ailleurs, ou `$MICROCOUNCIL_HOME/councils` si la variable est définie. **Le sujet n'y est
+jamais stocké** : c'est ce qui rend un conseil réutilisable d'une conversation à l'autre.
+
+Le catalogue n'apparaît nulle part dans le `SKILL.md` : l'agent appelle `members` ou
+`environments` pour obtenir des lignes `slug | nom | métier`, et ne charge jamais les fiches
+complètes en contexte. Ajouter vingt compagnons ne coûte donc rien au prompt système.
+
+Le script Python réimplémente `src/prompt.ts` à l'identique — même gabarit, même ordre de
+substitution, même suppression des sections vides — pour que le prompt du skill et celui du
+site soient le même texte.
+
+### Mettre le skill à jour
+
+```bash
+npm run skill
+```
+
+`skill/` est une **sortie de build** : la commande l'efface et le réécrit à partir de
+`skill-src/` (le `SKILL.md`, le script, les références) et des sources de données du dépôt.
+Ne jamais l'éditer à la main. La commande refuse de livrer un fichier que le `SKILL.md` ne
+cite pas — Hermes ne télécharge que les fichiers explicitement référencés, un fichier orphelin
+disparaîtrait donc à l'installation. Le résultat est commité dans le dépôt : c'est ce que les
+harnais téléchargent.
 
 ## Architecture
 
@@ -58,7 +106,10 @@ Tout le contenu éditorial vit hors du code :
 - `docs/data/custom.md` — l'exemple d'instructions additionnelles, inséré à la demande via le
   bouton « Exemple » (aucune instruction n'est pré-remplie par défaut).
 
-Ajouter un compagnon ou un environnement ne demande donc qu'une entrée JSON : l'interface et le
-prompt suivent. Le jeton `{{username}}` est remplacé partout, y compris à l'intérieur des fiches.
+- `skill-src/` — le contenu rédigé du skill agent (`SKILL.md`, `scripts/microcouncil.py`,
+  `references/`), d'où `npm run skill` produit `skill/`.
+
+Ajouter un compagnon ou un environnement ne demande donc qu'une entrée JSON : l'interface, le
+prompt et le skill suivent (`npm run skill` pour ce dernier). Le jeton `{{username}}` est remplacé partout, y compris à l'intérieur des fiches.
 Une section `##` dont le corps se réduit à un jeton vide (« Autres instructions », « Le sujet
 de … ») est retirée du prompt final plutôt que laissée en titre orphelin.
