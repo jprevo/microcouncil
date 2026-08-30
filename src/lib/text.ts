@@ -1,3 +1,5 @@
+import { resolveUsername } from '../prompt';
+
 /** Casse et diacritiques neutralisées, pour comparer des saisies libres. */
 export function normalize(value: string): string {
   return value
@@ -25,4 +27,9 @@ export function slugify(value: string): string {
 /** Dans les résumés affichés, le jeton du gabarit se lit « vous ». */
 export function humanizeUsernameToken(value: string): string {
   return value.replace(/\{\{username\}\}/gu, 'vous');
+}
+
+/** Dans les fiches affichées, le jeton du gabarit se lit comme dans le prompt final. */
+export function fillUsernameToken(value: string, username: string): string {
+  return value.replace(/\{\{username\}\}/gu, resolveUsername(username));
 }

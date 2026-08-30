@@ -3,6 +3,12 @@ import type { Environment, Member } from './types';
 
 export const USERNAME_FALLBACK = "l'utilisateur";
 
+/** Le nom tel qu'il se lira dans le prompt : la saisie, ou une tournure neutre si elle est vide. */
+export function resolveUsername(username: string): string {
+  const trimmed = username.trim();
+  return trimmed === '' ? USERNAME_FALLBACK : trimmed;
+}
+
 /**
  * Nombre moyen de caractères par token. Les tokeniseurs BPE (Claude, GPT, Gemini)
  * diffèrent les uns des autres, mais découpent tous le français autour de 3,5 à 3,8
@@ -68,7 +74,7 @@ function dropSection(template: string, placeholder: string): string {
 
 /** Construit le prompt final à partir du gabarit de docs/data/prompt.md. */
 export function buildPrompt(input: PromptInput): string {
-  const username = input.username.trim() === '' ? USERNAME_FALLBACK : input.username.trim();
+  const username = resolveUsername(input.username);
   const custom = input.customInstructions.trim();
   const subject = input.subject.trim();
 

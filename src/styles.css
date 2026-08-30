@@ -569,6 +569,16 @@ code {
   color: var(--text-muted);
 }
 
+/* Description complète, révélée à la sélection : présente mais en retrait. */
+.tile[aria-pressed="true"] .tile__desc {
+  margin-top: 4px;
+  padding-top: 5px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+
 .tile__traits {
   display: flex;
   flex-wrap: wrap;
