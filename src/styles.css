@@ -625,6 +625,103 @@ code {
   display: none;
 }
 
+/* Fiche modifiable : le crayon vit a cote du bouton, jamais dedans. */
+.tile-slot {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+
+.tile-slot > .tile {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Le crayon occupe le coin : le corps et la coche reculent d'autant. */
+.tile-slot .tile__body {
+  padding-right: 34px;
+}
+
+.tile-slot .tile__check {
+  right: 32px;
+}
+
+.tile__edit {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-faint);
+  opacity: 0;
+  transition: opacity 0.14s ease, background 0.14s ease, color 0.14s ease;
+}
+
+.tile-slot:hover .tile__edit,
+.tile-slot:focus-within .tile__edit {
+  opacity: 1;
+}
+
+.tile__edit:hover {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+/* Sans survol possible, le crayon reste visible en permanence. */
+@media (hover: none) {
+  .tile__edit {
+    opacity: 1;
+  }
+}
+
+.tile__badge {
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0 6px;
+  border-radius: 999px;
+  color: var(--text-faint);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+}
+
+.add-member {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px 14px;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 550;
+  cursor: pointer;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.add-member:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
 .empty {
   padding: 18px 4px;
   text-align: center;
@@ -742,10 +839,12 @@ code {
   background: var(--surface-soft);
 }
 
+/* `text-transform` neutralise : une boite de dialogue peut vivre dans une carte. */
 .modal__head h2 {
   font-family: var(--font-display);
   font-size: 19px;
   font-weight: 600;
+  text-transform: none;
   letter-spacing: -0.012em;
   font-optical-sizing: auto;
 }
@@ -780,6 +879,33 @@ code {
   font-size: 13.5px;
   line-height: 1.62;
   scrollbar-width: thin;
+}
+
+.modal__body--form {
+  gap: 14px;
+}
+
+.modal__error {
+  padding: 12px 18px 0;
+}
+
+.modal__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 13px 18px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-soft);
+}
+
+.modal__foot-left,
+.modal__foot-right {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
 }
 
 .modal__lede {
@@ -865,6 +991,93 @@ code {
 .command__copy:hover {
   background: var(--surface-soft);
   border-color: var(--border-strong);
+}
+
+/* -------------------------------------------------- editeur de membre */
+.form-field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.form-field__label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.form-field__hint {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.emoji {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* L'apercu se cale sur le champ de recherche, pas sur le bloc entier. */
+.emoji__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.emoji__preview {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  font-size: 23px;
+  border-radius: 13px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+}
+
+.emoji__head .field {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Une seule rangee, qui defile : la grille mangeait la moitie du formulaire. */
+.emoji__grid {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 6px;
+  border-radius: var(--radius);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  scrollbar-width: thin;
+}
+
+.emoji__option {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.emoji__option:hover {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.emoji__option[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
 
 /* ----------------------------------------------------------------- toast */

@@ -6,7 +6,7 @@ function haystack(member: Member): string {
 }
 
 /** Filtre le catalogue sur le nom, le métier, la description et les traits. */
-export function filterMembers(members: readonly Member[], query: string): readonly Member[] {
+export function filterMembers<T extends Member>(members: readonly T[], query: string): readonly T[] {
   const needle = normalize(query);
   if (needle === '') return members;
   return members.filter((member) => haystack(member).includes(needle));

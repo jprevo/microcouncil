@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Stepper } from '../ui/Stepper';
-import { MEMBERS } from '../../data';
 import { useAppDispatch, useAppState } from '../../state/hooks';
+import { useCatalog } from '../../state/selectors';
 
 /**
  * Le brouillon n'existe que pendant la saisie clavier : hors de là, le champ affiche
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppState } from '../../state/hooks';
  */
 export function RandomCountStepper() {
   const { randomCount } = useAppState();
+  const catalog = useCatalog();
   const dispatch = useAppDispatch();
   const [draft, setDraft] = useState<string | null>(null);
 
@@ -24,7 +25,7 @@ export function RandomCountStepper() {
       label="Nombre de membres à tirer au sort"
       inputLabel="Nombre de membres"
       value={draft ?? String(randomCount)}
-      max={MEMBERS.length}
+      max={catalog.length}
       onDraft={setDraft}
       onCommit={commit}
       onNudge={(delta) => dispatch({ type: 'nudgeCount', delta })}

@@ -6,6 +6,29 @@ export interface Member {
   readonly traits: readonly string[];
 }
 
+/**
+ * The catalog slot an edit writes into. It never changes when a member is renamed,
+ * so a built-in stays recognizable — and restorable — whatever the user calls it.
+ */
+export type MemberTarget =
+  | { readonly kind: 'builtin'; readonly name: string }
+  | { readonly kind: 'custom'; readonly name: string };
+
+/** Everything the user added to, or changed in, the shipped catalog. */
+export interface MemberLibrary {
+  /** Members created by the user, in creation order. */
+  readonly custom: readonly Member[];
+  /** Rewritten built-ins, keyed by the name of the built-in they replace. */
+  readonly overrides: Readonly<Record<string, Member>>;
+}
+
+/** A member as the interface shows it: its content, plus where it comes from. */
+export interface CatalogMember extends Member {
+  readonly target: MemberTarget;
+  /** True for a built-in carrying a local edit, which can therefore be reverted. */
+  readonly edited: boolean;
+}
+
 export interface Environment {
   readonly title: string;
   readonly icon: string;
@@ -25,4 +48,6 @@ export interface AppState {
   subject: string;
   randomCount: number;
   theme: Theme;
+  /** Membres ajoutés ou modifiés localement, superposés au catalogue livré. */
+  memberLibrary: MemberLibrary;
 }

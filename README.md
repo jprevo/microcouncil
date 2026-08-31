@@ -8,7 +8,14 @@ un environnement (idem), des instructions additionnelles optionnelles et le suje
 demande (optionnel lui aussi). Le prompt est reconstruit en direct à partir du gabarit
 `docs/data/prompt.md`, puis copié en un clic.
 
-Nom, sélection, instructions et thème sont mémorisés dans le `localStorage` du navigateur.
+Les membres se créent et se modifient depuis l'interface : le bouton en bas de la liste ouvre
+une fiche vierge, le crayon d'une carte ouvre la fiche correspondante. L'icône se cherche par
+shortcode (`brain`, `rocket`…) dans la table de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet).
+Un membre livré avec le site peut être réécrit comme n'importe quel autre ; sa fiche gagne alors
+un bouton « Revenir à l'original ».
+
+Nom, sélection, instructions, thème et membres ajoutés ou modifiés sont mémorisés dans le
+`localStorage` du navigateur.
 
 ## Commandes
 
@@ -23,6 +30,7 @@ npm install
 | `npm run build` | Typecheck puis build dans `dist/`. |
 | `npm run package` | **Produit `dist/microcouncil.html`** : un fichier unique (HTML + CSS + données + JS inlinés), sans aucune dépendance externe, à partager ou à ouvrir directement depuis le disque. |
 | `npm run skill` | **Régénère `skill/`** : le skill agent, à jour des compagnons, des environnements et du gabarit. |
+| `npm run emoji` | **Régénère `src/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes. |
 
 ```bash
 npm run package
@@ -95,12 +103,21 @@ Le découpage privilégie des composants très courts, à responsabilité unique
 - `src/lib/` et `src/prompt.ts`, `src/random.ts`, `src/storage.ts` — la logique pure, sans React,
   testable et réutilisable telle quelle.
 
+Le catalogue affiché n'est jamais `src/members.json` tel quel : `src/lib/catalog.ts` superpose à
+ce catalogue livré une **bibliothèque locale** — les membres créés par l'utilisateur, et les
+surcharges des membres livrés, indexées par leur nom d'origine. C'est ce qui permet de rétablir
+une fiche livrée après l'avoir réécrite, ou renommée. Une fiche renommée reste sélectionnée : le
+reducer déplace la sélection en même temps que le nom.
+
 ## Sources de données
 
 Tout le contenu éditorial vit hors du code :
 
 - `src/members.json` — le catalogue des compagnons (`name`, `icon`, `job`, `description`, `traits`) ;
 - `src/environments.json` — les décors (`title`, `icon`, `description`) ;
+- `src/emoji.json` — la table `shortcode -> caractère` du sélecteur d'icônes, **produite** par
+  `npm run emoji` à partir de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet)
+  (l'ordre et les shortcodes) et de l'API emoji de GitHub (les caractères eux-mêmes) ;
 - `docs/data/prompt.md` — le gabarit du prompt, avec les jetons `{{username}}`, `{{membres}}`,
   `{{environment}}`, `{{custom}}` et `{{subject}}` ;
 - `docs/data/custom.md` — l'exemple d'instructions additionnelles, inséré à la demande via le

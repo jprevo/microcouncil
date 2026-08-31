@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "package": "npm run build && node scripts/rename-bundle.mjs",
-    "skill": "node scripts/build-skill.mjs"
+    "skill": "node scripts/build-skill.mjs",
+    "emoji": "node scripts/build-emoji.mjs"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",
