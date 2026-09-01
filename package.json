@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "package": "npm run build && node scripts/rename-bundle.mjs",
     "skill": "node scripts/build-skill.mjs",
-    "emoji": "node scripts/build-emoji.mjs"
+    "emoji": "node scripts/build-emoji.mjs",
+    "shuffle": "node scripts/shuffle-members.mjs"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",

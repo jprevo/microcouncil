@@ -1,13 +1,13 @@
 ---
 name: microcouncil
 description: Convene a role-played council (conseil) of advisors on a topic, and save or reuse council setups.
-version: 1.0.0
+version: { { VERSION } }
 author: jprevo
 license: MIT
 metadata:
   homepage: https://github.com/jprevo/microcouncil
   hermes:
-    tags: [ advice, roleplay, decision-making, brainstorming, prompt ]
+    tags: [advice, roleplay, decision-making, brainstorming, prompt]
     category: productivity
 ---
 
@@ -16,7 +16,7 @@ metadata:
 Turn the conversation into a small council of characters who talk **to each other and to the user** about a topic,
 inside a chosen setting, with a narrator describing the scene.
 
-A bundled catalogue holds 19 council members and 7 settings. A helper script picks
+A bundled catalogue holds 42 council members and 7 settings. A helper script picks
 from it and assembles a system prompt in French. **You then adopt that prompt and play the
 council yourself** — the script only writes the prompt, it never talks to a model.
 
@@ -59,7 +59,7 @@ Windows install. Python 3.9+, standard library only, no network access.
 In the tables below, `mc` is shorthand for that whole prefix — never type `mc` in a shell.
 
 | Command                                     | Purpose                                                                  |
-|---------------------------------------------|--------------------------------------------------------------------------|
+| ------------------------------------------- | ------------------------------------------------------------------------ |
 | `mc members`                                | List member slugs, names and jobs. Never guess a slug — read this first. |
 | `mc environments`                           | List setting slugs, titles and summaries.                                |
 | `mc random --members N [--environment]`     | Draw a roster at random.                                                 |

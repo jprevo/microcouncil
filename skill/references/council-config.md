@@ -8,10 +8,10 @@ across conversations.
 
 One JSON file per council, named after its slug, in a per-user data directory:
 
-| Platform | Directory |
-| --- | --- |
-| Windows | `%APPDATA%\microcouncil\councils` |
-| macOS | `~/Library/Application Support/microcouncil/councils` |
+| Platform     | Directory                                                |
+| ------------ | -------------------------------------------------------- |
+| Windows      | `%APPDATA%\microcouncil\councils`                        |
+| macOS        | `~/Library/Application Support/microcouncil/councils`    |
 | Linux, other | `${XDG_DATA_HOME:-~/.local/share}/microcouncil/councils` |
 
 Setting `MICROCOUNCIL_HOME` overrides the parent directory, so councils can be kept in a
@@ -34,16 +34,16 @@ synced folder or scoped to a project: councils then live in `$MICROCOUNCIL_HOME/
 }
 ```
 
-| Field | Meaning |
-| --- | --- |
-| `schemaVersion` | Format version. Currently `1`. |
-| `slug` | File name, derived from `name` unless `--slug` was passed. |
-| `name` | Human readable label shown by `councils`. |
-| `username` | How the council addresses the user. Empty falls back to `l'utilisateur`. |
-| `members` | Member slugs, rendered in this order. At least one. |
-| `environment` | Setting slug, or `null` for no setting. |
-| `customInstructions` | Extra standing instructions, or `""` to drop that section. |
-| `createdAt`, `updatedAt` | UTC timestamps, preserved across overwrites. |
+| Field                    | Meaning                                                                  |
+| ------------------------ | ------------------------------------------------------------------------ |
+| `schemaVersion`          | Format version. Currently `1`.                                           |
+| `slug`                   | File name, derived from `name` unless `--slug` was passed.               |
+| `name`                   | Human readable label shown by `councils`.                                |
+| `username`               | How the council addresses the user. Empty falls back to `l'utilisateur`. |
+| `members`                | Member slugs, rendered in this order. At least one.                      |
+| `environment`            | Setting slug, or `null` for no setting.                                  |
+| `customInstructions`     | Extra standing instructions, or `""` to drop that section.               |
+| `createdAt`, `updatedAt` | UTC timestamps, preserved across overwrites.                             |
 
 ## Editing by hand
 
