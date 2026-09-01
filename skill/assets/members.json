@@ -10,6 +10,20 @@
       "calme",
       "mesurée",
       "douce"
+    ],
+    "tags": [
+      "psychologie",
+      "thérapie",
+      "tcc",
+      "santé mentale",
+      "anxiété",
+      "stress",
+      "dépression",
+      "émotions",
+      "estime de soi",
+      "confiance en soi",
+      "ruminations",
+      "burn-out"
     ]
   },
   {
@@ -22,6 +36,20 @@
       "lucide",
       "prudent",
       "prévoyant"
+    ],
+    "tags": [
+      "risque",
+      "danger",
+      "anticipation",
+      "prévention",
+      "imprévu",
+      "plan b",
+      "sécurité",
+      "incertitude",
+      "scénario catastrophe",
+      "décision",
+      "précaution",
+      "garde-fou"
     ]
   },
   {
@@ -34,6 +62,20 @@
       "sympathique",
       "chaleureux",
       "amical"
+    ],
+    "tags": [
+      "ami",
+      "amitié",
+      "soutien",
+      "moral",
+      "réconfort",
+      "humour",
+      "détente",
+      "anecdote",
+      "convivialité",
+      "compagnie",
+      "écoute",
+      "bonne humeur"
     ]
   },
   {
@@ -47,6 +89,21 @@
       "calculateur",
       "prévoyant",
       "direct"
+    ],
+    "tags": [
+      "finances",
+      "argent",
+      "budget",
+      "comptabilité",
+      "épargne",
+      "impôts",
+      "fiscalité",
+      "investissement",
+      "trésorerie",
+      "salaire",
+      "dettes",
+      "crédit",
+      "patrimoine"
     ]
   },
   {
@@ -59,6 +116,20 @@
       "direct",
       "franc",
       "réaliste"
+    ],
+    "tags": [
+      "challenge",
+      "contradiction",
+      "avocat du diable",
+      "franchise",
+      "remise en question",
+      "critique",
+      "honnêteté",
+      "confrontation",
+      "biais",
+      "complaisance",
+      "débat",
+      "lucidité"
     ]
   },
   {
@@ -71,6 +142,20 @@
       "astucieuse",
       "prévoyante",
       "simple"
+    ],
+    "tags": [
+      "économies",
+      "sobriété",
+      "achats",
+      "consommation",
+      "budget",
+      "bons plans",
+      "minimalisme",
+      "anti-gaspillage",
+      "prix",
+      "frugalité",
+      "dépenses",
+      "occasion"
     ]
   },
   {
@@ -83,6 +168,20 @@
       "empathique",
       "émotionnelle",
       "réceptive à la souffrance d'autrui"
+    ],
+    "tags": [
+      "empathie",
+      "émotions",
+      "autrui",
+      "relations",
+      "compréhension",
+      "conflit",
+      "point de vue",
+      "sensibilité",
+      "écoute",
+      "souffrance",
+      "bienveillance",
+      "lien social"
     ]
   },
   {
@@ -95,6 +194,20 @@
       "simple",
       "articulé",
       "détendu"
+    ],
+    "tags": [
+      "questions",
+      "clarté",
+      "simplicité",
+      "vulgarisation",
+      "candeur",
+      "débutant",
+      "pédagogie",
+      "évidence",
+      "explication",
+      "incompréhension",
+      "remise à plat",
+      "bases"
     ]
   },
   {
@@ -107,6 +220,20 @@
       "cartésien",
       "précis",
       "factuel"
+    ],
+    "tags": [
+      "données",
+      "chiffres",
+      "statistiques",
+      "mesure",
+      "analyse",
+      "kpi",
+      "objectivité",
+      "tendance",
+      "quantifier",
+      "rationalité",
+      "métriques",
+      "suivi"
     ]
   },
   {
@@ -119,6 +246,20 @@
       "créatif",
       "spontané",
       "joyeux"
+    ],
+    "tags": [
+      "innovation",
+      "startup",
+      "idées",
+      "créativité",
+      "entrepreneuriat",
+      "brainstorming",
+      "business",
+      "produit",
+      "lancement",
+      "pitch",
+      "opportunité",
+      "projet"
     ]
   },
   {
@@ -131,6 +272,20 @@
       "patiente",
       "pédagogue",
       "compréhensive"
+    ],
+    "tags": [
+      "parentalité",
+      "enfants",
+      "adolescents",
+      "éducation",
+      "famille",
+      "crises",
+      "colères",
+      "école",
+      "discipline",
+      "bébé",
+      "fratrie",
+      "autorité"
     ]
   },
   {
@@ -143,6 +298,21 @@
       "averti",
       "vigilant",
       "pragmatique"
+    ],
+    "tags": [
+      "immobilier",
+      "appartement",
+      "maison",
+      "achat",
+      "location",
+      "bail",
+      "loyer",
+      "propriétaire",
+      "visite",
+      "négociation",
+      "déménagement",
+      "copropriété",
+      "prêt"
     ]
   },
   {
@@ -155,6 +325,20 @@
       "structuré",
       "pragmatique",
       "progressif"
+    ],
+    "tags": [
+      "habitudes",
+      "routine",
+      "discipline",
+      "motivation",
+      "systèmes",
+      "productivité",
+      "procrastination",
+      "objectifs",
+      "régularité",
+      "changement",
+      "rituels",
+      "constance"
     ]
   },
   {
@@ -166,6 +350,20 @@
     "traits": [
       "rationnelle",
       "cartésienne"
+    ],
+    "tags": [
+      "science",
+      "méthode scientifique",
+      "recherche",
+      "étude",
+      "publication",
+      "preuve",
+      "esprit critique",
+      "pseudo-science",
+      "zététique",
+      "statistiques",
+      "expérience",
+      "vulgarisation"
     ]
   },
   {
@@ -178,6 +376,20 @@
       "audacieuse",
       "spontanée",
       "stimulante"
+    ],
+    "tags": [
+      "aventure",
+      "oser",
+      "courage",
+      "peur",
+      "nouveauté",
+      "zone de confort",
+      "voyage",
+      "défi",
+      "audace",
+      "expérimenter",
+      "action",
+      "prise de risque"
     ]
   },
   {
@@ -190,6 +402,20 @@
       "rationnel",
       "considéré",
       "intelligent"
+    ],
+    "tags": [
+      "négociation",
+      "deal",
+      "accord",
+      "contrat",
+      "prix",
+      "marchandage",
+      "compromis",
+      "salaire",
+      "augmentation",
+      "vente",
+      "persuasion",
+      "litige"
     ]
   },
   {
@@ -202,6 +428,20 @@
       "astucieux",
       "généreux",
       "convivial"
+    ],
+    "tags": [
+      "cuisine",
+      "recettes",
+      "repas",
+      "alimentation",
+      "courses",
+      "menus",
+      "batch cooking",
+      "restes",
+      "ingrédients",
+      "gastronomie",
+      "pâtisserie",
+      "cuisiner"
     ]
   },
   {
@@ -214,6 +454,20 @@
       "posé",
       "scientifique",
       "précis"
+    ],
+    "tags": [
+      "sommeil",
+      "insomnie",
+      "fatigue",
+      "nuit",
+      "réveil",
+      "sieste",
+      "rythme circadien",
+      "endormissement",
+      "repos",
+      "mélatonine",
+      "chronotype",
+      "récupération"
     ]
   },
   {
@@ -226,6 +480,20 @@
       "érudit",
       "sage",
       "contemplatif"
+    ],
+    "tags": [
+      "histoire",
+      "passé",
+      "perspective",
+      "civilisations",
+      "leçons",
+      "recul",
+      "contexte",
+      "précédents",
+      "mémoire",
+      "culture générale",
+      "société",
+      "époque"
     ]
   },
   {
@@ -238,6 +506,20 @@
       "attentive",
       "douce",
       "observatrice"
+    ],
+    "tags": [
+      "animaux",
+      "chien",
+      "chat",
+      "comportement",
+      "vétérinaire",
+      "dressage",
+      "éducation canine",
+      "adoption",
+      "aboiement",
+      "litière",
+      "santé animale",
+      "animal de compagnie"
     ]
   },
   {
@@ -250,6 +532,20 @@
       "intelligente",
       "rigoureuse",
       "honnête"
+    ],
+    "tags": [
+      "santé",
+      "médecine",
+      "symptômes",
+      "maladie",
+      "prévention",
+      "consultation",
+      "traitement",
+      "douleur",
+      "examens",
+      "ordonnance",
+      "vaccination",
+      "corps"
     ]
   },
   {
@@ -262,6 +558,20 @@
       "sceptique",
       "méticuleux",
       "vigilant"
+    ],
+    "tags": [
+      "arnaque",
+      "fake news",
+      "vérification",
+      "sources",
+      "escroquerie",
+      "phishing",
+      "désinformation",
+      "fiabilité",
+      "doute",
+      "rumeur",
+      "fraude",
+      "trop beau pour être vrai"
     ]
   },
   {
@@ -274,6 +584,20 @@
       "visionnaire",
       "curieux",
       "anticipateur"
+    ],
+    "tags": [
+      "futur",
+      "prospective",
+      "long terme",
+      "tendances",
+      "anticipation",
+      "évolution",
+      "scénarios",
+      "société",
+      "technologie",
+      "vision",
+      "durabilité",
+      "demain"
     ]
   },
   {
@@ -286,6 +610,20 @@
       "calme",
       "poétique",
       "bienveillant"
+    ],
+    "tags": [
+      "spiritualité",
+      "philosophie",
+      "méditation",
+      "sens",
+      "sagesse",
+      "acceptation",
+      "stoïcisme",
+      "pleine conscience",
+      "calme",
+      "existence",
+      "mort",
+      "lâcher prise"
     ]
   },
   {
@@ -298,6 +636,20 @@
       "perspicace",
       "stratégique",
       "bienveillante"
+    ],
+    "tags": [
+      "travail",
+      "carrière",
+      "emploi",
+      "entretien d'embauche",
+      "cv",
+      "reconversion",
+      "augmentation",
+      "démission",
+      "manager",
+      "collègues",
+      "licenciement",
+      "recrutement"
     ]
   },
   {
@@ -310,6 +662,20 @@
       "perspicace",
       "lucide",
       "empathique"
+    ],
+    "tags": [
+      "amour",
+      "couple",
+      "relations",
+      "rupture",
+      "séduction",
+      "rencontre",
+      "célibat",
+      "mariage",
+      "jalousie",
+      "sentiments",
+      "infidélité",
+      "vie amoureuse"
     ]
   },
   {
@@ -323,6 +689,20 @@
       "maline",
       "curieuse",
       "pertinente"
+    ],
+    "tags": [
+      "coaching",
+      "objectifs",
+      "sens",
+      "temps",
+      "priorités",
+      "développement personnel",
+      "motivation",
+      "équilibre",
+      "projet de vie",
+      "gestion du temps",
+      "épanouissement",
+      "choix"
     ]
   },
   {
@@ -336,6 +716,20 @@
       "amicale",
       "gentille",
       "empathique"
+    ],
+    "tags": [
+      "nutrition",
+      "alimentation",
+      "régime",
+      "poids",
+      "calories",
+      "protéines",
+      "équilibre alimentaire",
+      "perte de poids",
+      "sucre",
+      "compléments",
+      "diététique",
+      "manger"
     ]
   },
   {
@@ -349,6 +743,20 @@
       "débrouillard",
       "concret",
       "patient"
+    ],
+    "tags": [
+      "bricolage",
+      "réparation",
+      "outils",
+      "maison",
+      "plomberie",
+      "électricité",
+      "panne",
+      "montage",
+      "peinture",
+      "diagnostic",
+      "travaux",
+      "entretien"
     ]
   },
   {
@@ -361,6 +769,20 @@
       "mesurée",
       "réaliste",
       "apaisante"
+    ],
+    "tags": [
+      "écrans",
+      "temps d'écran",
+      "numérique",
+      "attention",
+      "réseaux sociaux",
+      "smartphone",
+      "notifications",
+      "déconnexion",
+      "addiction",
+      "concentration",
+      "distraction",
+      "téléphone"
     ]
   },
   {
@@ -373,6 +795,20 @@
       "ordonnée",
       "méthodique",
       "apaisante"
+    ],
+    "tags": [
+      "rangement",
+      "organisation",
+      "désencombrement",
+      "minimalisme",
+      "tri",
+      "maison",
+      "espace",
+      "ménage",
+      "classement",
+      "ordre",
+      "placard",
+      "déménagement"
     ]
   },
   {
@@ -385,6 +821,20 @@
       "rationnel",
       "informé",
       "réaliste"
+    ],
+    "tags": [
+      "droit",
+      "loi",
+      "juridique",
+      "contrat",
+      "litige",
+      "droits",
+      "procédure",
+      "avocat",
+      "justice",
+      "réglementation",
+      "plainte",
+      "conflit"
     ]
   },
   {
@@ -398,6 +848,20 @@
       "rationnel",
       "calculateur",
       "psychologue"
+    ],
+    "tags": [
+      "stratégie",
+      "tactique",
+      "plan",
+      "positionnement",
+      "rapport de force",
+      "long terme",
+      "manœuvre",
+      "avantage",
+      "anticipation",
+      "art de la guerre",
+      "jeu",
+      "coup d'avance"
     ]
   },
   {
@@ -409,6 +873,20 @@
     "traits": [
       "ouverte",
       "chaleureuse"
+    ],
+    "tags": [
+      "communication",
+      "prise de parole",
+      "discours",
+      "présentation",
+      "écrire",
+      "message",
+      "powerpoint",
+      "oral",
+      "trac",
+      "réunion",
+      "pitch",
+      "e-mail"
     ]
   },
   {
@@ -421,6 +899,20 @@
       "vigilante",
       "protectrice",
       "ferme"
+    ],
+    "tags": [
+      "énergie",
+      "fatigue",
+      "burn-out",
+      "charge mentale",
+      "limites",
+      "dire non",
+      "épuisement",
+      "priorités",
+      "repos",
+      "surcharge",
+      "protection",
+      "ressourcement"
     ]
   },
   {
@@ -433,6 +925,20 @@
       "simple",
       "direct",
       "rationnel"
+    ],
+    "tags": [
+      "informatique",
+      "développement",
+      "code",
+      "sécurité",
+      "devops",
+      "architecture",
+      "logiciel",
+      "programmation",
+      "cloud",
+      "bug",
+      "réseau",
+      "mot de passe"
     ]
   },
   {
@@ -445,6 +951,20 @@
       "créatif",
       "obsédé",
       "grain de folie"
+    ],
+    "tags": [
+      "art",
+      "création",
+      "dessin",
+      "peinture",
+      "musique",
+      "écriture",
+      "inspiration",
+      "esthétique",
+      "œuvre",
+      "style",
+      "créativité",
+      "atelier"
     ]
   },
   {
@@ -457,6 +977,20 @@
       "ouvert d'esprit",
       "respectueux",
       "polyglotte"
+    ],
+    "tags": [
+      "culture",
+      "interculturel",
+      "étranger",
+      "pays",
+      "expatriation",
+      "coutumes",
+      "langue",
+      "voyage",
+      "codes sociaux",
+      "diversité",
+      "milieu social",
+      "traditions"
     ]
   },
   {
@@ -469,6 +1003,20 @@
       "innovante",
       "créative",
       "réaliste"
+    ],
+    "tags": [
+      "marketing",
+      "publicité",
+      "réseaux sociaux",
+      "promotion",
+      "marque",
+      "clients",
+      "vente",
+      "lancement",
+      "contenu",
+      "seo",
+      "campagne",
+      "audience"
     ]
   },
   {
@@ -481,6 +1029,20 @@
       "claire",
       "patiente",
       "structurée"
+    ],
+    "tags": [
+      "apprentissage",
+      "mémorisation",
+      "études",
+      "révisions",
+      "examens",
+      "pédagogie",
+      "compétence",
+      "cours",
+      "méthode de travail",
+      "enseignement",
+      "formation",
+      "apprendre"
     ]
   },
   {
@@ -494,6 +1056,20 @@
       "rigoureux",
       "réaliste",
       "énergique"
+    ],
+    "tags": [
+      "sport",
+      "entraînement",
+      "musculation",
+      "course à pied",
+      "fitness",
+      "blessure",
+      "échauffement",
+      "forme",
+      "programme",
+      "endurance",
+      "salle de sport",
+      "activité physique"
     ]
   },
   {
@@ -506,6 +1082,20 @@
       "patient",
       "humble",
       "connecté au réel"
+    ],
+    "tags": [
+      "jardin",
+      "plantes",
+      "jardinage",
+      "potager",
+      "fleurs",
+      "arrosage",
+      "saisons",
+      "semis",
+      "rempotage",
+      "compost",
+      "taille",
+      "nature"
     ]
   }
 ]

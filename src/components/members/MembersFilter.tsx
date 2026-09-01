@@ -14,7 +14,7 @@ export function MembersFilter({ query, onChange }: MembersFilterProps) {
       value={query}
       onChange={onChange}
       ariaLabel="Filtrer les membres"
-      placeholder="Filtrer par nom, métier ou trait…"
+      placeholder="Filtrer par nom, métier, trait ou mot-clé…"
     />
   );
 }

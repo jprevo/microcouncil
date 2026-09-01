@@ -47,6 +47,7 @@ function asMember(value: unknown): Member | null {
     job: asString(record["job"]).trim(),
     description: asString(record["description"]).trim(),
     traits: asStringArray(record["traits"]),
+    tags: asStringArray(record["tags"]),
   };
   return member.name === "" || member.icon === "" ? null : member;
 }

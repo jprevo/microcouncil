@@ -112,7 +112,9 @@ reducer déplace la sélection en même temps que le nom.
 
 Tout le contenu éditorial vit hors du code :
 
-- `src/members.json` — le catalogue des compagnons (`name`, `icon`, `job`, `description`, `traits`) ;
+- `src/members.json` — le catalogue des compagnons (`name`, `icon`, `job`, `description`, `traits`,
+  `tags`) ; les `tags` sont des mots-clés de recherche : ils alimentent le filtre du catalogue mais
+  n'apparaissent jamais dans le prompt ;
 - `src/environments.json` — les décors (`title`, `icon`, `description`) ;
 - `src/emoji.json` — la table `shortcode -> caractère` du sélecteur d'icônes, **produite** par
   `npm run emoji` à partir de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet)

@@ -4,6 +4,8 @@ export interface Member {
   readonly job: string;
   readonly description: string;
   readonly traits: readonly string[];
+  /** Mots-clés de recherche : jamais affichés dans le prompt, seulement indexés. */
+  readonly tags: readonly string[];
 }
 
 /**

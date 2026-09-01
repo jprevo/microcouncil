@@ -3,11 +3,17 @@ import type { Member } from "../types";
 
 function haystack(member: Member): string {
   return normalize(
-    [member.name, member.job, member.description, ...member.traits].join(" "),
+    [
+      member.name,
+      member.job,
+      member.description,
+      ...member.traits,
+      ...member.tags,
+    ].join(" "),
   );
 }
 
-/** Filtre le catalogue sur le nom, le métier, la description et les traits. */
+/** Filtre le catalogue sur le nom, le métier, la description, les traits et les tags. */
 export function filterMembers<T extends Member>(
   members: readonly T[],
   query: string,

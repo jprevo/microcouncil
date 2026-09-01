@@ -65,6 +65,19 @@ export function MemberFields({ draft, onChange }: MemberFieldsProps) {
           placeholder="curieuse, rigoureuse, directe"
         />
       </Field>
+
+      <Field
+        htmlFor="member-tags"
+        label="Tags"
+        hint="Mots-clés de recherche, séparés par des virgules. Absents du prompt."
+      >
+        <TextField
+          id="member-tags"
+          value={draft.tags}
+          onChange={(tags) => onChange({ tags })}
+          placeholder="algorithmes, code, dette technique"
+        />
+      </Field>
     </>
   );
 }

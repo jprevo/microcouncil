@@ -1,7 +1,7 @@
 import { normalize } from "./text";
 import type { Member } from "../types";
 
-/** The form's own shape: every field is free text, traits included. */
+/** The form's own shape: every field is free text, traits and tags included. */
 export interface MemberDraft {
   readonly name: string;
   readonly icon: string;
@@ -9,6 +9,8 @@ export interface MemberDraft {
   readonly description: string;
   /** Traits séparés par des virgules. */
   readonly traits: string;
+  /** Mots-clés de recherche séparés par des virgules. */
+  readonly tags: string;
 }
 
 /** Neutral pictogram, so a brand-new member already has a valid icon. */
@@ -20,6 +22,7 @@ export const EMPTY_DRAFT: MemberDraft = {
   job: "",
   description: "",
   traits: "",
+  tags: "",
 };
 
 export function draftOf(member: Member): MemberDraft {
@@ -29,14 +32,17 @@ export function draftOf(member: Member): MemberDraft {
     job: member.job,
     description: member.description,
     traits: member.traits.join(", "),
+    tags: member.tags.join(", "),
   };
 }
 
-function splitTraits(value: string): string[] {
-  return value
+/** Découpe une saisie « a, b, c » en entrées propres, sans vide ni doublon. */
+function splitList(value: string): string[] {
+  const entries = value
     .split(",")
-    .map((trait) => trait.trim())
-    .filter((trait) => trait !== "");
+    .map((entry) => entry.trim())
+    .filter((entry) => entry !== "");
+  return [...new Set(entries)];
 }
 
 export function memberOf(draft: MemberDraft): Member {
@@ -45,7 +51,8 @@ export function memberOf(draft: MemberDraft): Member {
     icon: draft.icon.trim(),
     job: draft.job.trim(),
     description: draft.description.trim(),
-    traits: splitTraits(draft.traits),
+    traits: splitList(draft.traits),
+    tags: splitList(draft.tags),
   };
 }
 
