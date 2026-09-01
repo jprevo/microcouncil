@@ -1,7 +1,7 @@
 export function Lede() {
   return (
     <p className="lede">
-      Générez un prompt pour discuter dans votre IA favorite avec un conseil de spécialistes.
+        Créez un prompt à copier dans votre IA préférée pour consulter un panel de spécialistes.
     </p>
   );
 }
