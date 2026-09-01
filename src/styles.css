@@ -453,61 +453,6 @@ code {
   border-color: var(--border-strong);
 }
 
-.stepper {
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid var(--border);
-  background: var(--surface-soft);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.stepper__btn {
-  font: inherit;
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-  width: 30px;
-  height: 32px;
-  border: 0;
-  background: transparent;
-  color: var(--text-muted);
-  transition:
-    background 0.15s ease,
-    color 0.15s ease;
-}
-
-.stepper__btn:hover {
-  background: var(--surface-sunken);
-  color: var(--text);
-}
-
-.stepper__input {
-  font: inherit;
-  font-size: 13.5px;
-  font-weight: 600;
-  text-align: center;
-  width: 42px;
-  height: 32px;
-  border: 0;
-  border-inline: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-
-.stepper__input::-webkit-outer-spin-button,
-.stepper__input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.stepper__input:focus {
-  outline: none;
-  background: var(--surface);
-}
-
 /* ----------------------------------------------------------------- tiles */
 .grid {
   display: grid;

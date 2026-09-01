@@ -3,8 +3,8 @@
 Générateur de prompt pour convoquer un conseil de compagnons dans Claude, ChatGPT, Gemini
 ou n'importe quel autre assistant.
 
-L'interface permet de choisir son nom, les membres du conseil (à la main ou tirés au sort),
-un environnement (idem), des instructions additionnelles optionnelles et le sujet de la
+L'interface permet de choisir son nom, les membres du conseil, un environnement (à la main ou
+tiré au sort), des instructions additionnelles optionnelles et le sujet de la
 demande (optionnel lui aussi). Le prompt est reconstruit en direct à partir du gabarit
 `docs/data/prompt.md`, puis copié en un clic.
 
@@ -94,12 +94,11 @@ Le découpage privilégie des composants très courts, à responsabilité unique
   `selectors.ts` et `usePrompt.ts` (dérivations mémoïsées). L'état et le `dispatch` voyagent dans
   deux contextes distincts, pour que les composants qui n'écrivent que via `dispatch` ne se
   re-rendent pas à chaque frappe ;
-- `src/components/ui/` — les primitives sans logique métier (`Button`, `Card`, `TextField`,
-  `Stepper`…) ;
+- `src/components/ui/` — les primitives sans logique métier (`Button`, `Card`, `TextField`…) ;
 - `src/components/tiles/` — la coquille commune aux fiches (`Tile`) et ses fragments ;
 - `src/components/<domaine>/` — une carte par section du formulaire (`members`, `environments`,
   `identity`, `custom`, `subject`, `output`), chacune accompagnée de ses propres hooks
-  (`useDrawMembers`, `useEnvironmentKeys`, `useCopyPrompt`…) ;
+  (`useDrawEnvironment`, `useEnvironmentKeys`, `useCopyPrompt`…) ;
 - `src/lib/` et `src/prompt.ts`, `src/random.ts`, `src/storage.ts` — la logique pure, sans React,
   testable et réutilisable telle quelle.
 

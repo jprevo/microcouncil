@@ -4,8 +4,6 @@ import type { AppState, Member, MemberLibrary, Theme } from "./types";
 
 const STORAGE_KEY = "microcouncil.state.v1";
 
-export const DEFAULT_RANDOM_COUNT = 4;
-
 function isTheme(value: unknown): value is Theme {
   return value === "light" || value === "dark";
 }
@@ -24,7 +22,6 @@ export function defaultState(): AppState {
     selectedEnvironment: null,
     customInstructions: "",
     subject: "",
-    randomCount: DEFAULT_RANDOM_COUNT,
     theme: preferredTheme(),
     memberLibrary: EMPTY_LIBRARY,
   };
@@ -115,7 +112,6 @@ export function loadState(): AppState {
     ENVIRONMENTS.map((environment) => environment.title),
   );
   const environment = record["selectedEnvironment"];
-  const count = record["randomCount"];
 
   return {
     username:
@@ -137,10 +133,6 @@ export function loadState(): AppState {
       typeof record["subject"] === "string"
         ? record["subject"]
         : fallback.subject,
-    randomCount:
-      typeof count === "number" && Number.isFinite(count)
-        ? Math.min(Math.max(Math.round(count), 1), knownMembers.size)
-        : fallback.randomCount,
     theme: isTheme(record["theme"]) ? record["theme"] : fallback.theme,
     memberLibrary,
   };

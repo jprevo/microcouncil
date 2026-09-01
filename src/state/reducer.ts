@@ -15,8 +15,6 @@ export type AppAction =
   | { readonly type: "toggleEnvironment"; readonly title: string }
   | { readonly type: "custom"; readonly value: string }
   | { readonly type: "subject"; readonly value: string }
-  | { readonly type: "randomCount"; readonly value: number }
-  | { readonly type: "nudgeCount"; readonly delta: number }
   | { readonly type: "toggleTheme" }
   /** Un `target` nul crée un nouveau membre ; sinon la fiche visée est réécrite. */
   | {
@@ -26,10 +24,6 @@ export type AppAction =
     }
   | { readonly type: "deleteMember"; readonly target: MemberTarget }
   | { readonly type: "restoreMember"; readonly target: MemberTarget };
-
-export function clampCount(value: number, catalogSize: number): number {
-  return Math.min(Math.max(Math.round(value), 1), Math.max(catalogSize, 1));
-}
 
 function catalogNames(library: MemberLibrary): readonly string[] {
   return buildCatalog(library).map((member) => member.name);
@@ -52,7 +46,7 @@ function rename(
   return [...without, after];
 }
 
-/** Applique un changement de catalogue en réalignant la sélection et le tirage au sort. */
+/** Applique un changement de catalogue en réalignant la sélection. */
 function withLibrary(
   state: AppState,
   library: MemberLibrary,
@@ -62,7 +56,6 @@ function withLibrary(
     ...state,
     memberLibrary: library,
     selectedMembers: ordered(library, selected),
-    randomCount: clampCount(state.randomCount, catalogNames(library).length),
   };
 }
 
@@ -97,22 +90,6 @@ export function reducer(state: AppState, action: AppAction): AppState {
       return { ...state, customInstructions: action.value };
     case "subject":
       return { ...state, subject: action.value };
-    case "randomCount":
-      return {
-        ...state,
-        randomCount: clampCount(
-          action.value,
-          catalogNames(state.memberLibrary).length,
-        ),
-      };
-    case "nudgeCount":
-      return {
-        ...state,
-        randomCount: clampCount(
-          state.randomCount + action.delta,
-          catalogNames(state.memberLibrary).length,
-        ),
-      };
     case "toggleTheme":
       return { ...state, theme: state.theme === "dark" ? "light" : "dark" };
     case "saveMember": {

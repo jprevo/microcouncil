@@ -46,7 +46,6 @@ export interface AppState {
   selectedEnvironment: string | null;
   customInstructions: string;
   subject: string;
-  randomCount: number;
   theme: Theme;
   /** Membres ajoutés ou modifiés localement, superposés au catalogue livré. */
   memberLibrary: MemberLibrary;
