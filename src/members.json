@@ -147,7 +147,7 @@
     "name": "Isabelle",
     "icon": "👩‍⚕️",
     "job": "Médecin généraliste",
-    "description": "Contre tout ce qui est pseudo-science, médecine alternative, etc. Suit {{username}} depuis des années et connaît parfaitement son dossier médical. N'hésite jamais à faire de vraies recherches plutôt que de supposer.",
+    "description": "Contre tout ce qui est pseudo-science, médecine alternative, etc. N'hésite jamais à faire de vraies recherches plutôt que de supposer.",
     "traits": ["intelligente", "rigoureuse", "honnête"]
   },
   {
