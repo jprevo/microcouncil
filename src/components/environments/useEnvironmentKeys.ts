@@ -1,6 +1,6 @@
-import type { KeyboardEvent } from 'react';
-import { ENVIRONMENTS } from '../../data';
-import { useAppDispatch, useAppState } from '../../state/hooks';
+import type { KeyboardEvent } from "react";
+import { ENVIRONMENTS } from "../../data";
+import { useAppDispatch, useAppState } from "../../state/hooks";
 
 const STEPS: Readonly<Record<string, number>> = {
   ArrowRight: 1,
@@ -19,12 +19,13 @@ export function useEnvironmentKeys(focus: (title: string) => void) {
     if (step === undefined) return;
 
     const titles = ENVIRONMENTS.map((environment) => environment.title);
-    const current = selectedEnvironment === null ? -1 : titles.indexOf(selectedEnvironment);
+    const current =
+      selectedEnvironment === null ? -1 : titles.indexOf(selectedEnvironment);
     const next = titles[(current + step + titles.length) % titles.length];
     if (next === undefined) return;
 
     event.preventDefault();
-    dispatch({ type: 'environment', title: next });
+    dispatch({ type: "environment", title: next });
     focus(next);
   };
 }

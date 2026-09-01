@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import { Lede } from './Lede';
+import type { ReactNode } from "react";
+import { Lede } from "./Lede";
 
 export function Shell({ children }: { readonly children: ReactNode }) {
   return (

@@ -1,6 +1,6 @@
-import { Brand } from './Brand';
-import { ThemeToggle } from './ThemeToggle';
-import { SkillHelp } from '../skill/SkillHelp';
+import { Brand } from "./Brand";
+import { ThemeToggle } from "./ThemeToggle";
+import { SkillHelp } from "../skill/SkillHelp";
 
 export function TopBar() {
   return (

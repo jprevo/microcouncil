@@ -23,14 +23,14 @@ Nom, sélection, instructions, thème et membres ajoutés ou modifiés sont mém
 npm install
 ```
 
-| Commande | Effet |
-| --- | --- |
-| `npm run dev` | Serveur de développement Vite. |
-| `npm run typecheck` | Vérification TypeScript stricte, sans émission. |
-| `npm run build` | Typecheck puis build dans `dist/`. |
-| `npm run package` | **Produit `dist/microcouncil.html`** : un fichier unique (HTML + CSS + données + JS inlinés), sans aucune dépendance externe, à partager ou à ouvrir directement depuis le disque. |
-| `npm run skill` | **Régénère `skill/`** : le skill agent, à jour des compagnons, des environnements et du gabarit. |
-| `npm run emoji` | **Régénère `src/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes. |
+| Commande            | Effet                                                                                                                                                                              |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`       | Serveur de développement Vite.                                                                                                                                                     |
+| `npm run typecheck` | Vérification TypeScript stricte, sans émission.                                                                                                                                    |
+| `npm run build`     | Typecheck puis build dans `dist/`.                                                                                                                                                 |
+| `npm run package`   | **Produit `dist/microcouncil.html`** : un fichier unique (HTML + CSS + données + JS inlinés), sans aucune dépendance externe, à partager ou à ouvrir directement depuis le disque. |
+| `npm run skill`     | **Régénère `skill/`** : le skill agent, à jour des compagnons, des environnements et du gabarit.                                                                                   |
+| `npm run emoji`     | **Régénère `src/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes.                                                                                           |
 
 ```bash
 npm run package

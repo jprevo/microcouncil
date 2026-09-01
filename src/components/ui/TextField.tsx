@@ -3,10 +3,10 @@ interface TextFieldProps {
   readonly value: string;
   readonly onChange: (value: string) => void;
   readonly placeholder: string;
-  readonly type?: 'text' | 'search';
+  readonly type?: "text" | "search";
   readonly autoComplete?: string;
   readonly ariaLabel?: string;
-  readonly modifier?: 'search';
+  readonly modifier?: "search";
 }
 
 export function TextField({
@@ -14,7 +14,7 @@ export function TextField({
   value,
   onChange,
   placeholder,
-  type = 'text',
+  type = "text",
   autoComplete,
   ariaLabel,
   modifier,
@@ -22,7 +22,7 @@ export function TextField({
   return (
     <input
       id={id}
-      className={modifier === undefined ? 'field' : `field field--${modifier}`}
+      className={modifier === undefined ? "field" : `field field--${modifier}`}
       type={type}
       value={value}
       autoComplete={autoComplete}

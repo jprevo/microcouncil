@@ -1,8 +1,8 @@
-import { Card } from '../ui/Card';
-import { CardHead } from '../ui/CardHead';
-import { CardTitle } from '../ui/CardTitle';
-import { TextField } from '../ui/TextField';
-import { useAppDispatch, useAppState } from '../../state/hooks';
+import { Card } from "../ui/Card";
+import { CardHead } from "../ui/CardHead";
+import { CardTitle } from "../ui/CardTitle";
+import { TextField } from "../ui/TextField";
+import { useAppDispatch, useAppState } from "../../state/hooks";
 
 export function IdentityCard() {
   const { username } = useAppState();
@@ -16,7 +16,7 @@ export function IdentityCard() {
       <TextField
         id="username"
         value={username}
-        onChange={(value) => dispatch({ type: 'username', value })}
+        onChange={(value) => dispatch({ type: "username", value })}
         autoComplete="given-name"
         placeholder="Votre nom"
       />

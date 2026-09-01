@@ -1,7 +1,7 @@
-import { useDrawEnvironment } from './useDrawEnvironment';
-import { Button } from '../ui/Button';
-import { Emoji } from '../ui/Emoji';
-import { useAppDispatch } from '../../state/hooks';
+import { useDrawEnvironment } from "./useDrawEnvironment";
+import { Button } from "../ui/Button";
+import { Emoji } from "../ui/Emoji";
+import { useAppDispatch } from "../../state/hooks";
 
 export function EnvironmentsActions() {
   const dispatch = useAppDispatch();
@@ -12,7 +12,10 @@ export function EnvironmentsActions() {
       <Button variant="ghost" onClick={draw}>
         <Emoji glyph="🎲" /> Aléatoire
       </Button>
-      <Button variant="quiet" onClick={() => dispatch({ type: 'environment', title: null })}>
+      <Button
+        variant="quiet"
+        onClick={() => dispatch({ type: "environment", title: null })}
+      >
         Effacer
       </Button>
     </>

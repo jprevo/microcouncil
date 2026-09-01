@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import type { KeyboardEvent, MouseEvent, ReactNode } from 'react';
+import { useEffect, useRef } from "react";
+import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
 
 interface ModalProps {
   readonly open: boolean;
@@ -26,7 +26,7 @@ export function Modal({ open, labelledBy, onClose, children }: ModalProps) {
 
   // Certains navigateurs embarqués n'émettent pas la demande de fermeture native sur Échap.
   const onEscape = (event: KeyboardEvent<HTMLDialogElement>): void => {
-    if (event.key === 'Escape') onClose();
+    if (event.key === "Escape") onClose();
   };
 
   return (

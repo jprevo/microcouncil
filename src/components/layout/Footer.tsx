@@ -12,7 +12,10 @@ export function Footer() {
           GitHub
         </a>
       </p>
-      <p>Aucun cookie n'est utilisé. Vos réglages ne quittent jamais votre navigateur.</p>
+      <p>
+        Aucun cookie n'est utilisé. Vos réglages ne quittent jamais votre
+        navigateur.
+      </p>
     </footer>
   );
 }

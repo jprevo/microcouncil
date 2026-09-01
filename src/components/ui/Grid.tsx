@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface GridProps {
-  readonly variant: 'members' | 'environments';
+  readonly variant: "members" | "environments";
   readonly children: ReactNode;
 }
 

@@ -1,10 +1,15 @@
-import { useState } from 'react';
-import { takenNames } from '../../lib/catalog';
-import { EMPTY_DRAFT, draftOf, memberOf, validateDraft } from '../../lib/memberDraft';
-import type { MemberDraft } from '../../lib/memberDraft';
-import { useAppDispatch, useAppState } from '../../state/hooks';
-import { useToast } from '../../toast/useToast';
-import type { CatalogMember } from '../../types';
+import { useState } from "react";
+import { takenNames } from "../../lib/catalog";
+import {
+  EMPTY_DRAFT,
+  draftOf,
+  memberOf,
+  validateDraft,
+} from "../../lib/memberDraft";
+import type { MemberDraft } from "../../lib/memberDraft";
+import { useAppDispatch, useAppState } from "../../state/hooks";
+import { useToast } from "../../toast/useToast";
+import type { CatalogMember } from "../../types";
 
 interface MemberDraftForm {
   readonly draft: MemberDraft;
@@ -15,11 +20,16 @@ interface MemberDraftForm {
 }
 
 /** Brouillon de fiche : saisie, validation, puis enregistrement dans le catalogue. */
-export function useMemberDraft(member: CatalogMember | null, onSaved: () => void): MemberDraftForm {
+export function useMemberDraft(
+  member: CatalogMember | null,
+  onSaved: () => void,
+): MemberDraftForm {
   const { memberLibrary } = useAppState();
   const dispatch = useAppDispatch();
   const toast = useToast();
-  const [draft, setDraft] = useState<MemberDraft>(() => (member === null ? EMPTY_DRAFT : draftOf(member)));
+  const [draft, setDraft] = useState<MemberDraft>(() =>
+    member === null ? EMPTY_DRAFT : draftOf(member),
+  );
   const [error, setError] = useState<string | null>(null);
 
   const target = member?.target ?? null;
@@ -36,8 +46,12 @@ export function useMemberDraft(member: CatalogMember | null, onSaved: () => void
       return;
     }
     const saved = memberOf(draft);
-    dispatch({ type: 'saveMember', target, member: saved });
-    toast(member === null ? `${saved.name} rejoint le conseil` : `${saved.name} est à jour`);
+    dispatch({ type: "saveMember", target, member: saved });
+    toast(
+      member === null
+        ? `${saved.name} rejoint le conseil`
+        : `${saved.name} est à jour`,
+    );
     onSaved();
   };
 

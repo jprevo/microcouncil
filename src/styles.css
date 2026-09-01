@@ -23,14 +23,20 @@
   --warning-border: #eccfa0;
   --warning-text: #8a5a12;
   --shadow-sm: 0 1px 2px rgb(29 27 38 / 0.06), 0 1px 3px rgb(29 27 38 / 0.05);
-  --shadow-md: 0 6px 16px -6px rgb(29 27 38 / 0.14), 0 2px 6px -2px rgb(29 27 38 / 0.08);
+  --shadow-md:
+    0 6px 16px -6px rgb(29 27 38 / 0.14), 0 2px 6px -2px rgb(29 27 38 / 0.08);
   --shadow-lg: 0 24px 48px -24px rgb(29 27 38 / 0.28);
   --radius-sm: 10px;
   --radius: 14px;
   --radius-lg: 20px;
-  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Fraunces", Iowan Old Style, Palatino, Georgia, "Times New Roman", serif;
-  --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  --font:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-display:
+    "Fraunces", Iowan Old Style, Palatino, Georgia, "Times New Roman", serif;
+  --mono:
+    ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas,
+    monospace;
 }
 
 [data-theme="dark"] {
@@ -172,7 +178,6 @@ code {
   align-items: center;
   gap: 8px;
 }
-
 
 /* ---------------------------------------------------------------- layout */
 .shell {
@@ -326,7 +331,10 @@ code {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 11px 14px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
 }
 
 .field::placeholder {
@@ -372,7 +380,11 @@ code {
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
-  transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.12s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .button:hover {
@@ -431,7 +443,9 @@ code {
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .icon-button:hover {
@@ -458,7 +472,9 @@ code {
   border: 0;
   background: transparent;
   color: var(--text-muted);
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .stepper__btn:hover {
@@ -518,7 +534,11 @@ code {
   border: 1px solid var(--border);
   background: var(--surface-soft);
   color: var(--text);
-  transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease, box-shadow 0.14s ease;
+  transition:
+    transform 0.14s ease,
+    border-color 0.14s ease,
+    background 0.14s ease,
+    box-shadow 0.14s ease;
 }
 
 .tile:hover {
@@ -612,7 +632,9 @@ code {
   color: var(--accent);
   opacity: 0;
   transform: scale(0.6);
-  transition: opacity 0.14s ease, transform 0.14s ease;
+  transition:
+    opacity 0.14s ease,
+    transform 0.14s ease;
 }
 
 .tile[aria-pressed="true"] .tile__check,
@@ -663,7 +685,10 @@ code {
   background: transparent;
   color: var(--text-faint);
   opacity: 0;
-  transition: opacity 0.14s ease, background 0.14s ease, color 0.14s ease;
+  transition:
+    opacity 0.14s ease,
+    background 0.14s ease,
+    color 0.14s ease;
 }
 
 .tile-slot:hover .tile__edit,
@@ -713,7 +738,10 @@ code {
   background: transparent;
   border: 1px dashed var(--border-strong);
   border-radius: var(--radius);
-  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
 }
 
 .add-member:hover {
@@ -863,7 +891,9 @@ code {
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text-muted);
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .modal__close:hover {
@@ -985,7 +1015,9 @@ code {
   border-radius: 8px;
   border: 1px solid var(--border);
   background: var(--surface);
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .command__copy:hover {
@@ -1067,7 +1099,9 @@ code {
   border-radius: 9px;
   border: 1px solid transparent;
   background: transparent;
-  transition: background 0.12s ease, border-color 0.12s ease;
+  transition:
+    background 0.12s ease,
+    border-color 0.12s ease;
 }
 
 .emoji__option:hover {
@@ -1096,7 +1130,9 @@ code {
   box-shadow: var(--shadow-lg);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .toast.is-visible {
@@ -1114,7 +1150,6 @@ code {
   .grid--environments {
     grid-template-columns: 1fr;
   }
-
 
   .icon-button span:last-child {
     display: none;

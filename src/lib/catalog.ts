@@ -1,6 +1,11 @@
-import { MEMBERS } from '../data';
-import { normalize } from './text';
-import type { CatalogMember, Member, MemberLibrary, MemberTarget } from '../types';
+import { MEMBERS } from "../data";
+import { normalize } from "./text";
+import type {
+  CatalogMember,
+  Member,
+  MemberLibrary,
+  MemberTarget,
+} from "../types";
 
 export const EMPTY_LIBRARY: MemberLibrary = { custom: [], overrides: {} };
 
@@ -19,19 +24,26 @@ export function buildCatalog(library: MemberLibrary): readonly CatalogMember[] {
     const override = library.overrides[member.name];
     return {
       ...(override ?? member),
-      target: { kind: 'builtin', name: member.name },
+      target: { kind: "builtin", name: member.name },
       edited: override !== undefined,
     };
   });
-  const custom = library.custom.map(
-    (member): CatalogMember => ({ ...member, target: { kind: 'custom', name: member.name }, edited: false }),
-  );
+  const custom = library.custom.map((member): CatalogMember => ({
+    ...member,
+    target: { kind: "custom", name: member.name },
+    edited: false,
+  }));
   return [...builtins, ...custom];
 }
 
 /** The member currently filling a slot, or undefined once that slot is gone. */
-export function memberAt(library: MemberLibrary, target: MemberTarget): Member | undefined {
-  return buildCatalog(library).find((entry) => sameTarget(entry.target, target));
+export function memberAt(
+  library: MemberLibrary,
+  target: MemberTarget,
+): Member | undefined {
+  return buildCatalog(library).find((entry) =>
+    sameTarget(entry.target, target),
+  );
 }
 
 /**
@@ -39,12 +51,16 @@ export function memberAt(library: MemberLibrary, target: MemberTarget): Member |
  * name even after a rename, so restoring one can never collide with a member created
  * in the meantime.
  */
-export function takenNames(library: MemberLibrary, target: MemberTarget | null): ReadonlySet<string> {
+export function takenNames(
+  library: MemberLibrary,
+  target: MemberTarget | null,
+): ReadonlySet<string> {
   const taken = new Set<string>();
   for (const entry of buildCatalog(library)) {
     if (target !== null && sameTarget(entry.target, target)) continue;
     taken.add(normalize(entry.name));
-    if (entry.target.kind === 'builtin') taken.add(normalize(entry.target.name));
+    if (entry.target.kind === "builtin")
+      taken.add(normalize(entry.target.name));
   }
   return taken;
 }
@@ -58,24 +74,39 @@ export function saveMember(
   if (target === null) {
     return { ...library, custom: [...library.custom, member] };
   }
-  if (target.kind === 'builtin') {
-    return { ...library, overrides: { ...library.overrides, [target.name]: member } };
+  if (target.kind === "builtin") {
+    return {
+      ...library,
+      overrides: { ...library.overrides, [target.name]: member },
+    };
   }
   return {
     ...library,
-    custom: library.custom.map((entry) => (entry.name === target.name ? member : entry)),
+    custom: library.custom.map((entry) =>
+      entry.name === target.name ? member : entry,
+    ),
   };
 }
 
 /** Removes a member the user created. Built-ins are restored, never deleted. */
-export function deleteMember(library: MemberLibrary, target: MemberTarget): MemberLibrary {
-  if (target.kind !== 'custom') return library;
-  return { ...library, custom: library.custom.filter((entry) => entry.name !== target.name) };
+export function deleteMember(
+  library: MemberLibrary,
+  target: MemberTarget,
+): MemberLibrary {
+  if (target.kind !== "custom") return library;
+  return {
+    ...library,
+    custom: library.custom.filter((entry) => entry.name !== target.name),
+  };
 }
 
 /** Drops the local edit of a built-in, bringing the shipped version back. */
-export function restoreMember(library: MemberLibrary, target: MemberTarget): MemberLibrary {
-  if (target.kind !== 'builtin' || !(target.name in library.overrides)) return library;
+export function restoreMember(
+  library: MemberLibrary,
+  target: MemberTarget,
+): MemberLibrary {
+  if (target.kind !== "builtin" || !(target.name in library.overrides))
+    return library;
   const overrides = { ...library.overrides };
   delete overrides[target.name];
   return { ...library, overrides };

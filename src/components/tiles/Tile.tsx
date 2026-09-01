@@ -1,6 +1,6 @@
-import type { ReactNode, Ref } from 'react';
-import { TileCheck } from './TileCheck';
-import { TileIcon } from './TileIcon';
+import type { ReactNode, Ref } from "react";
+import { TileCheck } from "./TileCheck";
+import { TileIcon } from "./TileIcon";
 
 interface TileProps {
   readonly icon: string;
@@ -15,7 +15,16 @@ interface TileProps {
 }
 
 /** Coquille commune aux fiches : icône, corps, coche. */
-export function Tile({ icon, selected, onClick, children, radio, tabIndex, hint, buttonRef }: TileProps) {
+export function Tile({
+  icon,
+  selected,
+  onClick,
+  children,
+  radio,
+  tabIndex,
+  hint,
+  buttonRef,
+}: TileProps) {
   return (
     <button
       ref={buttonRef}
@@ -23,7 +32,7 @@ export function Tile({ icon, selected, onClick, children, radio, tabIndex, hint,
       type="button"
       title={hint}
       tabIndex={tabIndex}
-      role={radio === true ? 'radio' : undefined}
+      role={radio === true ? "radio" : undefined}
       aria-checked={radio === true ? selected : undefined}
       aria-pressed={radio === true ? undefined : selected}
       onClick={onClick}

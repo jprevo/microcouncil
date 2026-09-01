@@ -1,15 +1,15 @@
 /** Repli pour les contextes non sécurisés (fichier local ouvert sans serveur). */
 function copyViaScratchArea(text: string): boolean {
-  const scratch = document.createElement('textarea');
+  const scratch = document.createElement("textarea");
   scratch.value = text;
-  scratch.setAttribute('readonly', '');
-  scratch.style.position = 'fixed';
-  scratch.style.opacity = '0';
+  scratch.setAttribute("readonly", "");
+  scratch.style.position = "fixed";
+  scratch.style.opacity = "0";
   document.body.append(scratch);
   scratch.select();
   let copied = false;
   try {
-    copied = document.execCommand('copy');
+    copied = document.execCommand("copy");
   } catch {
     copied = false;
   }

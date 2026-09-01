@@ -1,10 +1,14 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface PillProps {
   readonly children: ReactNode;
-  readonly tone?: 'soft';
+  readonly tone?: "soft";
 }
 
 export function Pill({ children, tone }: PillProps) {
-  return <span className={tone === undefined ? 'pill' : `pill pill--${tone}`}>{children}</span>;
+  return (
+    <span className={tone === undefined ? "pill" : `pill pill--${tone}`}>
+      {children}
+    </span>
+  );
 }

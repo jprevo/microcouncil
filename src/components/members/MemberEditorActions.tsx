@@ -1,7 +1,7 @@
-import { Button } from '../ui/Button';
-import { useAppDispatch } from '../../state/hooks';
-import { useToast } from '../../toast/useToast';
-import type { CatalogMember } from '../../types';
+import { Button } from "../ui/Button";
+import { useAppDispatch } from "../../state/hooks";
+import { useToast } from "../../toast/useToast";
+import type { CatalogMember } from "../../types";
 
 interface MemberEditorActionsProps {
   readonly member: CatalogMember | null;
@@ -10,29 +10,34 @@ interface MemberEditorActionsProps {
 }
 
 /** Pied de la boîte d'édition : suppression, retour à l'original, annulation, sauvegarde. */
-export function MemberEditorActions({ member, onSave, onClose }: MemberEditorActionsProps) {
+export function MemberEditorActions({
+  member,
+  onSave,
+  onClose,
+}: MemberEditorActionsProps) {
   const dispatch = useAppDispatch();
   const toast = useToast();
 
   const remove = (): void => {
     if (member === null) return;
-    if (!globalThis.confirm(`Supprimer définitivement ${member.name} ?`)) return;
-    dispatch({ type: 'deleteMember', target: member.target });
+    if (!globalThis.confirm(`Supprimer définitivement ${member.name} ?`))
+      return;
+    dispatch({ type: "deleteMember", target: member.target });
     toast(`${member.name} quitte le catalogue`);
     onClose();
   };
 
   const restore = (): void => {
     if (member === null) return;
-    dispatch({ type: 'restoreMember', target: member.target });
-    toast('Version d’origine rétablie');
+    dispatch({ type: "restoreMember", target: member.target });
+    toast("Version d’origine rétablie");
     onClose();
   };
 
   return (
     <div className="modal__foot">
       <div className="modal__foot-left">
-        {member?.target.kind === 'custom' ? (
+        {member?.target.kind === "custom" ? (
           <Button variant="quiet" onClick={remove}>
             Supprimer
           </Button>

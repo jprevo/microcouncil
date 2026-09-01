@@ -1,4 +1,4 @@
-import { StepperButton } from './StepperButton';
+import { StepperButton } from "./StepperButton";
 
 interface StepperProps {
   readonly label: string;
@@ -10,7 +10,15 @@ interface StepperProps {
   readonly onNudge: (delta: number) => void;
 }
 
-export function Stepper({ label, inputLabel, value, max, onDraft, onCommit, onNudge }: StepperProps) {
+export function Stepper({
+  label,
+  inputLabel,
+  value,
+  max,
+  onDraft,
+  onCommit,
+  onNudge,
+}: StepperProps) {
   return (
     <div className="stepper" role="group" aria-label={label}>
       <StepperButton label="Diminuer" glyph="−" onClick={() => onNudge(-1)} />

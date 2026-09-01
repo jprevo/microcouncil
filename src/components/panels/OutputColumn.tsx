@@ -1,5 +1,5 @@
-import { OutputCard } from '../output/OutputCard';
-import { SubjectCard } from '../subject/SubjectCard';
+import { OutputCard } from "../output/OutputCard";
+import { SubjectCard } from "../subject/SubjectCard";
 
 export function OutputColumn() {
   return (

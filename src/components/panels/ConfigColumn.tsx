@@ -1,7 +1,7 @@
-import { CustomCard } from '../custom/CustomCard';
-import { EnvironmentsCard } from '../environments/EnvironmentsCard';
-import { IdentityCard } from '../identity/IdentityCard';
-import { MembersCard } from '../members/MembersCard';
+import { CustomCard } from "../custom/CustomCard";
+import { EnvironmentsCard } from "../environments/EnvironmentsCard";
+import { IdentityCard } from "../identity/IdentityCard";
+import { MembersCard } from "../members/MembersCard";
 
 export function ConfigColumn() {
   return (

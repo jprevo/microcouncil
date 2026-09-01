@@ -1,5 +1,5 @@
-import { CopyButton } from './CopyButton';
-import { DownloadButton } from './DownloadButton';
+import { CopyButton } from "./CopyButton";
+import { DownloadButton } from "./DownloadButton";
 
 export function OutputActions({ prompt }: { readonly prompt: string }) {
   return (

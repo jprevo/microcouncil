@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { copyText } from '../../lib/clipboard';
-import { useToast } from '../../toast/useToast';
+import { useEffect, useRef, useState } from "react";
+import { copyText } from "../../lib/clipboard";
+import { useToast } from "../../toast/useToast";
 
 const DONE_MS = 1800;
 
@@ -20,7 +20,7 @@ export function useCopyAction(text: string, message: string): CopyControl {
   const copy = (): void => {
     void copyText(text).then((success) => {
       if (!success) {
-        toast('Copie impossible — sélectionnez le texte manuellement');
+        toast("Copie impossible — sélectionnez le texte manuellement");
         return;
       }
       setCopied(true);

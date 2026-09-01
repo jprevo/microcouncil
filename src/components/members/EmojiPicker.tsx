@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
-import { EmptyMessage } from '../ui/EmptyMessage';
-import { TextField } from '../ui/TextField';
-import { searchEmojis } from '../../lib/emoji';
+import { useMemo, useState } from "react";
+import { EmptyMessage } from "../ui/EmptyMessage";
+import { TextField } from "../ui/TextField";
+import { searchEmojis } from "../../lib/emoji";
 
 /** Au-delà, la rangée défile sans fin sans rien apporter à la recherche. */
 const MAX_RESULTS = 84;
@@ -14,7 +14,7 @@ interface EmojiPickerProps {
 
 /** Recherche par shortcode dans la table de l'emoji cheat sheet. */
 export function EmojiPicker({ inputId, icon, onPick }: EmojiPickerProps) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const matches = useMemo(() => searchEmojis(query, MAX_RESULTS), [query]);
 
   return (

@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
-import { findEnvironment } from '../data';
-import { buildCatalog } from '../lib/catalog';
-import { useAppState } from './hooks';
-import type { CatalogMember, Environment, Member } from '../types';
+import { useMemo } from "react";
+import { findEnvironment } from "../data";
+import { buildCatalog } from "../lib/catalog";
+import { useAppState } from "./hooks";
+import type { CatalogMember, Environment, Member } from "../types";
 
 /** Le catalogue effectif : les fiches livrées, telles que l'utilisateur les a laissées. */
 export function useCatalog(): readonly CatalogMember[] {

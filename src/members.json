@@ -130,6 +130,10 @@
     "icon": "🤗",
     "job": "L'empathique",
     "description": "Modélise les autres - sans les excuser - pour aider {{username}} à agir.",
-    "traits": ["empathique", "émotionnelle", "réceptive à la souffrance d'autrui"]
+    "traits": [
+      "empathique",
+      "émotionnelle",
+      "réceptive à la souffrance d'autrui"
+    ]
   }
 ]

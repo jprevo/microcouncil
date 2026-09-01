@@ -4,24 +4,28 @@ import {
   memberAt,
   restoreMember,
   saveMember,
-} from '../lib/catalog';
-import type { AppState, Member, MemberLibrary, MemberTarget } from '../types';
+} from "../lib/catalog";
+import type { AppState, Member, MemberLibrary, MemberTarget } from "../types";
 
 export type AppAction =
-  | { readonly type: 'username'; readonly value: string }
-  | { readonly type: 'members'; readonly names: readonly string[] }
-  | { readonly type: 'toggleMember'; readonly name: string }
-  | { readonly type: 'environment'; readonly title: string | null }
-  | { readonly type: 'toggleEnvironment'; readonly title: string }
-  | { readonly type: 'custom'; readonly value: string }
-  | { readonly type: 'subject'; readonly value: string }
-  | { readonly type: 'randomCount'; readonly value: number }
-  | { readonly type: 'nudgeCount'; readonly delta: number }
-  | { readonly type: 'toggleTheme' }
+  | { readonly type: "username"; readonly value: string }
+  | { readonly type: "members"; readonly names: readonly string[] }
+  | { readonly type: "toggleMember"; readonly name: string }
+  | { readonly type: "environment"; readonly title: string | null }
+  | { readonly type: "toggleEnvironment"; readonly title: string }
+  | { readonly type: "custom"; readonly value: string }
+  | { readonly type: "subject"; readonly value: string }
+  | { readonly type: "randomCount"; readonly value: number }
+  | { readonly type: "nudgeCount"; readonly delta: number }
+  | { readonly type: "toggleTheme" }
   /** Un `target` nul crée un nouveau membre ; sinon la fiche visée est réécrite. */
-  | { readonly type: 'saveMember'; readonly target: MemberTarget | null; readonly member: Member }
-  | { readonly type: 'deleteMember'; readonly target: MemberTarget }
-  | { readonly type: 'restoreMember'; readonly target: MemberTarget };
+  | {
+      readonly type: "saveMember";
+      readonly target: MemberTarget | null;
+      readonly member: Member;
+    }
+  | { readonly type: "deleteMember"; readonly target: MemberTarget }
+  | { readonly type: "restoreMember"; readonly target: MemberTarget };
 
 export function clampCount(value: number, catalogSize: number): number {
   return Math.min(Math.max(Math.round(value), 1), Math.max(catalogSize, 1));
@@ -37,7 +41,11 @@ function ordered(library: MemberLibrary, names: readonly string[]): string[] {
 }
 
 /** Une fiche renommée reste sélectionnée ; une fiche disparue quitte la sélection. */
-function rename(names: readonly string[], before: string | undefined, after: string | null): string[] {
+function rename(
+  names: readonly string[],
+  before: string | undefined,
+  after: string | null,
+): string[] {
   if (before === undefined || before === after) return [...names];
   const without = names.filter((name) => name !== before);
   if (after === null || !names.includes(before)) return without;
@@ -45,7 +53,11 @@ function rename(names: readonly string[], before: string | undefined, after: str
 }
 
 /** Applique un changement de catalogue en réalignant la sélection et le tirage au sort. */
-function withLibrary(state: AppState, library: MemberLibrary, selected: readonly string[]): AppState {
+function withLibrary(
+  state: AppState,
+  library: MemberLibrary,
+  selected: readonly string[],
+): AppState {
   return {
     ...state,
     memberLibrary: library,
@@ -56,11 +68,14 @@ function withLibrary(state: AppState, library: MemberLibrary, selected: readonly
 
 export function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
-    case 'username':
+    case "username":
       return { ...state, username: action.value };
-    case 'members':
-      return { ...state, selectedMembers: ordered(state.memberLibrary, action.names) };
-    case 'toggleMember':
+    case "members":
+      return {
+        ...state,
+        selectedMembers: ordered(state.memberLibrary, action.names),
+      };
+    case "toggleMember":
       return {
         ...state,
         selectedMembers: ordered(
@@ -70,20 +85,27 @@ export function reducer(state: AppState, action: AppAction): AppState {
             : [...state.selectedMembers, action.name],
         ),
       };
-    case 'environment':
+    case "environment":
       return { ...state, selectedEnvironment: action.title };
-    case 'toggleEnvironment':
+    case "toggleEnvironment":
       return {
         ...state,
-        selectedEnvironment: state.selectedEnvironment === action.title ? null : action.title,
+        selectedEnvironment:
+          state.selectedEnvironment === action.title ? null : action.title,
       };
-    case 'custom':
+    case "custom":
       return { ...state, customInstructions: action.value };
-    case 'subject':
+    case "subject":
       return { ...state, subject: action.value };
-    case 'randomCount':
-      return { ...state, randomCount: clampCount(action.value, catalogNames(state.memberLibrary).length) };
-    case 'nudgeCount':
+    case "randomCount":
+      return {
+        ...state,
+        randomCount: clampCount(
+          action.value,
+          catalogNames(state.memberLibrary).length,
+        ),
+      };
+    case "nudgeCount":
       return {
         ...state,
         randomCount: clampCount(
@@ -91,24 +113,42 @@ export function reducer(state: AppState, action: AppAction): AppState {
           catalogNames(state.memberLibrary).length,
         ),
       };
-    case 'toggleTheme':
-      return { ...state, theme: state.theme === 'dark' ? 'light' : 'dark' };
-    case 'saveMember': {
+    case "toggleTheme":
+      return { ...state, theme: state.theme === "dark" ? "light" : "dark" };
+    case "saveMember": {
       const previous =
-        action.target === null ? undefined : memberAt(state.memberLibrary, action.target)?.name;
-      const library = saveMember(state.memberLibrary, action.target, action.member);
-      return withLibrary(state, library, rename(state.selectedMembers, previous, action.member.name));
+        action.target === null
+          ? undefined
+          : memberAt(state.memberLibrary, action.target)?.name;
+      const library = saveMember(
+        state.memberLibrary,
+        action.target,
+        action.member,
+      );
+      return withLibrary(
+        state,
+        library,
+        rename(state.selectedMembers, previous, action.member.name),
+      );
     }
-    case 'deleteMember': {
+    case "deleteMember": {
       const previous = memberAt(state.memberLibrary, action.target)?.name;
       const library = deleteMember(state.memberLibrary, action.target);
-      return withLibrary(state, library, rename(state.selectedMembers, previous, null));
+      return withLibrary(
+        state,
+        library,
+        rename(state.selectedMembers, previous, null),
+      );
     }
-    case 'restoreMember': {
+    case "restoreMember": {
       const previous = memberAt(state.memberLibrary, action.target)?.name;
       const library = restoreMember(state.memberLibrary, action.target);
       const restored = memberAt(library, action.target)?.name ?? null;
-      return withLibrary(state, library, rename(state.selectedMembers, previous, restored));
+      return withLibrary(
+        state,
+        library,
+        rename(state.selectedMembers, previous, restored),
+      );
     }
   }
 }

@@ -11,8 +11,8 @@ export interface Member {
  * so a built-in stays recognizable — and restorable — whatever the user calls it.
  */
 export type MemberTarget =
-  | { readonly kind: 'builtin'; readonly name: string }
-  | { readonly kind: 'custom'; readonly name: string };
+  | { readonly kind: "builtin"; readonly name: string }
+  | { readonly kind: "custom"; readonly name: string };
 
 /** Everything the user added to, or changed in, the shipped catalog. */
 export interface MemberLibrary {
@@ -36,7 +36,7 @@ export interface Environment {
   readonly description: string;
 }
 
-export type Theme = 'light' | 'dark';
+export type Theme = "light" | "dark";
 
 export interface AppState {
   username: string;

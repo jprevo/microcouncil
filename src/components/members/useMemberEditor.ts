@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import type { CatalogMember } from '../../types';
+import { useCallback, useState } from "react";
+import type { CatalogMember } from "../../types";
 
 interface MemberEditorHandle {
   readonly open: boolean;

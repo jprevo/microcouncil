@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface CardProps {
   readonly labelledBy: string;
   readonly children: ReactNode;
-  readonly variant?: 'output';
+  readonly variant?: "output";
 }
 
 export function Card({ labelledBy, children, variant }: CardProps) {
-  const className = variant === undefined ? 'card' : `card card--${variant}`;
+  const className = variant === undefined ? "card" : `card card--${variant}`;
   return (
     <section className={className} aria-labelledby={labelledBy}>
       {children}

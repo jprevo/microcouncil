@@ -1,12 +1,12 @@
-import { PROMPT_TEMPLATE } from './data';
-import type { Environment, Member } from './types';
+import { PROMPT_TEMPLATE } from "./data";
+import type { Environment, Member } from "./types";
 
 export const USERNAME_FALLBACK = "l'utilisateur";
 
 /** Le nom tel qu'il se lira dans le prompt : la saisie, ou une tournure neutre si elle est vide. */
 export function resolveUsername(username: string): string {
   const trimmed = username.trim();
-  return trimmed === '' ? USERNAME_FALLBACK : trimmed;
+  return trimmed === "" ? USERNAME_FALLBACK : trimmed;
 }
 
 /**
@@ -33,9 +33,9 @@ function renderMember(member: Member): string {
     `${member.job}. ${member.description}`,
   ];
   if (member.traits.length > 0) {
-    lines.push(`Personnalité : ${member.traits.join(', ')}`);
+    lines.push(`Personnalité : ${member.traits.join(", ")}`);
   }
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 function renderEnvironment(environment: Environment): string {
@@ -56,20 +56,22 @@ export interface PromptInput {
  * saisi par l'utilisateur ne peut jamais être confondu avec un titre.
  */
 function dropSection(template: string, placeholder: string): string {
-  const lines = template.split('\n');
-  const tokenIndex = lines.findIndex((line) => line.trim() === `{{${placeholder}}}`);
+  const lines = template.split("\n");
+  const tokenIndex = lines.findIndex(
+    (line) => line.trim() === `{{${placeholder}}}`,
+  );
   if (tokenIndex === -1) return template;
 
   // `## ` (avec l'espace) ne peut pas confondre un titre de section et un `###` de fiche.
   let start = tokenIndex;
-  while (start > 0 && !(lines[start] ?? '').startsWith('## ')) start -= 1;
-  if (!(lines[start] ?? '').startsWith('## ')) return template;
+  while (start > 0 && !(lines[start] ?? "").startsWith("## ")) start -= 1;
+  if (!(lines[start] ?? "").startsWith("## ")) return template;
 
   let end = tokenIndex + 1;
-  while (end < lines.length && (lines[end] ?? '').trim() === '') end += 1;
+  while (end < lines.length && (lines[end] ?? "").trim() === "") end += 1;
 
   lines.splice(start, end - start);
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 /** Construit le prompt final à partir du gabarit de docs/data/prompt.md. */
@@ -80,21 +82,23 @@ export function buildPrompt(input: PromptInput): string {
 
   const membres =
     input.members.length > 0
-      ? input.members.map(renderMember).join('\n\n')
-      : '_Aucun membre sélectionné._';
+      ? input.members.map(renderMember).join("\n\n")
+      : "_Aucun membre sélectionné._";
   const environment =
-    input.environment === null ? '_Aucun environnement sélectionné._' : renderEnvironment(input.environment);
+    input.environment === null
+      ? "_Aucun environnement sélectionné._"
+      : renderEnvironment(input.environment);
 
   let output = PROMPT_TEMPLATE;
-  if (custom === '') output = dropSection(output, 'custom');
-  if (subject === '') output = dropSection(output, 'subject');
+  if (custom === "") output = dropSection(output, "custom");
+  if (subject === "") output = dropSection(output, "subject");
 
-  output = fill(output, 'membres', membres);
-  output = fill(output, 'environment', environment);
-  output = fill(output, 'custom', custom);
-  output = fill(output, 'subject', subject);
+  output = fill(output, "membres", membres);
+  output = fill(output, "environment", environment);
+  output = fill(output, "custom", custom);
+  output = fill(output, "subject", subject);
   // En dernier : le nom peut aussi apparaître dans les fiches et l'environnement.
-  output = fill(output, 'username', username);
+  output = fill(output, "username", username);
 
   return `${output.trimEnd()}\n`;
 }

@@ -1,11 +1,11 @@
-import { EnvironmentsActions } from './EnvironmentsActions';
-import { EnvironmentsGrid } from './EnvironmentsGrid';
-import { Card } from '../ui/Card';
-import { CardHead } from '../ui/CardHead';
-import { CardHint } from '../ui/CardHint';
-import { CardTitle } from '../ui/CardTitle';
+import { EnvironmentsActions } from "./EnvironmentsActions";
+import { EnvironmentsGrid } from "./EnvironmentsGrid";
+import { Card } from "../ui/Card";
+import { CardHead } from "../ui/CardHead";
+import { CardHint } from "../ui/CardHint";
+import { CardTitle } from "../ui/CardTitle";
 
-const TITLE_ID = 'title-environment';
+const TITLE_ID = "title-environment";
 
 export function EnvironmentsCard() {
   return (

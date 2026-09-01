@@ -1,8 +1,8 @@
-import { MemberEditorActions } from './MemberEditorActions';
-import { MemberFields } from './MemberFields';
-import { useMemberDraft } from './useMemberDraft';
-import { Notice } from '../ui/Notice';
-import type { CatalogMember } from '../../types';
+import { MemberEditorActions } from "./MemberEditorActions";
+import { MemberFields } from "./MemberFields";
+import { useMemberDraft } from "./useMemberDraft";
+import { Notice } from "../ui/Notice";
+import type { CatalogMember } from "../../types";
 
 interface MemberEditorProps {
   /** La fiche à modifier, ou null pour en créer une. */
@@ -17,8 +17,15 @@ export function MemberEditor({ member, titleId, onClose }: MemberEditorProps) {
   return (
     <>
       <div className="modal__head">
-        <h2 id={titleId}>{member === null ? '✨ Nouveau membre' : `✏️ ${member.name}`}</h2>
-        <button className="modal__close" type="button" aria-label="Fermer" onClick={onClose}>
+        <h2 id={titleId}>
+          {member === null ? "✨ Nouveau membre" : `✏️ ${member.name}`}
+        </h2>
+        <button
+          className="modal__close"
+          type="button"
+          aria-label="Fermer"
+          onClick={onClose}
+        >
           <span aria-hidden="true">✕</span>
         </button>
       </div>
@@ -34,7 +41,11 @@ export function MemberEditor({ member, titleId, onClose }: MemberEditorProps) {
         </div>
       )}
 
-      <MemberEditorActions member={member} onSave={form.save} onClose={onClose} />
+      <MemberEditorActions
+        member={member}
+        onSave={form.save}
+        onClose={onClose}
+      />
     </>
   );
 }

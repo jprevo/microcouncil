@@ -1,5 +1,5 @@
-import { normalize } from './text';
-import type { Member } from '../types';
+import { normalize } from "./text";
+import type { Member } from "../types";
 
 /** The form's own shape: every field is free text, traits included. */
 export interface MemberDraft {
@@ -12,14 +12,14 @@ export interface MemberDraft {
 }
 
 /** Neutral pictogram, so a brand-new member already has a valid icon. */
-const DEFAULT_ICON = '🙂';
+const DEFAULT_ICON = "🙂";
 
 export const EMPTY_DRAFT: MemberDraft = {
-  name: '',
+  name: "",
   icon: DEFAULT_ICON,
-  job: '',
-  description: '',
-  traits: '',
+  job: "",
+  description: "",
+  traits: "",
 };
 
 export function draftOf(member: Member): MemberDraft {
@@ -28,15 +28,15 @@ export function draftOf(member: Member): MemberDraft {
     icon: member.icon,
     job: member.job,
     description: member.description,
-    traits: member.traits.join(', '),
+    traits: member.traits.join(", "),
   };
 }
 
 function splitTraits(value: string): string[] {
   return value
-    .split(',')
+    .split(",")
     .map((trait) => trait.trim())
-    .filter((trait) => trait !== '');
+    .filter((trait) => trait !== "");
 }
 
 export function memberOf(draft: MemberDraft): Member {
@@ -50,12 +50,16 @@ export function memberOf(draft: MemberDraft): Member {
 }
 
 /** The first problem with the draft, ready to display, or null when it can be saved. */
-export function validateDraft(draft: MemberDraft, taken: ReadonlySet<string>): string | null {
+export function validateDraft(
+  draft: MemberDraft,
+  taken: ReadonlySet<string>,
+): string | null {
   const member = memberOf(draft);
-  if (member.name === '') return 'Le nom est obligatoire.';
-  if (taken.has(normalize(member.name))) return 'Ce nom est déjà pris par un autre membre.';
-  if (member.icon === '') return 'Choisissez une icône.';
-  if (member.job === '') return 'Le métier est obligatoire.';
-  if (member.description === '') return 'La description est obligatoire.';
+  if (member.name === "") return "Le nom est obligatoire.";
+  if (taken.has(normalize(member.name)))
+    return "Ce nom est déjà pris par un autre membre.";
+  if (member.icon === "") return "Choisissez une icône.";
+  if (member.job === "") return "Le métier est obligatoire.";
+  if (member.description === "") return "La description est obligatoire.";
   return null;
 }

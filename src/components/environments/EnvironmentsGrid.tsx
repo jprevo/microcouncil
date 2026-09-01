@@ -1,9 +1,9 @@
-import { EnvironmentTile } from './EnvironmentTile';
-import { useEnvironmentKeys } from './useEnvironmentKeys';
-import { RadioGrid } from '../ui/RadioGrid';
-import { useTileRegistry } from '../tiles/useTileRegistry';
-import { ENVIRONMENTS } from '../../data';
-import { useAppState } from '../../state/hooks';
+import { EnvironmentTile } from "./EnvironmentTile";
+import { useEnvironmentKeys } from "./useEnvironmentKeys";
+import { RadioGrid } from "../ui/RadioGrid";
+import { useTileRegistry } from "../tiles/useTileRegistry";
+import { ENVIRONMENTS } from "../../data";
+import { useAppState } from "../../state/hooks";
 
 /** Tabulation itinérante : le groupe radio garde toujours un point d'entrée au clavier. */
 function focusableTitle(selected: string | null): string | undefined {
@@ -11,7 +11,11 @@ function focusableTitle(selected: string | null): string | undefined {
   return ENVIRONMENTS[0]?.title;
 }
 
-export function EnvironmentsGrid({ labelledBy }: { readonly labelledBy: string }) {
+export function EnvironmentsGrid({
+  labelledBy,
+}: {
+  readonly labelledBy: string;
+}) {
   const { selectedEnvironment } = useAppState();
   const { register, focus } = useTileRegistry();
   const onKeyDown = useEnvironmentKeys(focus);

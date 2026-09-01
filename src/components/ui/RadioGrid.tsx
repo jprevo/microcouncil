@@ -1,4 +1,4 @@
-import type { KeyboardEventHandler, ReactNode } from 'react';
+import type { KeyboardEventHandler, ReactNode } from "react";
 
 interface RadioGridProps {
   readonly labelledBy: string;

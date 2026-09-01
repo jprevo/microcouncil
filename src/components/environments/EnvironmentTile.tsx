@@ -1,10 +1,10 @@
-import type { Ref } from 'react';
-import { Tile } from '../tiles/Tile';
-import { TileDescription } from '../tiles/TileDescription';
-import { TileName } from '../tiles/TileName';
-import { humanizeUsernameToken } from '../../lib/text';
-import { useAppDispatch, useAppState } from '../../state/hooks';
-import type { Environment } from '../../types';
+import type { Ref } from "react";
+import { Tile } from "../tiles/Tile";
+import { TileDescription } from "../tiles/TileDescription";
+import { TileName } from "../tiles/TileName";
+import { humanizeUsernameToken } from "../../lib/text";
+import { useAppDispatch, useAppState } from "../../state/hooks";
+import type { Environment } from "../../types";
 
 interface EnvironmentTileProps {
   readonly environment: Environment;
@@ -13,7 +13,11 @@ interface EnvironmentTileProps {
 }
 
 /** Fiche d'un environnement : bouton radio (sélection unique). */
-export function EnvironmentTile({ environment, tabIndex, buttonRef }: EnvironmentTileProps) {
+export function EnvironmentTile({
+  environment,
+  tabIndex,
+  buttonRef,
+}: EnvironmentTileProps) {
   const selected = useAppState().selectedEnvironment === environment.title;
   const dispatch = useAppDispatch();
 
@@ -24,10 +28,14 @@ export function EnvironmentTile({ environment, tabIndex, buttonRef }: Environmen
       selected={selected}
       tabIndex={tabIndex}
       buttonRef={buttonRef}
-      onClick={() => dispatch({ type: 'toggleEnvironment', title: environment.title })}
+      onClick={() =>
+        dispatch({ type: "toggleEnvironment", title: environment.title })
+      }
     >
       <TileName>{environment.title}</TileName>
-      <TileDescription>{humanizeUsernameToken(environment.summary)}</TileDescription>
+      <TileDescription>
+        {humanizeUsernameToken(environment.summary)}
+      </TileDescription>
     </Tile>
   );
 }

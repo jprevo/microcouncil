@@ -1,8 +1,8 @@
-import { EmojiPicker } from './EmojiPicker';
-import { Field } from '../ui/Field';
-import { TextArea } from '../ui/TextArea';
-import { TextField } from '../ui/TextField';
-import type { MemberDraft } from '../../lib/memberDraft';
+import { EmojiPicker } from "./EmojiPicker";
+import { Field } from "../ui/Field";
+import { TextArea } from "../ui/TextArea";
+import { TextField } from "../ui/TextField";
+import type { MemberDraft } from "../../lib/memberDraft";
 
 interface MemberFieldsProps {
   readonly draft: MemberDraft;
@@ -32,7 +32,11 @@ export function MemberFields({ draft, onChange }: MemberFieldsProps) {
       </Field>
 
       <Field htmlFor="member-icon" label="Icône">
-        <EmojiPicker inputId="member-icon" icon={draft.icon} onPick={(icon) => onChange({ icon })} />
+        <EmojiPicker
+          inputId="member-icon"
+          icon={draft.icon}
+          onPick={(icon) => onChange({ icon })}
+        />
       </Field>
 
       <Field
@@ -49,7 +53,11 @@ export function MemberFields({ draft, onChange }: MemberFieldsProps) {
         />
       </Field>
 
-      <Field htmlFor="member-traits" label="Traits" hint="Séparés par des virgules.">
+      <Field
+        htmlFor="member-traits"
+        label="Traits"
+        hint="Séparés par des virgules."
+      >
         <TextField
           id="member-traits"
           value={draft.traits}

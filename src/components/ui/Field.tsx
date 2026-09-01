@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface FieldProps {
   /** Identifiant du contrôle décrit par le libellé. */

@@ -1,12 +1,12 @@
-import { OutputActions } from './OutputActions';
-import { OutputMeta } from './OutputMeta';
-import { OutputNote } from './OutputNote';
-import { OutputWarning } from './OutputWarning';
-import { PromptBox } from './PromptBox';
-import { Card } from '../ui/Card';
-import { CardHead } from '../ui/CardHead';
-import { CardTitle } from '../ui/CardTitle';
-import { usePrompt } from '../../state/usePrompt';
+import { OutputActions } from "./OutputActions";
+import { OutputMeta } from "./OutputMeta";
+import { OutputNote } from "./OutputNote";
+import { OutputWarning } from "./OutputWarning";
+import { PromptBox } from "./PromptBox";
+import { Card } from "../ui/Card";
+import { CardHead } from "../ui/CardHead";
+import { CardTitle } from "../ui/CardTitle";
+import { usePrompt } from "../../state/usePrompt";
 
 export function OutputCard() {
   const prompt = usePrompt();
