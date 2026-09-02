@@ -36,21 +36,27 @@ retouches faites depuis sur ces fiches précises.
 npm install
 ```
 
-| Commande            | Effet                                                                                                                                                                              |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`       | Serveur de développement Vite.                                                                                                                                                     |
-| `npm run typecheck` | Vérification TypeScript stricte, sans émission.                                                                                                                                    |
-| `npm run gate`      | **Le gate** : `format:check`, `lint`, `typecheck`, `knip` à la suite. Doit passer avant toute fusion — la CI le rejoue sur `main` et sur chaque PR.                                |
-| `npm run lint`      | ESLint (TypeScript typé, React Hooks, SonarJS). `npm run lint:fix` corrige ce qui est corrigible.                                                                                  |
-| `npm run format`    | Prettier sur tout le dépôt. `npm run format:check` se contente de vérifier.                                                                                                        |
-| `npm run knip`      | Fichiers, exports et dépendances jamais utilisés.                                                                                                                                  |
-| `npm run build`     | Typecheck puis build dans `dist/`.                                                                                                                                                 |
-| `npm run package`   | **Produit `dist/microcouncil.html`** : un fichier unique (HTML + CSS + données + JS inlinés), sans aucune dépendance externe, à partager ou à ouvrir directement depuis le disque. |
-| `npm run skill`     | **Régénère `skill/`** : le skill agent, à jour des compagnons, des environnements et du gabarit.                                                                                   |
-| `npm run emoji`     | **Régénère `src/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes.                                                                                           |
+| Commande            | Effet                                                                                                                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`       | Serveur de développement Vite.                                                                                                                      |
+| `npm run typecheck` | Vérification TypeScript stricte, sans émission.                                                                                                     |
+| `npm run gate`      | **Le gate** : `format:check`, `lint`, `typecheck`, `knip` à la suite. Doit passer avant toute fusion — la CI le rejoue sur `main` et sur chaque PR. |
+| `npm run lint`      | ESLint (TypeScript typé, React Hooks, SonarJS). `npm run lint:fix` corrige ce qui est corrigible.                                                   |
+| `npm run format`    | Prettier sur tout le dépôt. `npm run format:check` se contente de vérifier.                                                                         |
+| `npm run knip`      | Fichiers, exports et dépendances jamais utilisés.                                                                                                   |
+| `npm run build`     | **Produit `dist/`** : typecheck strict, puis build de production (HTML, CSS et JS avec empreinte).                                                  |
+| `npm run preview`   | Sert `dist/` en local, pour vérifier le build de production avant livraison.                                                                        |
+| `npm run skill`     | **Régénère `skill/`** : le skill agent, à jour des compagnons, des environnements et du gabarit.                                                    |
+| `npm run emoji`     | **Régénère `src/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes.                                                            |
+
+`dist/` est un site statique ordinaire : à déposer tel quel derrière n'importe quel serveur
+de fichiers (ou sur GitHub Pages, Netlify…). Les chemins sont relatifs, donc il fonctionne
+aussi bien à la racine d'un domaine que dans un sous-répertoire. Rien n'est chargé depuis un
+tiers à l'exécution : polices, données et gabarit sont embarqués dans le build.
 
 ```bash
-npm run package
+npm run build
+npm run preview
 ```
 
 ## Skill agent
@@ -102,8 +108,8 @@ harnais téléchargent.
 
 ## Architecture
 
-L'interface est une application **React 19 + TypeScript**, compilée par Vite puis inlinée en un
-fichier unique par `vite-plugin-singlefile` (React inclus : aucune requête réseau à l'exécution).
+L'interface est une application **React 19 + TypeScript**, compilée par Vite en un site statique
+dans `dist/` (React inclus dans le bundle : aucune requête vers un tiers à l'exécution).
 
 Le découpage privilégie des composants très courts, à responsabilité unique :
 
