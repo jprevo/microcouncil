@@ -21,7 +21,7 @@ export function asNumber(value: unknown): number | null {
 
 /** Relit une valeur du stockage local, ou null si elle est absente ou illisible. */
 export function readJson(key: string): unknown {
-  let raw: string | null = null;
+  let raw: string | null;
   try {
     raw = globalThis.localStorage?.getItem(key) ?? null;
   } catch {

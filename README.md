@@ -40,6 +40,10 @@ npm install
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `npm run dev`       | Serveur de développement Vite.                                                                                                                                                     |
 | `npm run typecheck` | Vérification TypeScript stricte, sans émission.                                                                                                                                    |
+| `npm run gate`      | **Le gate** : `format:check`, `lint`, `typecheck`, `knip` à la suite. Doit passer avant toute fusion — la CI le rejoue sur `main` et sur chaque PR.                                |
+| `npm run lint`      | ESLint (TypeScript typé, React Hooks, SonarJS). `npm run lint:fix` corrige ce qui est corrigible.                                                                                  |
+| `npm run format`    | Prettier sur tout le dépôt. `npm run format:check` se contente de vérifier.                                                                                                        |
+| `npm run knip`      | Fichiers, exports et dépendances jamais utilisés.                                                                                                                                  |
 | `npm run build`     | Typecheck puis build dans `dist/`.                                                                                                                                                 |
 | `npm run package`   | **Produit `dist/microcouncil.html`** : un fichier unique (HTML + CSS + données + JS inlinés), sans aucune dépendance externe, à partager ou à ouvrir directement depuis le disque. |
 | `npm run skill`     | **Régénère `skill/`** : le skill agent, à jour des compagnons, des environnements et du gabarit.                                                                                   |

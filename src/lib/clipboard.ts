@@ -7,8 +7,10 @@ function copyViaScratchArea(text: string): boolean {
   scratch.style.opacity = "0";
   document.body.append(scratch);
   scratch.select();
-  let copied = false;
+  let copied: boolean;
   try {
+    // `execCommand` est obsolète mais reste le seul recours hors contexte sécurisé.
+    // eslint-disable-next-line sonarjs/deprecation
     copied = document.execCommand("copy");
   } catch {
     copied = false;

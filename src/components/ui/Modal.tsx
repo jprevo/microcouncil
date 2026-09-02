@@ -28,7 +28,7 @@ export function Modal({ open, labelledBy, onClose, children }: ModalProps) {
 
   // Un clic sur l'arrière-plan vise l'élément `dialog` lui-même, jamais le panneau.
   const onBackdropClick = (event: MouseEvent<HTMLDialogElement>): void => {
-    if (event.target === ref.current) onClose();
+    if (event.target === event.currentTarget) onClose();
   };
 
   // Certains navigateurs embarqués n'émettent pas la demande de fermeture native sur Échap.

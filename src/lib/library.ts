@@ -8,7 +8,7 @@ export function targetKey(target: LibraryTarget): string {
   return `${target.kind}:${target.name}`;
 }
 
-export function sameTarget(a: LibraryTarget, b: LibraryTarget): boolean {
+function sameTarget(a: LibraryTarget, b: LibraryTarget): boolean {
   return a.kind === b.kind && a.name === b.name;
 }
 
@@ -30,7 +30,7 @@ function freeName(taken: ReadonlySet<string>, base: string): string {
 }
 
 /** A card put back into a catalog, under the name it could actually take. */
-export interface Reinstated<T> {
+interface Reinstated<T> {
   readonly library: Library<T>;
   /** The name the card came back under — suffixed when its own was taken. */
   readonly label: string;

@@ -17,7 +17,7 @@ const ENTRIES: readonly EmojiEntry[] = Object.entries(TABLE).map(
 function normalizeQuery(query: string): string {
   return normalize(query)
     .replace(/[^a-z0-9+]+/gu, "_")
-    .replace(/^_+|_+$/gu, "");
+    .replace(/^_|_$/gu, "");
 }
 
 /** Best matches first: the exact shortcode, then prefixes, then anything containing it. */

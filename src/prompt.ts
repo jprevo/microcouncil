@@ -1,7 +1,7 @@
 import { PROMPT_TEMPLATE } from "./data";
 import type { Environment, Member } from "./types";
 
-export const USERNAME_FALLBACK = "l'utilisateur";
+const USERNAME_FALLBACK = "l'utilisateur";
 
 /** Le nom tel qu'il se lira dans le prompt : la saisie, ou une tournure neutre si elle est vide. */
 export function resolveUsername(username: string): string {

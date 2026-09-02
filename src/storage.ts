@@ -24,7 +24,7 @@ function preferredTheme(): Theme {
     : "light";
 }
 
-export function defaultState(): AppState {
+function defaultState(): AppState {
   return {
     username: "",
     selectedMembers: [],

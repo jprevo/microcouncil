@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export type ButtonVariant = "primary" | "ghost" | "quiet";
+type ButtonVariant = "primary" | "ghost" | "quiet";
 
 interface ButtonProps {
   readonly variant: ButtonVariant;

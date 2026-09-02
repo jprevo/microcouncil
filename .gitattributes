@@ -1,2 +1,4 @@
+# Fins de ligne LF partout : le gate (prettier --check) doit passer aussi sous Windows.
+* text=auto eol=lf
 skill/** text eol=lf
 skill-src/** text eol=lf
