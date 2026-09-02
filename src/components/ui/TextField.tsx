@@ -7,6 +7,10 @@ interface TextFieldProps {
   readonly autoComplete?: string;
   readonly ariaLabel?: string;
   readonly modifier?: "search";
+  /** Validation au clavier, pour les boîtes qui n'ont qu'un champ à remplir. */
+  readonly onEnter?: () => void;
+  /** Champ que sa boîte de dialogue focalise à l'ouverture, contenu pré-sélectionné. */
+  readonly autoFocus?: boolean;
 }
 
 export function TextField({
@@ -18,6 +22,8 @@ export function TextField({
   autoComplete,
   ariaLabel,
   modifier,
+  onEnter,
+  autoFocus,
 }: TextFieldProps) {
   return (
     <input
@@ -29,7 +35,14 @@ export function TextField({
       aria-label={ariaLabel}
       spellCheck={false}
       placeholder={placeholder}
+      data-autofocus={autoFocus === true ? "" : undefined}
       onChange={(event) => onChange(event.target.value)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" && onEnter !== undefined) {
+          event.preventDefault();
+          onEnter();
+        }
+      }}
     />
   );
 }

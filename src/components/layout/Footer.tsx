@@ -1,6 +1,11 @@
+import { SkillHelp } from "../skill/SkillHelp";
+
 export function Footer() {
   return (
     <footer className="footer">
+      <div className="footer__actions">
+        <SkillHelp />
+      </div>
       <p>
         © 2026 Micro Council · Projet open source disponible sur{" "}
         <a

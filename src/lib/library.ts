@@ -12,6 +12,30 @@ export function sameTarget(a: LibraryTarget, b: LibraryTarget): boolean {
   return a.kind === b.kind && a.name === b.name;
 }
 
+/** The card alone, stripped of where it came from: what a library actually stores. */
+export function stripOrigin<T>(entry: CatalogEntry<T>): T {
+  const { label, target, edited, ...item } = entry;
+  return item as T;
+}
+
+/** `base` itself when free, else the first `base (n)` no other slot lays claim to. */
+function freeName(taken: ReadonlySet<string>, base: string): string {
+  if (!taken.has(normalize(base))) return base;
+  // Each suffix is distinct, so a free one is reached within `taken.size` tries.
+  for (let n = 2; n <= taken.size + 2; n += 1) {
+    const candidate = `${base} (${n})`;
+    if (!taken.has(normalize(candidate))) return candidate;
+  }
+  return `${base} (${Date.now()})`;
+}
+
+/** A card put back into a catalog, under the name it could actually take. */
+export interface Reinstated<T> {
+  readonly library: Library<T>;
+  /** The name the card came back under — suffixed when its own was taken. */
+  readonly label: string;
+}
+
 /** A shipped catalog and the operations that overlay a local library on top of it. */
 export interface Catalog<T> {
   /** Shipped entries first — edits applied in place — then the ones the user created. */
@@ -36,6 +60,17 @@ export interface Catalog<T> {
   readonly remove: (library: Library<T>, target: LibraryTarget) => Library<T>;
   /** Drops the local edit of a built-in, bringing the shipped version back. */
   readonly restore: (library: Library<T>, target: LibraryTarget) => Library<T>;
+  /**
+   * Writes a card back into the slot it used to fill, recreating that slot when it
+   * has since disappeared. Used to reinstate the catalog a saved council was built
+   * on, whatever became of it in the meantime.
+   */
+  readonly reinstate: (
+    library: Library<T>,
+    target: LibraryTarget,
+    item: T,
+    edited: boolean,
+  ) => Reinstated<T>;
   /** Reads the field an entry is named by. */
   readonly nameOf: (item: T) => string;
   /** Names of the shipped entries, used to spot orphan overrides when reloading. */
@@ -44,12 +79,13 @@ export interface Catalog<T> {
 
 /**
  * Builds the operations of one catalog. `nameOf` reads the field an entry is named
- * by — `name` for a member, `title` for an environment — and nothing else here
- * needs to know which of the two it is working on.
+ * by — `name` for a member, `title` for an environment — `withName` rewrites it,
+ * and nothing else here needs to know which of the two it is working on.
  */
 export function createCatalog<T>(
   builtins: readonly T[],
   nameOf: (item: T) => string,
+  withName: (item: T, name: string) => T,
 ): Catalog<T> {
   const entry = (
     item: T,
@@ -137,6 +173,33 @@ export function createCatalog<T>(
     return { ...library, overrides };
   };
 
+  /**
+   * A slot survives as long as `entryAt` still finds it — always, for a shipped
+   * built-in. Once it is gone the card comes back as a new custom entry, which is
+   * also what happens to a built-in dropped from a later version of the catalog.
+   */
+  const reinstate = (
+    library: Library<T>,
+    target: LibraryTarget,
+    item: T,
+    edited: boolean,
+  ): Reinstated<T> => {
+    const slot = entryAt(library, target) === undefined ? null : target;
+
+    // Une fiche livrée qui n'avait pas été retouchée se rétablit en retirant la
+    // surcharge. Le nom livré est toujours libre : `takenNames` le réserve à son
+    // built-in tant que celui-ci existe, donc ce retour ne peut pas entrer en
+    // collision.
+    if (slot !== null && slot.kind === "builtin" && !edited) {
+      const next = restore(library, slot);
+      const back = entryAt(next, slot);
+      if (back !== undefined) return { library: next, label: back.label };
+    }
+
+    const label = freeName(takenNames(library, slot), nameOf(item));
+    return { library: save(library, slot, withName(item, label)), label };
+  };
+
   return {
     build,
     entryAt,
@@ -144,6 +207,7 @@ export function createCatalog<T>(
     save,
     remove,
     restore,
+    reinstate,
     nameOf,
     builtinNames: new Set(builtins.map(nameOf)),
   };

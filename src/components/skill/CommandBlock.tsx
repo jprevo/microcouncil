@@ -1,8 +1,11 @@
-import { useCopyAction } from '../ui/useCopyAction';
-import { Emoji } from '../ui/Emoji';
+import { useCopyAction } from "../ui/useCopyAction";
+import { Emoji } from "../ui/Emoji";
 
 export function CommandBlock({ command }: { readonly command: string }) {
-  const { copied, copy } = useCopyAction(command, 'Commande copiée dans le presse-papiers');
+  const { copied, copy } = useCopyAction(
+    command,
+    "Commande copiée dans le presse-papiers",
+  );
 
   return (
     <div className="command">
@@ -10,10 +13,10 @@ export function CommandBlock({ command }: { readonly command: string }) {
       <button
         className="command__copy"
         type="button"
-        aria-label={copied ? 'Commande copiée' : 'Copier la commande'}
+        aria-label={copied ? "Commande copiée" : "Copier la commande"}
         onClick={copy}
       >
-        <Emoji glyph={copied ? '✅' : '📋'} />
+        <Emoji glyph={copied ? "✅" : "📋"} />
       </button>
     </div>
   );

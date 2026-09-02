@@ -33,3 +33,12 @@ export function humanizeUsernameToken(value: string): string {
 export function fillUsernameToken(value: string, username: string): string {
   return value.replace(/\{\{username\}\}/gu, resolveUsername(username));
 }
+
+/** Date courte et lisible, telle qu'elle apparaît en face d'une sauvegarde. */
+export function formatDate(timestamp: number): string {
+  return new Date(timestamp).toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}

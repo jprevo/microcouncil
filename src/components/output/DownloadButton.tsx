@@ -19,7 +19,7 @@ export function DownloadButton({ prompt }: { readonly prompt: string }) {
   };
 
   return (
-    <Button variant="ghost" onClick={download}>
+    <Button variant="quiet" onClick={download}>
       <Emoji glyph="⬇️" /> Télécharger
     </Button>
   );

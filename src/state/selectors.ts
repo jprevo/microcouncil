@@ -1,12 +1,7 @@
 import { useMemo } from "react";
 import { environmentCatalog, memberCatalog } from "../lib/catalogs";
 import { useAppState } from "./hooks";
-import type {
-  CatalogEnvironment,
-  CatalogMember,
-  Environment,
-  Member,
-} from "../types";
+import type { CatalogEnvironment, CatalogMember } from "../types";
 
 /** Le catalogue effectif des membres, tel que l'utilisateur l'a laissé. */
 export function useMemberCatalog(): readonly CatalogMember[] {
@@ -23,7 +18,8 @@ export function useEnvironmentCatalog(): readonly CatalogEnvironment[] {
   );
 }
 
-export function useSelectedMembers(): readonly Member[] {
+/** Les fiches sélectionnées, avec leur origine : une sauvegarde en a besoin. */
+export function useSelectedMembers(): readonly CatalogMember[] {
   const { selectedMembers } = useAppState();
   const catalog = useMemberCatalog();
   return useMemo(
@@ -36,7 +32,7 @@ export function useIsMemberSelected(name: string): boolean {
   return useAppState().selectedMembers.includes(name);
 }
 
-export function useSelectedEnvironment(): Environment | null {
+export function useSelectedEnvironment(): CatalogEnvironment | null {
   const { selectedEnvironment } = useAppState();
   const catalog = useEnvironmentCatalog();
   return useMemo(

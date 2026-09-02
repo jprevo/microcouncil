@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { SkillGuide } from './SkillGuide';
-import { Emoji } from '../ui/Emoji';
-import { Modal } from '../ui/Modal';
+import { useState } from "react";
+import { SkillGuide } from "./SkillGuide";
+import { IconButton } from "../ui/IconButton";
+import { Modal } from "../ui/Modal";
 
 export function SkillHelp() {
   const [open, setOpen] = useState(false);
@@ -9,15 +9,12 @@ export function SkillHelp() {
 
   return (
     <>
-      <button
-        className="icon-button"
-        type="button"
-        aria-haspopup="dialog"
+      <IconButton
+        glyph="🧩"
+        label="Installer le skill"
+        hasPopup
         onClick={() => setOpen(true)}
-      >
-        <Emoji glyph="🧩" />
-        <span>Installer le skill</span>
-      </button>
+      />
       <Modal open={open} labelledBy="skill-title" onClose={close}>
         <SkillGuide onClose={close} />
       </Modal>

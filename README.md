@@ -17,6 +17,19 @@ l'original », tandis qu'une fiche créée peut être supprimée.
 Nom, sélection, instructions, thème et fiches ajoutées ou modifiées sont mémorisés dans le
 `localStorage` du navigateur.
 
+Un conseil peut aussi être **rangé sous un nom**. Les deux gestes vivent ensemble dans la barre
+du haut, parce qu'ils portent sur le conseil et non sur le prompt produit : « Sauvegarder »
+enregistre nom, instructions, sujet et **les fiches elles-mêmes** dans le `localStorage`,
+« Charger » en rouvre la liste — les emoji des membres en tête de chaque ligne donnent à
+reconnaître un conseil d'un coup d'œil — pour le rappeler ou l'effacer. Cent sauvegardes au
+plus : au-delà, la plus ancienne cède sa place. Seul le thème ne voyage pas : c'est un réglage
+d'affichage, pas une pièce du conseil.
+
+Une sauvegarde est un **instantané fidèle**. Recharger un conseil rétablit ses fiches telles
+qu'elles étaient : une fiche renommée ou réécrite depuis reprend sa version d'alors, une fiche
+supprimée revient dans le catalogue. C'est un choix assumé — le conseil enregistré prime sur les
+retouches faites depuis sur ces fiches précises.
+
 ## Commandes
 
 ```bash
@@ -102,6 +115,9 @@ Le découpage privilégie des composants très courts, à responsabilité unique
 - `src/components/<domaine>/` — une carte par section du formulaire (`members`, `environments`,
   `identity`, `custom`, `subject`, `output`), chacune accompagnée de ses propres hooks
   (`useEnvironmentKeys`, `useMemberDraft`, `useCopyPrompt`…) ;
+- `src/saves/` — les conseils enregistrés : la relecture défensive du stockage (`storage.ts`) et
+  le contexte qui les tient à part de l'état de l'application, pour que les modifier ne rejoue pas
+  le prompt et que taper dans le sujet ne réécrive pas la liste ;
 - `src/lib/` et `src/prompt.ts`, `src/storage.ts` — la logique pure, sans React,
   testable et réutilisable telle quelle.
 
@@ -116,6 +132,21 @@ domaine (`src/lib/catalogs.ts`), et seule la lecture du champ qui porte le nom �
 membre, `title` pour un environnement — distingue les deux. Les bibliothèques sont enregistrées
 dans le `localStorage` avec le reste de l'état, et relues en écartant les fiches illisibles, les
 doublons et les surcharges devenues orphelines.
+
+Une sauvegarde ne retient pas les **noms** des fiches retenues mais les fiches entières, chacune
+accompagnée de l'emplacement (`LibraryTarget`) qu'elle occupait. Le nom seul ne suffirait pas : le
+renommer, le réécrire ou le supprimer amputerait toutes les sauvegardes antérieures. Au
+chargement, `catalog.reinstate` réécrit chaque fiche dans son emplacement, et recrée celui-ci
+lorsqu'il a disparu — fiche personnelle supprimée, ou fiche livrée retirée d'une version
+ultérieure du catalogue. Le drapeau `edited` enregistré avec la fiche évite d'écrire une copie
+conforme par-dessus une fiche livrée intacte, qui s'afficherait à tort comme « modifiée » : dans
+ce cas la surcharge est simplement retirée.
+
+**Une limite connue** : une fiche livrée a un emplacement stable — son nom d'origine — mais une
+fiche personnelle est identifiée par son nom courant. Renommer une fiche personnelle puis
+recharger une sauvegarde antérieure la recrée donc sous son ancien nom, à côté de la nouvelle,
+au lieu de la retrouver. Le conseil reste complet, mais le catalogue gagne un doublon. Le lever
+demanderait de doter les fiches personnelles d'un identifiant stable.
 
 ## Sources de données
 

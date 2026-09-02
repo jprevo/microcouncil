@@ -1,12 +1,12 @@
 import { environmentCatalog, memberCatalog } from "./lib/catalogs";
+import { asRecord, asStringArray, readJson, writeJson } from "./lib/json";
 import { EMPTY_LIBRARY } from "./lib/library";
 import type { Catalog } from "./lib/library";
+import { asEnvironment, asMember } from "./lib/parse";
 import type {
   AppState,
-  Environment,
   EnvironmentLibrary,
   Library,
-  Member,
   MemberLibrary,
   Theme,
 } from "./types";
@@ -35,51 +35,6 @@ export function defaultState(): AppState {
     memberLibrary: EMPTY_LIBRARY,
     environmentLibrary: EMPTY_LIBRARY,
   };
-}
-
-function asStringArray(value: unknown): string[] {
-  return Array.isArray(value)
-    ? value.filter((item): item is string => typeof item === "string")
-    : [];
-}
-
-function asString(value: unknown): string {
-  return typeof value === "string" ? value : "";
-}
-
-function asRecord(value: unknown): Record<string, unknown> | null {
-  if (typeof value !== "object" || value === null) return null;
-  return value as Record<string, unknown>;
-}
-
-/** Relit une fiche de membre enregistrée, ou null si elle n'a pas la forme attendue. */
-function asMember(value: unknown): Member | null {
-  const record = asRecord(value);
-  if (record === null) return null;
-  const member: Member = {
-    name: asString(record["name"]).trim(),
-    icon: asString(record["icon"]).trim(),
-    job: asString(record["job"]).trim(),
-    description: asString(record["description"]).trim(),
-    traits: asStringArray(record["traits"]),
-    tags: asStringArray(record["tags"]),
-  };
-  return member.name === "" || member.icon === "" ? null : member;
-}
-
-/** Relit un environnement enregistré, ou null s'il n'a pas la forme attendue. */
-function asEnvironment(value: unknown): Environment | null {
-  const record = asRecord(value);
-  if (record === null) return null;
-  const environment: Environment = {
-    title: asString(record["title"]).trim(),
-    icon: asString(record["icon"]).trim(),
-    summary: asString(record["summary"]).trim(),
-    description: asString(record["description"]).trim(),
-  };
-  return environment.title === "" || environment.icon === ""
-    ? null
-    : environment;
 }
 
 /** Écarte les fiches illisibles, les doublons de nom et les surcharges orphelines. */
@@ -122,21 +77,7 @@ function asLibrary<T>(
 /** Relit l'état sauvegardé en écartant tout ce qui ne correspond plus au catalogue. */
 export function loadState(): AppState {
   const fallback = defaultState();
-  let raw: string | null = null;
-  try {
-    raw = globalThis.localStorage?.getItem(STORAGE_KEY) ?? null;
-  } catch {
-    return fallback;
-  }
-  if (raw === null) return fallback;
-
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(raw);
-  } catch {
-    return fallback;
-  }
-  const record = asRecord(parsed);
+  const record = asRecord(readJson(STORAGE_KEY));
   if (record === null) return fallback;
 
   const memberLibrary: MemberLibrary = asLibrary(
@@ -185,9 +126,5 @@ export function loadState(): AppState {
 }
 
 export function saveState(state: AppState): void {
-  try {
-    globalThis.localStorage?.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    // Mode privé ou stockage plein : l'application reste utilisable sans persistance.
-  }
+  writeJson(STORAGE_KEY, state);
 }

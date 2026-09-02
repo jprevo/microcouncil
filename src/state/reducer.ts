@@ -2,6 +2,7 @@ import { environmentCatalog, memberCatalog } from "../lib/catalogs";
 import type { Catalog } from "../lib/library";
 import type {
   AppState,
+  CouncilConfig,
   Environment,
   EnvironmentLibrary,
   Library,
@@ -19,6 +20,8 @@ export type AppAction =
   | { readonly type: "custom"; readonly value: string }
   | { readonly type: "subject"; readonly value: string }
   | { readonly type: "toggleTheme" }
+  /** Rejoue un conseil enregistré par-dessus l'état courant, sans toucher au catalogue. */
+  | { readonly type: "loadCouncil"; readonly council: CouncilConfig }
   /** Un `target` nul crée un nouveau membre ; sinon la fiche visée est réécrite. */
   | {
       readonly type: "saveMember";
@@ -128,6 +131,46 @@ function withEnvironments(
   };
 }
 
+/**
+ * Restitue un conseil enregistré. Chaque fiche est réécrite dans l'emplacement
+ * qu'elle occupait : une fiche renommée ou réécrite depuis reprend sa version
+ * d'alors, une fiche supprimée revient dans le catalogue. Le conseil est donc
+ * rendu tel qu'il était, quoi qu'il soit advenu du catalogue entre-temps.
+ */
+function loadCouncil(state: AppState, council: CouncilConfig): AppState {
+  let memberLibrary = state.memberLibrary;
+  const selected: string[] = [];
+  for (const { target, item, edited } of council.members) {
+    const back = memberCatalog.reinstate(memberLibrary, target, item, edited);
+    memberLibrary = back.library;
+    selected.push(back.label);
+  }
+
+  let environmentLibrary = state.environmentLibrary;
+  let selectedEnvironment: string | null = null;
+  if (council.environment !== null) {
+    const back = environmentCatalog.reinstate(
+      environmentLibrary,
+      council.environment.target,
+      council.environment.item,
+      council.environment.edited,
+    );
+    environmentLibrary = back.library;
+    selectedEnvironment = back.label;
+  }
+
+  return {
+    ...state,
+    username: council.username,
+    memberLibrary,
+    environmentLibrary,
+    selectedMembers: ordered(memberLibrary, selected),
+    selectedEnvironment,
+    customInstructions: council.customInstructions,
+    subject: council.subject,
+  };
+}
+
 export function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case "username":
@@ -161,6 +204,8 @@ export function reducer(state: AppState, action: AppAction): AppState {
       return { ...state, subject: action.value };
     case "toggleTheme":
       return { ...state, theme: state.theme === "dark" ? "light" : "dark" };
+    case "loadCouncil":
+      return loadCouncil(state, action.council);
     case "saveMember":
       return withMembers(state, action.target, (library) =>
         memberCatalog.save(library, action.target, action.member),

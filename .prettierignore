@@ -3,6 +3,6 @@ build
 coverage
 dist
 docs
-skill
+/skill
 .idea
 .claude

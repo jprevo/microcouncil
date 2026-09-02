@@ -15,7 +15,14 @@ export function Modal({ open, labelledBy, onClose, children }: ModalProps) {
   useEffect(() => {
     const dialog = ref.current;
     if (dialog === null) return;
-    if (open && !dialog.open) dialog.showModal();
+    if (open && !dialog.open) {
+      dialog.showModal();
+      // `showModal` vise le premier élément focalisable — souvent la croix de
+      // fermeture. Une boîte qui désigne son champ d'entrée reprend la main.
+      const target = dialog.querySelector<HTMLElement>("[data-autofocus]");
+      target?.focus();
+      if (target instanceof HTMLInputElement) target.select();
+    }
     if (!open && dialog.open) dialog.close();
   }, [open]);
 

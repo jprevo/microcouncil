@@ -179,6 +179,12 @@ code {
   gap: 8px;
 }
 
+.topbar__divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+}
+
 /* ---------------------------------------------------------------- layout */
 .shell {
   max-width: 1240px;
@@ -450,6 +456,21 @@ code {
 .icon-button:hover {
   background: var(--surface-soft);
   border-color: var(--border-strong);
+}
+
+/* Sans libellé, la pilule se resserre autour de son icône. */
+.icon-button--bare {
+  padding-inline: 10px;
+}
+
+.icon-button__count {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
 /* ----------------------------------------------------------------- tiles */
@@ -729,15 +750,29 @@ code {
 }
 
 .output__actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 8px;
 }
 
-.output__actions .button {
-  flex: 1 1 auto;
+.output__actions > .button {
   justify-content: center;
   padding-block: 10px;
+}
+
+/* Le téléchargement reste possible, mais discret sous les actions principales. */
+.output__actions-aside {
+  display: flex;
+  justify-content: center;
+}
+
+.output__actions-aside .button {
+  font-size: 12px;
+  padding: 5px 11px;
+  color: var(--text-faint);
+}
+
+.output__actions-aside .button:hover {
+  color: var(--text-muted);
 }
 
 .output__note {
@@ -759,6 +794,12 @@ code {
   line-height: 1.6;
   color: var(--text-faint);
   text-wrap: pretty;
+}
+
+.footer__actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .footer-link {
@@ -1058,6 +1099,108 @@ code {
   border-color: var(--accent);
 }
 
+/* ------------------------------------------------------------ sauvegardes */
+.saves {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+}
+
+.save {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.save:hover {
+  border-color: var(--border-strong);
+  background: var(--surface);
+}
+
+.save__load {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: 11px 4px 11px 13px;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--text);
+}
+
+/* Quatre colonnes fixes : deux rangées au plus, et des lignes de même hauteur. */
+.save__icons {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  place-items: center;
+  gap: 3px 2px;
+  width: 92px;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.save__more {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-faint);
+}
+
+.save__body {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.save__name {
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.save__meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.save__delete {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  border: 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: none;
+  color: var(--text-faint);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.save__delete:hover {
+  background: var(--surface-sunken);
+  color: var(--text);
+}
+
 /* ----------------------------------------------------------------- toast */
 .toast {
   position: fixed;
@@ -1095,8 +1238,12 @@ code {
     grid-template-columns: 1fr;
   }
 
-  .icon-button span:last-child {
+  .topbar .icon-button__label {
     display: none;
+  }
+
+  .topbar .icon-button {
+    padding-inline: 10px;
   }
 }
 

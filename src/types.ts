@@ -65,3 +65,39 @@ export interface AppState {
   /** Environnements ajoutés ou modifiés localement, superposés au catalogue livré. */
   environmentLibrary: EnvironmentLibrary;
 }
+
+/**
+ * Une fiche telle qu'elle était à l'enregistrement, avec l'emplacement qu'elle
+ * occupait. Le nom seul ne suffirait pas : une fiche renommée, réécrite ou
+ * supprimée depuis laisserait le conseil amputé.
+ */
+export interface SavedEntry<T> {
+  readonly target: LibraryTarget;
+  readonly item: T;
+  /**
+   * Vrai si la fiche portait une retouche locale. Une fiche livrée intacte se
+   * rétablit en retirant la surcharge, sans quoi le catalogue se remplirait de
+   * copies conformes marquées « modifié ».
+   */
+  readonly edited: boolean;
+}
+
+/**
+ * Ce qu'une sauvegarde restitue : le conseil et les fiches sur lesquelles il est
+ * bâti. Le thème, lui, est un réglage d'affichage et ne voyage pas.
+ */
+export interface CouncilConfig {
+  readonly username: string;
+  readonly members: readonly SavedEntry<Member>[];
+  readonly environment: SavedEntry<Environment> | null;
+  readonly customInstructions: string;
+  readonly subject: string;
+}
+
+/** Un conseil rangé en mémoire, sous le nom que l'utilisateur lui a donné. */
+export interface CouncilSave extends CouncilConfig {
+  readonly id: string;
+  readonly name: string;
+  /** Horodatage de l'enregistrement, qui classe la liste et désigne la plus vieille. */
+  readonly savedAt: number;
+}
