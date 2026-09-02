@@ -358,7 +358,6 @@ code {
 
 .field--area {
   resize: vertical;
-  min-height: 96px;
   line-height: 1.6;
 }
 
@@ -667,7 +666,7 @@ code {
   border: 1px solid var(--border);
 }
 
-.add-member {
+.add-entry {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -689,7 +688,7 @@ code {
     background 0.15s ease;
 }
 
-.add-member:hover {
+.add-entry:hover {
   color: var(--accent);
   border-color: var(--accent);
   background: var(--accent-soft);

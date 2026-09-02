@@ -1,11 +1,14 @@
-import {
-  buildCatalog,
-  deleteMember,
-  memberAt,
-  restoreMember,
-  saveMember,
-} from "../lib/catalog";
-import type { AppState, Member, MemberLibrary, MemberTarget } from "../types";
+import { environmentCatalog, memberCatalog } from "../lib/catalogs";
+import type { Catalog } from "../lib/library";
+import type {
+  AppState,
+  Environment,
+  EnvironmentLibrary,
+  Library,
+  LibraryTarget,
+  Member,
+  MemberLibrary,
+} from "../types";
 
 export type AppAction =
   | { readonly type: "username"; readonly value: string }
@@ -19,26 +22,60 @@ export type AppAction =
   /** Un `target` nul crée un nouveau membre ; sinon la fiche visée est réécrite. */
   | {
       readonly type: "saveMember";
-      readonly target: MemberTarget | null;
+      readonly target: LibraryTarget | null;
       readonly member: Member;
     }
-  | { readonly type: "deleteMember"; readonly target: MemberTarget }
-  | { readonly type: "restoreMember"; readonly target: MemberTarget };
+  | { readonly type: "deleteMember"; readonly target: LibraryTarget }
+  | { readonly type: "restoreMember"; readonly target: LibraryTarget }
+  /** Un `target` nul crée un nouvel environnement ; sinon la fiche visée est réécrite. */
+  | {
+      readonly type: "saveEnvironment";
+      readonly target: LibraryTarget | null;
+      readonly environment: Environment;
+    }
+  | { readonly type: "deleteEnvironment"; readonly target: LibraryTarget }
+  | { readonly type: "restoreEnvironment"; readonly target: LibraryTarget };
 
-function catalogNames(library: MemberLibrary): readonly string[] {
-  return buildCatalog(library).map((member) => member.name);
+/** Le nom porté par une fiche avant, puis après, un changement de bibliothèque. */
+interface Rename {
+  /** Absent lors d'une création : aucune fiche existante n'est visée. */
+  readonly before: string | undefined;
+  /** Null lorsque la fiche visée a disparu. */
+  readonly after: string | null;
+}
+
+interface LibraryChange<T> extends Rename {
+  readonly library: Library<T>;
+}
+
+/** Rejoue un changement de bibliothèque en relevant le nom d'avant et celui d'après. */
+function applyChange<T>(
+  catalog: Catalog<T>,
+  library: Library<T>,
+  target: LibraryTarget | null,
+  apply: (library: Library<T>) => Library<T>,
+): LibraryChange<T> {
+  const next = apply(library);
+  if (target === null) return { library: next, before: undefined, after: null };
+  return {
+    library: next,
+    before: catalog.entryAt(library, target)?.label,
+    after: catalog.entryAt(next, target)?.label ?? null,
+  };
 }
 
 /** Sélection triée selon l'ordre du catalogue, pour un prompt stable. */
 function ordered(library: MemberLibrary, names: readonly string[]): string[] {
-  return catalogNames(library).filter((name) => names.includes(name));
+  return memberCatalog
+    .build(library)
+    .map((member) => member.label)
+    .filter((name) => names.includes(name));
 }
 
 /** Une fiche renommée reste sélectionnée ; une fiche disparue quitte la sélection. */
-function rename(
+function renameSelected(
   names: readonly string[],
-  before: string | undefined,
-  after: string | null,
+  { before, after }: Rename,
 ): string[] {
   if (before === undefined || before === after) return [...names];
   const without = names.filter((name) => name !== before);
@@ -46,16 +83,48 @@ function rename(
   return [...without, after];
 }
 
-/** Applique un changement de catalogue en réalignant la sélection. */
-function withLibrary(
+/** La même règle, pour une sélection unique. */
+function renameSelectedOne(
+  selected: string | null,
+  { before, after }: Rename,
+): string | null {
+  if (before === undefined || selected !== before) return selected;
+  return after;
+}
+
+/** Applique un changement au catalogue des membres en réalignant la sélection. */
+function withMembers(
   state: AppState,
-  library: MemberLibrary,
-  selected: readonly string[],
+  target: LibraryTarget | null,
+  apply: (library: MemberLibrary) => MemberLibrary,
 ): AppState {
+  const edit = applyChange(memberCatalog, state.memberLibrary, target, apply);
   return {
     ...state,
-    memberLibrary: library,
-    selectedMembers: ordered(library, selected),
+    memberLibrary: edit.library,
+    selectedMembers: ordered(
+      edit.library,
+      renameSelected(state.selectedMembers, edit),
+    ),
+  };
+}
+
+/** Applique un changement au catalogue des environnements en suivant la sélection. */
+function withEnvironments(
+  state: AppState,
+  target: LibraryTarget | null,
+  apply: (library: EnvironmentLibrary) => EnvironmentLibrary,
+): AppState {
+  const edit = applyChange(
+    environmentCatalog,
+    state.environmentLibrary,
+    target,
+    apply,
+  );
+  return {
+    ...state,
+    environmentLibrary: edit.library,
+    selectedEnvironment: renameSelectedOne(state.selectedEnvironment, edit),
   };
 }
 
@@ -92,40 +161,29 @@ export function reducer(state: AppState, action: AppAction): AppState {
       return { ...state, subject: action.value };
     case "toggleTheme":
       return { ...state, theme: state.theme === "dark" ? "light" : "dark" };
-    case "saveMember": {
-      const previous =
-        action.target === null
-          ? undefined
-          : memberAt(state.memberLibrary, action.target)?.name;
-      const library = saveMember(
-        state.memberLibrary,
-        action.target,
-        action.member,
+    case "saveMember":
+      return withMembers(state, action.target, (library) =>
+        memberCatalog.save(library, action.target, action.member),
       );
-      return withLibrary(
-        state,
-        library,
-        rename(state.selectedMembers, previous, action.member.name),
+    case "deleteMember":
+      return withMembers(state, action.target, (library) =>
+        memberCatalog.remove(library, action.target),
       );
-    }
-    case "deleteMember": {
-      const previous = memberAt(state.memberLibrary, action.target)?.name;
-      const library = deleteMember(state.memberLibrary, action.target);
-      return withLibrary(
-        state,
-        library,
-        rename(state.selectedMembers, previous, null),
+    case "restoreMember":
+      return withMembers(state, action.target, (library) =>
+        memberCatalog.restore(library, action.target),
       );
-    }
-    case "restoreMember": {
-      const previous = memberAt(state.memberLibrary, action.target)?.name;
-      const library = restoreMember(state.memberLibrary, action.target);
-      const restored = memberAt(library, action.target)?.name ?? null;
-      return withLibrary(
-        state,
-        library,
-        rename(state.selectedMembers, previous, restored),
+    case "saveEnvironment":
+      return withEnvironments(state, action.target, (library) =>
+        environmentCatalog.save(library, action.target, action.environment),
       );
-    }
+    case "deleteEnvironment":
+      return withEnvironments(state, action.target, (library) =>
+        environmentCatalog.remove(library, action.target),
+      );
+    case "restoreEnvironment":
+      return withEnvironments(state, action.target, (library) =>
+        environmentCatalog.restore(library, action.target),
+      );
   }
 }

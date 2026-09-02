@@ -1,6 +1,15 @@
-import { ENVIRONMENTS, MEMBERS } from "./data";
-import { EMPTY_LIBRARY, buildCatalog } from "./lib/catalog";
-import type { AppState, Member, MemberLibrary, Theme } from "./types";
+import { environmentCatalog, memberCatalog } from "./lib/catalogs";
+import { EMPTY_LIBRARY } from "./lib/library";
+import type { Catalog } from "./lib/library";
+import type {
+  AppState,
+  Environment,
+  EnvironmentLibrary,
+  Library,
+  Member,
+  MemberLibrary,
+  Theme,
+} from "./types";
 
 const STORAGE_KEY = "microcouncil.state.v1";
 
@@ -24,6 +33,7 @@ export function defaultState(): AppState {
     subject: "",
     theme: preferredTheme(),
     memberLibrary: EMPTY_LIBRARY,
+    environmentLibrary: EMPTY_LIBRARY,
   };
 }
 
@@ -37,10 +47,15 @@ function asString(value: unknown): string {
   return typeof value === "string" ? value : "";
 }
 
-/** Relit une fiche enregistrée, ou null si elle n'a pas la forme attendue. */
-function asMember(value: unknown): Member | null {
+function asRecord(value: unknown): Record<string, unknown> | null {
   if (typeof value !== "object" || value === null) return null;
-  const record = value as Record<string, unknown>;
+  return value as Record<string, unknown>;
+}
+
+/** Relit une fiche de membre enregistrée, ou null si elle n'a pas la forme attendue. */
+function asMember(value: unknown): Member | null {
+  const record = asRecord(value);
+  if (record === null) return null;
   const member: Member = {
     name: asString(record["name"]).trim(),
     icon: asString(record["icon"]).trim(),
@@ -52,34 +67,53 @@ function asMember(value: unknown): Member | null {
   return member.name === "" || member.icon === "" ? null : member;
 }
 
-/** Écarte les fiches illisibles, les doublons de nom et les surcharges orphelines. */
-function asLibrary(value: unknown): MemberLibrary {
-  if (typeof value !== "object" || value === null) return EMPTY_LIBRARY;
-  const record = value as Record<string, unknown>;
+/** Relit un environnement enregistré, ou null s'il n'a pas la forme attendue. */
+function asEnvironment(value: unknown): Environment | null {
+  const record = asRecord(value);
+  if (record === null) return null;
+  const environment: Environment = {
+    title: asString(record["title"]).trim(),
+    icon: asString(record["icon"]).trim(),
+    summary: asString(record["summary"]).trim(),
+    description: asString(record["description"]).trim(),
+  };
+  return environment.title === "" || environment.icon === ""
+    ? null
+    : environment;
+}
 
-  const overrides: Record<string, Member> = {};
-  const storedOverrides = record["overrides"];
-  if (typeof storedOverrides === "object" && storedOverrides !== null) {
-    const builtinNames = new Set(MEMBERS.map((member) => member.name));
-    for (const [name, stored] of Object.entries(
-      storedOverrides as Record<string, unknown>,
-    )) {
-      const member = asMember(stored);
-      if (member !== null && builtinNames.has(name)) overrides[name] = member;
+/** Écarte les fiches illisibles, les doublons de nom et les surcharges orphelines. */
+function asLibrary<T>(
+  value: unknown,
+  catalog: Catalog<T>,
+  asItem: (value: unknown) => T | null,
+): Library<T> {
+  const record = asRecord(value);
+  if (record === null) return EMPTY_LIBRARY;
+
+  const overrides: Record<string, T> = {};
+  const storedOverrides = asRecord(record["overrides"]);
+  if (storedOverrides !== null) {
+    for (const [name, stored] of Object.entries(storedOverrides)) {
+      const item = asItem(stored);
+      if (item !== null && catalog.builtinNames.has(name))
+        overrides[name] = item;
     }
   }
 
   const taken = new Set(
-    buildCatalog({ custom: [], overrides }).map((member) => member.name),
+    catalog.build({ custom: [], overrides }).map((entry) => entry.label),
   );
-  const custom: Member[] = [];
+  const custom: T[] = [];
   for (const stored of Array.isArray(record["custom"])
     ? record["custom"]
     : []) {
-    const member = asMember(stored);
-    if (member === null || taken.has(member.name)) continue;
-    taken.add(member.name);
-    custom.push(member);
+    const item = asItem(stored);
+    if (item === null) continue;
+    const name = catalog.nameOf(item);
+    if (taken.has(name)) continue;
+    taken.add(name);
+    custom.push(item);
   }
 
   return { custom, overrides };
@@ -102,15 +136,25 @@ export function loadState(): AppState {
   } catch {
     return fallback;
   }
-  if (typeof parsed !== "object" || parsed === null) return fallback;
-  const record = parsed as Record<string, unknown>;
+  const record = asRecord(parsed);
+  if (record === null) return fallback;
 
-  const memberLibrary = asLibrary(record["memberLibrary"]);
+  const memberLibrary: MemberLibrary = asLibrary(
+    record["memberLibrary"],
+    memberCatalog,
+    asMember,
+  );
+  const environmentLibrary: EnvironmentLibrary = asLibrary(
+    record["environmentLibrary"],
+    environmentCatalog,
+    asEnvironment,
+  );
+
   const knownMembers = new Set(
-    buildCatalog(memberLibrary).map((member) => member.name),
+    memberCatalog.build(memberLibrary).map((entry) => entry.label),
   );
   const knownEnvironments = new Set(
-    ENVIRONMENTS.map((environment) => environment.title),
+    environmentCatalog.build(environmentLibrary).map((entry) => entry.label),
   );
   const environment = record["selectedEnvironment"];
 
@@ -136,6 +180,7 @@ export function loadState(): AppState {
         : fallback.subject,
     theme: isTheme(record["theme"]) ? record["theme"] : fallback.theme,
     memberLibrary,
+    environmentLibrary,
   };
 }
 

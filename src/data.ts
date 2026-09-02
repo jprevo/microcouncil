@@ -12,7 +12,3 @@ export const PROMPT_TEMPLATE: string = promptTemplateRaw.trim();
 
 /** Exemple d'instructions additionnelles, inséré à la demande via le bouton « Exemple ». */
 export const CUSTOM_EXAMPLE: string = customExampleRaw.trim();
-
-export function findEnvironment(title: string): Environment | undefined {
-  return ENVIRONMENTS.find((environment) => environment.title === title);
-}

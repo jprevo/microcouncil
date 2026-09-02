@@ -1,6 +1,6 @@
 import type { KeyboardEvent } from "react";
-import { ENVIRONMENTS } from "../../data";
 import { useAppDispatch, useAppState } from "../../state/hooks";
+import type { Environment } from "../../types";
 
 const STEPS: Readonly<Record<string, number>> = {
   ArrowRight: 1,
@@ -10,7 +10,10 @@ const STEPS: Readonly<Record<string, number>> = {
 };
 
 /** Navigation aux flèches dans le groupe radio des environnements. */
-export function useEnvironmentKeys(focus: (title: string) => void) {
+export function useEnvironmentKeys(
+  environments: readonly Environment[],
+  focus: (title: string) => void,
+) {
   const { selectedEnvironment } = useAppState();
   const dispatch = useAppDispatch();
 
@@ -18,7 +21,7 @@ export function useEnvironmentKeys(focus: (title: string) => void) {
     const step = STEPS[event.key];
     if (step === undefined) return;
 
-    const titles = ENVIRONMENTS.map((environment) => environment.title);
+    const titles = environments.map((environment) => environment.title);
     const current =
       selectedEnvironment === null ? -1 : titles.indexOf(selectedEnvironment);
     const next = titles[(current + step + titles.length) % titles.length];

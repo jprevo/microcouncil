@@ -1,7 +1,7 @@
 import { MemberTile } from "./MemberTile";
 import { EmptyMessage } from "../ui/EmptyMessage";
 import { Grid } from "../ui/Grid";
-import { targetKey } from "../../lib/catalog";
+import { targetKey } from "../../lib/library";
 import type { CatalogMember } from "../../types";
 
 interface MembersGridProps {

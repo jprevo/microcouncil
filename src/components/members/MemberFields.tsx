@@ -1,4 +1,4 @@
-import { EmojiPicker } from "./EmojiPicker";
+import { IconField } from "../editor/IconField";
 import { Field } from "../ui/Field";
 import { TextArea } from "../ui/TextArea";
 import { TextField } from "../ui/TextField";
@@ -31,13 +31,11 @@ export function MemberFields({ draft, onChange }: MemberFieldsProps) {
         />
       </Field>
 
-      <Field htmlFor="member-icon" label="Icône">
-        <EmojiPicker
-          inputId="member-icon"
-          icon={draft.icon}
-          onPick={(icon) => onChange({ icon })}
-        />
-      </Field>
+      <IconField
+        id="member-icon"
+        icon={draft.icon}
+        onPick={(icon) => onChange({ icon })}
+      />
 
       <Field
         htmlFor="member-description"

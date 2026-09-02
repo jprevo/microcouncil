@@ -3,18 +3,18 @@
 Générateur de prompt pour convoquer un conseil de compagnons dans Claude, ChatGPT, Gemini
 ou n'importe quel autre assistant.
 
-L'interface permet de choisir son nom, les membres du conseil, un environnement (à la main ou
-tiré au sort), des instructions additionnelles optionnelles et le sujet de la
-demande (optionnel lui aussi). Le prompt est reconstruit en direct à partir du gabarit
-`docs/data/prompt.md`, puis copié en un clic.
+L'interface permet de choisir son nom, les membres du conseil, un environnement, des
+instructions additionnelles optionnelles et le sujet de la demande (optionnel lui aussi). Le
+prompt est reconstruit en direct à partir du gabarit `docs/data/prompt.md`, puis copié en un clic.
 
-Les membres se créent et se modifient depuis l'interface : le bouton en bas de la liste ouvre
-une fiche vierge, le crayon d'une carte ouvre la fiche correspondante. L'icône se cherche par
-shortcode (`brain`, `rocket`…) dans la table de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet).
-Un membre livré avec le site peut être réécrit comme n'importe quel autre ; sa fiche gagne alors
-un bouton « Revenir à l'original ».
+Les membres **et les environnements** se créent et se modifient depuis l'interface, de la même
+façon : le bouton en bas de la liste ouvre une fiche vierge, le crayon d'une carte ouvre la fiche
+correspondante. L'icône se cherche par shortcode (`brain`, `rocket`…) dans la table de
+l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet). Une fiche livrée avec le
+site peut être réécrite comme n'importe quelle autre ; elle gagne alors un bouton « Revenir à
+l'original », tandis qu'une fiche créée peut être supprimée.
 
-Nom, sélection, instructions, thème et membres ajoutés ou modifiés sont mémorisés dans le
+Nom, sélection, instructions, thème et fiches ajoutées ou modifiées sont mémorisés dans le
 `localStorage` du navigateur.
 
 ## Commandes
@@ -96,17 +96,26 @@ Le découpage privilégie des composants très courts, à responsabilité unique
   re-rendent pas à chaque frappe ;
 - `src/components/ui/` — les primitives sans logique métier (`Button`, `Card`, `TextField`…) ;
 - `src/components/tiles/` — la coquille commune aux fiches (`Tile`) et ses fragments ;
+- `src/components/editor/` — ce que partagent les deux formulaires d'édition : la coquille de la
+  boîte de dialogue (`EntryEditor`), le sélecteur d'icônes, le brouillon (`useDraftForm`) et
+  l'ouverture de la boîte (`useEditorModal`) ;
 - `src/components/<domaine>/` — une carte par section du formulaire (`members`, `environments`,
   `identity`, `custom`, `subject`, `output`), chacune accompagnée de ses propres hooks
-  (`useDrawEnvironment`, `useEnvironmentKeys`, `useCopyPrompt`…) ;
-- `src/lib/` et `src/prompt.ts`, `src/random.ts`, `src/storage.ts` — la logique pure, sans React,
+  (`useEnvironmentKeys`, `useMemberDraft`, `useCopyPrompt`…) ;
+- `src/lib/` et `src/prompt.ts`, `src/storage.ts` — la logique pure, sans React,
   testable et réutilisable telle quelle.
 
-Le catalogue affiché n'est jamais `src/members.json` tel quel : `src/lib/catalog.ts` superpose à
-ce catalogue livré une **bibliothèque locale** — les membres créés par l'utilisateur, et les
-surcharges des membres livrés, indexées par leur nom d'origine. C'est ce qui permet de rétablir
-une fiche livrée après l'avoir réécrite, ou renommée. Une fiche renommée reste sélectionnée : le
-reducer déplace la sélection en même temps que le nom.
+Les catalogues affichés ne sont jamais `src/members.json` et `src/environments.json` tels quels :
+`src/lib/library.ts` superpose à un catalogue livré une **bibliothèque locale** — les fiches créées
+par l'utilisateur, et les surcharges des fiches livrées, indexées par leur nom d'origine. C'est ce
+qui permet de rétablir une fiche livrée après l'avoir réécrite, ou renommée. Une fiche renommée
+reste sélectionnée : le reducer déplace la sélection en même temps que le nom.
+
+Ce mécanisme est écrit une seule fois : `createCatalog(livrés, nomDe)` en produit une instance par
+domaine (`src/lib/catalogs.ts`), et seule la lecture du champ qui porte le nom — `name` pour un
+membre, `title` pour un environnement — distingue les deux. Les bibliothèques sont enregistrées
+dans le `localStorage` avec le reste de l'état, et relues en écartant les fiches illisibles, les
+doublons et les surcharges devenues orphelines.
 
 ## Sources de données
 
@@ -115,7 +124,8 @@ Tout le contenu éditorial vit hors du code :
 - `src/members.json` — le catalogue des compagnons (`name`, `icon`, `job`, `description`, `traits`,
   `tags`) ; les `tags` sont des mots-clés de recherche : ils alimentent le filtre du catalogue mais
   n'apparaissent jamais dans le prompt ;
-- `src/environments.json` — les décors (`title`, `icon`, `description`) ;
+- `src/environments.json` — les décors (`title`, `icon`, `summary`, `description`) ; le `summary`
+  est la phrase affichée sur la fiche : il n'apparaît jamais dans le prompt ;
 - `src/emoji.json` — la table `shortcode -> caractère` du sélecteur d'icônes, **produite** par
   `npm run emoji` à partir de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet)
   (l'ordre et les shortcodes) et de l'API emoji de GitHub (les caractères eux-mêmes) ;

@@ -1,18 +1,31 @@
 import { useMemo } from "react";
-import { findEnvironment } from "../data";
-import { buildCatalog } from "../lib/catalog";
+import { environmentCatalog, memberCatalog } from "../lib/catalogs";
 import { useAppState } from "./hooks";
-import type { CatalogMember, Environment, Member } from "../types";
+import type {
+  CatalogEnvironment,
+  CatalogMember,
+  Environment,
+  Member,
+} from "../types";
 
-/** Le catalogue effectif : les fiches livrées, telles que l'utilisateur les a laissées. */
-export function useCatalog(): readonly CatalogMember[] {
+/** Le catalogue effectif des membres, tel que l'utilisateur l'a laissé. */
+export function useMemberCatalog(): readonly CatalogMember[] {
   const { memberLibrary } = useAppState();
-  return useMemo(() => buildCatalog(memberLibrary), [memberLibrary]);
+  return useMemo(() => memberCatalog.build(memberLibrary), [memberLibrary]);
+}
+
+/** Le catalogue effectif des environnements, tel que l'utilisateur l'a laissé. */
+export function useEnvironmentCatalog(): readonly CatalogEnvironment[] {
+  const { environmentLibrary } = useAppState();
+  return useMemo(
+    () => environmentCatalog.build(environmentLibrary),
+    [environmentLibrary],
+  );
 }
 
 export function useSelectedMembers(): readonly Member[] {
   const { selectedMembers } = useAppState();
-  const catalog = useCatalog();
+  const catalog = useMemberCatalog();
   return useMemo(
     () => catalog.filter((member) => selectedMembers.includes(member.name)),
     [catalog, selectedMembers],
@@ -25,6 +38,12 @@ export function useIsMemberSelected(name: string): boolean {
 
 export function useSelectedEnvironment(): Environment | null {
   const { selectedEnvironment } = useAppState();
-  if (selectedEnvironment === null) return null;
-  return findEnvironment(selectedEnvironment) ?? null;
+  const catalog = useEnvironmentCatalog();
+  return useMemo(
+    () =>
+      catalog.find(
+        (environment) => environment.title === selectedEnvironment,
+      ) ?? null,
+    [catalog, selectedEnvironment],
+  );
 }
