@@ -74,10 +74,10 @@ function asLibrary<T>(
   return { custom, overrides };
 }
 
-/** Relit l'état sauvegardé en écartant tout ce qui ne correspond plus au catalogue. */
-export function loadState(): AppState {
+/** Reads a stored state, dropping whatever no longer matches the catalog. */
+export function parseState(value: unknown): AppState {
   const fallback = defaultState();
-  const record = asRecord(readJson(STORAGE_KEY));
+  const record = asRecord(value);
   if (record === null) return fallback;
 
   const memberLibrary: MemberLibrary = asLibrary(
@@ -123,6 +123,10 @@ export function loadState(): AppState {
     memberLibrary,
     environmentLibrary,
   };
+}
+
+export function loadState(): AppState {
+  return parseState(readJson(STORAGE_KEY));
 }
 
 export function saveState(state: AppState): void {

@@ -1,19 +1,14 @@
 import { CommandBlock } from "./CommandBlock";
+import { DialogHead } from "../ui/DialogHead";
 
 export function SkillGuide({ onClose }: { readonly onClose: () => void }) {
   return (
     <>
-      <div className="modal__head">
-        <h2 id="skill-title">🧩 Le skill Micro Council</h2>
-        <button
-          className="modal__close"
-          type="button"
-          aria-label="Fermer"
-          onClick={onClose}
-        >
-          <span aria-hidden="true">✕</span>
-        </button>
-      </div>
+      <DialogHead
+        id="skill-title"
+        title="🧩 Le skill Micro Council"
+        onClose={onClose}
+      />
 
       <div className="modal__body">
         <p className="modal__lede">

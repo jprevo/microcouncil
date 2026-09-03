@@ -1,3 +1,4 @@
+import { BackupActions } from "../backup/BackupActions";
 import { SkillHelp } from "../skill/SkillHelp";
 
 export function Footer() {
@@ -5,6 +6,7 @@ export function Footer() {
     <footer className="footer">
       <div className="footer__actions">
         <SkillHelp />
+        <BackupActions />
       </div>
       <p>
         © 2026 Micro Council · Projet open source disponible sur{" "}

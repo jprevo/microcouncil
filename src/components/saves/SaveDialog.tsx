@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "../ui/Button";
 import { Field } from "../ui/Field";
+import { DialogHead } from "../ui/DialogHead";
 import { Notice } from "../ui/Notice";
 import { TextField } from "../ui/TextField";
 import { stripOrigin } from "../../lib/library";
@@ -75,17 +76,11 @@ export function SaveDialog({ onClose }: { readonly onClose: () => void }) {
 
   return (
     <>
-      <div className="modal__head">
-        <h2 id="save-title">💾 Enregistrer ce conseil</h2>
-        <button
-          className="modal__close"
-          type="button"
-          aria-label="Fermer"
-          onClick={onClose}
-        >
-          <span aria-hidden="true">✕</span>
-        </button>
-      </div>
+      <DialogHead
+        id="save-title"
+        title="💾 Enregistrer ce conseil"
+        onClose={onClose}
+      />
 
       <div className="modal__body modal__body--form">
         <Field

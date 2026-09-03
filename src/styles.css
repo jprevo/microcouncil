@@ -798,7 +798,9 @@ code {
 
 .footer__actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 8px;
   margin-bottom: 10px;
 }
 
@@ -840,6 +842,8 @@ code {
   flex-direction: column;
   min-height: 0;
   width: 100%;
+  /* A dialog opened from the footer would otherwise inherit its centering. */
+  text-align: left;
 }
 
 .modal__head {

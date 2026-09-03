@@ -38,17 +38,24 @@ export function SavesProvider({ children }: { readonly children: ReactNode }) {
     });
   }, []);
 
+  const replaceAll = useCallback((next: readonly CouncilSave[]): void => {
+    const kept = sortAndTrim(next);
+    writeSaves(kept);
+    setSaves(kept);
+  }, []);
+
   const api = useMemo(
     () => ({
       saves,
       save,
       remove,
+      replaceAll,
       findByName: (name: string): CouncilSave | undefined =>
         saves.find(
           (candidate) => normalize(candidate.name) === normalize(name),
         ),
     }),
-    [saves, save, remove],
+    [saves, save, remove, replaceAll],
   );
 
   return <SavesContext value={api}>{children}</SavesContext>;

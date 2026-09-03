@@ -1,5 +1,6 @@
 import { SaveRow } from "./SaveRow";
 import { EmptyMessage } from "../ui/EmptyMessage";
+import { DialogHead } from "../ui/DialogHead";
 import { useSaves } from "../../saves/useSaves";
 
 export function SavesList({ onClose }: { readonly onClose: () => void }) {
@@ -7,17 +8,11 @@ export function SavesList({ onClose }: { readonly onClose: () => void }) {
 
   return (
     <>
-      <div className="modal__head">
-        <h2 id="saves-title">📂 Vos conseils enregistrés</h2>
-        <button
-          className="modal__close"
-          type="button"
-          aria-label="Fermer"
-          onClick={onClose}
-        >
-          <span aria-hidden="true">✕</span>
-        </button>
-      </div>
+      <DialogHead
+        id="saves-title"
+        title="📂 Vos conseils enregistrés"
+        onClose={onClose}
+      />
 
       <div className="modal__body">
         {saves.length === 0 ? (

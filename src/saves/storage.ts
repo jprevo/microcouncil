@@ -55,19 +55,23 @@ function asSave(value: unknown): CouncilSave | null {
   };
 }
 
-/** La liste enregistrée, de la plus récente à la plus ancienne. */
-export function readSaves(): readonly CouncilSave[] {
-  const stored = readJson(STORAGE_KEY);
-  if (!Array.isArray(stored)) return [];
+/** Reads a stored list, newest first, dropping unreadable and duplicate entries. */
+export function parseSaves(value: unknown): readonly CouncilSave[] {
+  if (!Array.isArray(value)) return [];
   const saves: CouncilSave[] = [];
   const seen = new Set<string>();
-  for (const value of stored) {
-    const save = asSave(value);
+  for (const stored of value) {
+    const save = asSave(stored);
     if (save === null || seen.has(save.id)) continue;
     seen.add(save.id);
     saves.push(save);
   }
   return sortAndTrim(saves);
+}
+
+/** La liste enregistrée, de la plus récente à la plus ancienne. */
+export function readSaves(): readonly CouncilSave[] {
+  return parseSaves(readJson(STORAGE_KEY));
 }
 
 export function writeSaves(saves: readonly CouncilSave[]): void {

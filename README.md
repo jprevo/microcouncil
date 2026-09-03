@@ -30,6 +30,18 @@ qu'elles étaient : une fiche renommée ou réécrite depuis reprend sa version 
 supprimée revient dans le catalogue. C'est un choix assumé — le conseil enregistré prime sur les
 retouches faites depuis sur ces fiches précises.
 
+Le pied de page porte enfin l'**export** et l'**import** de toutes vos données, en JSON. L'export
+range les réglages, le thème, les fiches ajoutées ou modifiées et les sauvegardes dans un fichier
+`microcouncil-AAAA-MM-JJ.json`, qui se relit sur un autre navigateur ou après un nettoyage du
+stockage. Le fichier porte un numéro de version de format et sa date d'export : de quoi bâtir la
+rétrocompatibilité quand le modèle bougera, un fichier venu d'une version inconnue étant refusé
+plutôt que lu à moitié. Chacun des deux boutons ouvre une boîte qui dit d'abord ce qu'il va
+faire : l'export annonce ce que le fichier emporte, l'import annonce ce que le fichier contient et
+avertit qu'il **écrase toutes les données** de ce navigateur. Rien n'est écrit avant le clic de
+confirmation, et un fichier importé passe la validation avant même d'être annoncé — la même
+relecture défensive que le stockage local, donc une fiche illisible est écartée sans contaminer
+le reste.
+
 ## Commandes
 
 ```bash

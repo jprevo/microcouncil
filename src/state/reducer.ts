@@ -20,6 +20,8 @@ export type AppAction =
   | { readonly type: "custom"; readonly value: string }
   | { readonly type: "subject"; readonly value: string }
   | { readonly type: "toggleTheme" }
+  /** Replaces the whole state, as an imported backup does. */
+  | { readonly type: "replaceState"; readonly state: AppState }
   /** Rejoue un conseil enregistré par-dessus l'état courant, sans toucher au catalogue. */
   | { readonly type: "loadCouncil"; readonly council: CouncilConfig }
   /** Un `target` nul crée un nouveau membre ; sinon la fiche visée est réécrite. */
@@ -204,6 +206,8 @@ export function reducer(state: AppState, action: AppAction): AppState {
       return { ...state, subject: action.value };
     case "toggleTheme":
       return { ...state, theme: state.theme === "dark" ? "light" : "dark" };
+    case "replaceState":
+      return action.state;
     case "loadCouncil":
       return loadCouncil(state, action.council);
     case "saveMember":
