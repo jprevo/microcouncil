@@ -37,7 +37,7 @@ function defaultState(): AppState {
   };
 }
 
-/** Écarte les fiches illisibles, les doublons de nom et les surcharges orphelines. */
+/** Discards unreadable entries, duplicate names, and overrides with no built-in left. */
 function asLibrary<T>(
   value: unknown,
   catalog: Catalog<T>,

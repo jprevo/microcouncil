@@ -3,7 +3,7 @@ import { EmptyMessage } from "../ui/EmptyMessage";
 import { TextField } from "../ui/TextField";
 import { searchEmojis } from "../../lib/emoji";
 
-/** Au-delà, la rangée défile sans fin sans rien apporter à la recherche. */
+/** Past this, the grid scrolls forever without making the search any more useful. */
 const MAX_RESULTS = 84;
 
 interface EmojiPickerProps {
@@ -12,7 +12,7 @@ interface EmojiPickerProps {
   readonly onPick: (icon: string) => void;
 }
 
-/** Recherche par shortcode dans la table de l'emoji cheat sheet. */
+/** Shortcode search over the emoji cheat sheet table. */
 export function EmojiPicker({ inputId, icon, onPick }: EmojiPickerProps) {
   const [query, setQuery] = useState("");
   const matches = useMemo(() => searchEmojis(query, MAX_RESULTS), [query]);

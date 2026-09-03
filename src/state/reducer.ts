@@ -22,9 +22,9 @@ export type AppAction =
   | { readonly type: "toggleTheme" }
   /** Replaces the whole state, as an imported backup does. */
   | { readonly type: "replaceState"; readonly state: AppState }
-  /** Rejoue un conseil enregistré par-dessus l'état courant, sans toucher au catalogue. */
+  /** Replays a saved council over the current state, leaving the catalog alone. */
   | { readonly type: "loadCouncil"; readonly council: CouncilConfig }
-  /** Un `target` nul crée un nouveau membre ; sinon la fiche visée est réécrite. */
+  /** A null `target` creates a new member; otherwise the entry it points to is rewritten. */
   | {
       readonly type: "saveMember";
       readonly target: LibraryTarget | null;
@@ -32,7 +32,7 @@ export type AppAction =
     }
   | { readonly type: "deleteMember"; readonly target: LibraryTarget }
   | { readonly type: "restoreMember"; readonly target: LibraryTarget }
-  /** Un `target` nul crée un nouvel environnement ; sinon la fiche visée est réécrite. */
+  /** A null `target` creates a new setting; otherwise the entry it points to is rewritten. */
   | {
       readonly type: "saveEnvironment";
       readonly target: LibraryTarget | null;
@@ -41,11 +41,11 @@ export type AppAction =
   | { readonly type: "deleteEnvironment"; readonly target: LibraryTarget }
   | { readonly type: "restoreEnvironment"; readonly target: LibraryTarget };
 
-/** Le nom porté par une fiche avant, puis après, un changement de bibliothèque. */
+/** The name an entry carried before, then after, a change to the library. */
 interface Rename {
-  /** Absent lors d'une création : aucune fiche existante n'est visée. */
+  /** Absent on a creation: no existing entry is being targeted. */
   readonly before: string | undefined;
-  /** Null lorsque la fiche visée a disparu. */
+  /** Null once the targeted entry is gone. */
   readonly after: string | null;
 }
 
@@ -53,7 +53,7 @@ interface LibraryChange<T> extends Rename {
   readonly library: Library<T>;
 }
 
-/** Rejoue un changement de bibliothèque en relevant le nom d'avant et celui d'après. */
+/** Applies a library change, noting the name before and the name after. */
 function applyChange<T>(
   catalog: Catalog<T>,
   library: Library<T>,
@@ -69,7 +69,7 @@ function applyChange<T>(
   };
 }
 
-/** Sélection triée selon l'ordre du catalogue, pour un prompt stable. */
+/** The selection sorted into catalog order, so the prompt stays stable. */
 function ordered(library: MemberLibrary, names: readonly string[]): string[] {
   return memberCatalog
     .build(library)
@@ -77,7 +77,7 @@ function ordered(library: MemberLibrary, names: readonly string[]): string[] {
     .filter((name) => names.includes(name));
 }
 
-/** Une fiche renommée reste sélectionnée ; une fiche disparue quitte la sélection. */
+/** A renamed entry stays selected; one that disappeared drops out of the selection. */
 function renameSelected(
   names: readonly string[],
   { before, after }: Rename,
@@ -88,7 +88,7 @@ function renameSelected(
   return [...without, after];
 }
 
-/** La même règle, pour une sélection unique. */
+/** The same rule, for a single-value selection. */
 function renameSelectedOne(
   selected: string | null,
   { before, after }: Rename,
@@ -97,7 +97,7 @@ function renameSelectedOne(
   return after;
 }
 
-/** Applique un changement au catalogue des membres en réalignant la sélection. */
+/** Applies a change to the member catalog, realigning the selection with it. */
 function withMembers(
   state: AppState,
   target: LibraryTarget | null,
@@ -114,7 +114,7 @@ function withMembers(
   };
 }
 
-/** Applique un changement au catalogue des environnements en suivant la sélection. */
+/** Applies a change to the setting catalog, keeping the selection in step. */
 function withEnvironments(
   state: AppState,
   target: LibraryTarget | null,
@@ -134,10 +134,10 @@ function withEnvironments(
 }
 
 /**
- * Restitue un conseil enregistré. Chaque fiche est réécrite dans l'emplacement
- * qu'elle occupait : une fiche renommée ou réécrite depuis reprend sa version
- * d'alors, une fiche supprimée revient dans le catalogue. Le conseil est donc
- * rendu tel qu'il était, quoi qu'il soit advenu du catalogue entre-temps.
+ * Restores a saved council. Every entry is written back into the slot it filled:
+ * one renamed or rewritten since gets its old version back, one deleted since
+ * reappears in the catalog. The council therefore comes back exactly as it was,
+ * whatever happened to the catalog in the meantime.
  */
 function loadCouncil(state: AppState, council: CouncilConfig): AppState {
   let memberLibrary = state.memberLibrary;

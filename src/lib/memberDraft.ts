@@ -7,9 +7,9 @@ export interface MemberDraft {
   readonly icon: string;
   readonly job: string;
   readonly description: string;
-  /** Traits séparés par des virgules. */
+  /** Traits, comma-separated. */
   readonly traits: string;
-  /** Mots-clés de recherche séparés par des virgules. */
+  /** Search keywords, comma-separated. */
   readonly tags: string;
 }
 
@@ -36,7 +36,7 @@ export function draftOf(member: Member): MemberDraft {
   };
 }
 
-/** Découpe une saisie « a, b, c » en entrées propres, sans vide ni doublon. */
+/** Turns an "a, b, c" input into clean entries, with no blanks and no duplicates. */
 function splitList(value: string): string[] {
   const entries = value
     .split(",")

@@ -7,14 +7,14 @@ interface TileProps {
   readonly selected: boolean;
   readonly onClick: () => void;
   readonly children: ReactNode;
-  /** Vrai dans un `radiogroup` : la sélection est unique et la tabulation itinérante. */
+  /** True inside a `radiogroup`: the selection is single, and tab focus roams. */
   readonly radio?: boolean;
   readonly tabIndex?: number;
   readonly hint?: string;
   readonly buttonRef?: Ref<HTMLButtonElement>;
 }
 
-/** Coquille commune aux fiches : icône, corps, coche. */
+/** The shell every tile shares: icon, body, check mark. */
 export function Tile({
   icon,
   selected,

@@ -17,7 +17,7 @@ import { useToast } from "../../toast/useToast";
 
 const NAME_LIMIT = 48;
 
-/** Un nom déjà rempli : la première ligne du sujet, à défaut la date du jour. */
+/** A name filled in already: the first line of the subject, else today's date. */
 function suggestName(subject: string): string {
   const line = subject.trim().split("\n")[0]?.trim() ?? "";
   if (line === "") return `Conseil du ${formatDate(Date.now())}`;
@@ -50,8 +50,8 @@ export function SaveDialog({ onClose }: { readonly onClose: () => void }) {
     )
       return;
 
-    // Les fiches partent entières, pas seulement leurs noms : c'est ce qui permet
-    // de rendre le conseil intact même si le catalogue a changé depuis.
+    // Whole entries are stored, not just their names: that is what lets the council
+    // come back intact even after the catalog has changed.
     save(label, {
       username: state.username,
       members: members.map((member) => ({

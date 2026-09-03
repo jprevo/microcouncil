@@ -4,7 +4,7 @@ import { useAppDispatch } from "../../state/hooks";
 import { useToast } from "../../toast/useToast";
 import type { CouncilSave } from "../../types";
 
-/** Au-delà, les emoji restants sont comptés plutôt qu'affichés : les lignes restent régulières. */
+/** Past this, the remaining emoji are counted rather than shown, so rows stay even. */
 const ICON_LIMIT = 7;
 
 interface SaveRowProps {

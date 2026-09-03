@@ -13,7 +13,7 @@ function haystack(member: Member): string {
   );
 }
 
-/** Filtre le catalogue sur le nom, le métier, la description, les traits et les tags. */
+/** Filters the catalog on name, job, description, traits and tags. */
 export function filterMembers<T extends Member>(
   members: readonly T[],
   query: string,

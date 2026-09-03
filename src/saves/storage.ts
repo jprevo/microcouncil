@@ -4,10 +4,10 @@ import type { CouncilSave, Environment, Member, SavedEntry } from "../types";
 
 const STORAGE_KEY = "microcouncil.saves.v2";
 
-/** Au-delà, les sauvegardes les plus anciennes cèdent la place aux nouvelles. */
+/** Past this count, the oldest saves make room for new ones. */
 export const MAX_SAVES = 100;
 
-/** Relit une fiche enregistrée et son emplacement, ou null si l'une des deux manque. */
+/** Reads back a saved entry and its slot, or null when either one is missing. */
 function asEntry<T>(
   value: unknown,
   asItem: (value: unknown) => T | null,
@@ -20,7 +20,7 @@ function asEntry<T>(
   return { target, item, edited: record["edited"] === true };
 }
 
-/** Relit une sauvegarde enregistrée, ou null si elle n'a pas la forme attendue. */
+/** Reads back a stored save, or null when it does not have the expected shape. */
 function asSave(value: unknown): CouncilSave | null {
   const record = asRecord(value);
   if (record === null) return null;
@@ -69,7 +69,7 @@ export function parseSaves(value: unknown): readonly CouncilSave[] {
   return sortAndTrim(saves);
 }
 
-/** La liste enregistrée, de la plus récente à la plus ancienne. */
+/** The stored list, newest first. */
 export function readSaves(): readonly CouncilSave[] {
   return parseSaves(readJson(STORAGE_KEY));
 }
@@ -78,19 +78,19 @@ export function writeSaves(saves: readonly CouncilSave[]): void {
   writeJson(STORAGE_KEY, saves);
 }
 
-/** Range par date décroissante et abandonne les plus vieilles au-delà de la limite. */
+/** Sorts newest first and drops the oldest ones past the limit. */
 export function sortAndTrim(
   saves: readonly CouncilSave[],
 ): readonly CouncilSave[] {
   return [...saves].sort((a, b) => b.savedAt - a.savedAt).slice(0, MAX_SAVES);
 }
 
-/** Identifiant opaque et stable, même là où `randomUUID` n'existe pas. */
+/** An opaque, stable id, even where `randomUUID` is unavailable. */
 export function newSaveId(): string {
   const uuid = globalThis.crypto?.randomUUID?.();
   return (
     uuid ??
-    // Repli sans portée cryptographique : un identifiant de liste, pas un secret.
+    // Fallback with no cryptographic ambition: this is a list key, not a secret.
     // eslint-disable-next-line sonarjs/pseudo-random
     `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
   );

@@ -5,7 +5,7 @@ import { useAppDispatch } from "../../state/hooks";
 import type { CatalogEnvironment } from "../../types";
 
 interface EnvironmentEditorProps {
-  /** La fiche à modifier, ou null pour en créer une. */
+  /** The entry to edit, or null to create a new one. */
   readonly environment: CatalogEnvironment | null;
   readonly titleId: string;
   readonly onClose: () => void;

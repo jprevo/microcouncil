@@ -1,7 +1,7 @@
 import { asRecord, asString, asStringArray } from "./json";
 import type { Environment, LibraryTarget, Member } from "../types";
 
-/** Relit une fiche de membre enregistrée, ou null si elle n'a pas la forme attendue. */
+/** Reads a stored member back, or null when it does not have the expected shape. */
 export function asMember(value: unknown): Member | null {
   const record = asRecord(value);
   if (record === null) return null;
@@ -16,7 +16,7 @@ export function asMember(value: unknown): Member | null {
   return member.name === "" || member.icon === "" ? null : member;
 }
 
-/** Relit un environnement enregistré, ou null s'il n'a pas la forme attendue. */
+/** Reads a stored setting back, or null when it does not have the expected shape. */
 export function asEnvironment(value: unknown): Environment | null {
   const record = asRecord(value);
   if (record === null) return null;
@@ -31,7 +31,7 @@ export function asEnvironment(value: unknown): Environment | null {
     : environment;
 }
 
-/** Relit l'emplacement de catalogue qu'une fiche occupait, ou null s'il est illisible. */
+/** Reads back the catalog slot an entry used to fill, or null when it is unreadable. */
 export function asTarget(value: unknown): LibraryTarget | null {
   const record = asRecord(value);
   if (record === null) return null;

@@ -12,7 +12,7 @@ import { useAppDispatch, useAppState } from "../../state/hooks";
 import { useToast } from "../../toast/useToast";
 import type { CatalogMember } from "../../types";
 
-/** Brouillon de membre : saisie, validation, puis enregistrement dans le catalogue. */
+/** A member being drafted: typed, validated, then written into the catalog. */
 export function useMemberDraft(
   member: CatalogMember | null,
   onSaved: () => void,

@@ -1,4 +1,4 @@
-/** Lectures défensives d'un JSON relu depuis le stockage : jamais d'exception, jamais de `any`. */
+/** Defensive reads of JSON coming back from storage: never throws, never uses `any`. */
 
 export function asRecord(value: unknown): Record<string, unknown> | null {
   if (typeof value !== "object" || value === null) return null;
@@ -19,7 +19,7 @@ export function asNumber(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-/** Relit une valeur du stockage local, ou null si elle est absente ou illisible. */
+/** Reads a value back from local storage, or null when it is missing or unreadable. */
 export function readJson(key: string): unknown {
   let raw: string | null;
   try {
@@ -35,11 +35,11 @@ export function readJson(key: string): unknown {
   }
 }
 
-/** Écrit dans le stockage local. Un échec — mode privé, quota — reste sans effet. */
+/** Writes to local storage. A failure — private mode, quota — is simply ignored. */
 export function writeJson(key: string, value: unknown): void {
   try {
     globalThis.localStorage?.setItem(key, JSON.stringify(value));
   } catch {
-    // Mode privé ou stockage plein : l'application reste utilisable sans persistance.
+    // Private mode or storage full: the app still works, it just won't remember.
   }
 }

@@ -3,7 +3,7 @@ interface TileEditButtonProps {
   readonly onClick: () => void;
 }
 
-/** Crayon d'édition, épinglé dans le coin de la fiche. */
+/** Edit pencil, pinned in the corner of the tile. */
 export function TileEditButton({ label, onClick }: TileEditButtonProps) {
   return (
     <button

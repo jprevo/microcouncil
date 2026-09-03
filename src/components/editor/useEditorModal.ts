@@ -2,14 +2,14 @@ import { useCallback, useState } from "react";
 
 export interface EditorModal<T> {
   readonly open: boolean;
-  /** La fiche éditée, ou null lorsqu'il s'agit d'une création. */
+  /** The entry being edited, or null when one is being created. */
   readonly entry: T | null;
   readonly create: () => void;
   readonly edit: (entry: T) => void;
   readonly close: () => void;
 }
 
-/** Ouverture et fermeture d'une boîte d'édition, quelle que soit la fiche visée. */
+/** Opens and closes an editor dialog, whatever kind of entry it is aimed at. */
 export function useEditorModal<T>(): EditorModal<T> {
   const [open, setOpen] = useState(false);
   const [entry, setEntry] = useState<T | null>(null);

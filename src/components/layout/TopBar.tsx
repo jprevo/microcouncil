@@ -8,7 +8,7 @@ export function TopBar() {
     <header className="topbar">
       <div className="topbar__inner">
         <Brand />
-        {/* Les deux gestes sur le conseil vont ensemble ; le thème est d'un autre ordre. */}
+        {/* The two council actions belong together; the theme is a different kind of thing. */}
         <div className="topbar__actions">
           <SaveButton />
           <LoadButton />

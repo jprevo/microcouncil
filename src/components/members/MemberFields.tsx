@@ -9,7 +9,7 @@ interface MemberFieldsProps {
   readonly onChange: (patch: Partial<MemberDraft>) => void;
 }
 
-/** Les champs d'une fiche de membre, sans aucune logique d'enregistrement. */
+/** The fields of a member entry, with no saving logic of their own. */
 export function MemberFields({ draft, onChange }: MemberFieldsProps) {
   return (
     <>

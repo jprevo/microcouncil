@@ -186,10 +186,9 @@ export function createCatalog<T>(
   ): Reinstated<T> => {
     const slot = entryAt(library, target) === undefined ? null : target;
 
-    // Une fiche livrée qui n'avait pas été retouchée se rétablit en retirant la
-    // surcharge. Le nom livré est toujours libre : `takenNames` le réserve à son
-    // built-in tant que celui-ci existe, donc ce retour ne peut pas entrer en
-    // collision.
+    // An untouched built-in comes back by dropping the override. Its shipped name is
+    // always available: `takenNames` reserves that name for the built-in as long as it
+    // exists, so putting the card back can never collide.
     if (slot !== null && slot.kind === "builtin" && !edited) {
       const next = restore(library, slot);
       const back = entryAt(next, slot);

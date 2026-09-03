@@ -219,8 +219,8 @@ code {
   }
 
   /*
-   * La colonne tient dans la fenêtre : l'aperçu se comprime et scrolle en interne,
-   * de sorte que le bouton « Copier » reste atteignable sans dérouler toute la page.
+   * The column fits the viewport: the preview shrinks and scrolls inside itself, so
+   * the copy button stays reachable without scrolling the whole page.
    */
   .output {
     position: sticky;
@@ -282,8 +282,8 @@ code {
 }
 
 /*
- * Intitules de section : micro-libelle en capitales espacees, dans la sans de l'interface.
- * La serif d'affichage reste reservee au titre du site, ou sa taille lui rend justice.
+ * Section headings: a small all-caps label with wide tracking, in the UI sans.
+ * The display serif stays reserved for the site title, where its size earns it.
  */
 .card h2 {
   display: flex;
@@ -458,7 +458,7 @@ code {
   border-color: var(--border-strong);
 }
 
-/* Sans libellé, la pilule se resserre autour de son icône. */
+/* With no label, the pill tightens around its icon. */
 .icon-button--bare {
   padding-inline: 10px;
 }
@@ -560,7 +560,7 @@ code {
   color: var(--text-muted);
 }
 
-/* Description complète, révélée à la sélection : présente mais en retrait. */
+/* Full description, revealed on selection: present, but understated. */
 .tile[aria-pressed="true"] .tile__desc {
   margin-top: 4px;
   padding-top: 5px;
@@ -612,7 +612,7 @@ code {
   display: none;
 }
 
-/* Fiche modifiable : le crayon vit a cote du bouton, jamais dedans. */
+/* An editable tile: the pencil sits beside the button, never inside it. */
 .tile-slot {
   position: relative;
   display: flex;
@@ -624,7 +624,7 @@ code {
   min-width: 0;
 }
 
-/* Le crayon occupe le coin : le corps et la coche reculent d'autant. */
+/* The pencil takes the corner, so the body and the check mark step aside. */
 .tile-slot .tile__body {
   padding-right: 34px;
 }
@@ -667,7 +667,7 @@ code {
   color: var(--text);
 }
 
-/* Sans survol possible, le crayon reste visible en permanence. */
+/* Where hover is unavailable, the pencil stays visible at all times. */
 @media (hover: none) {
   .tile__edit {
     opacity: 1;
@@ -759,7 +759,7 @@ code {
   padding-block: 10px;
 }
 
-/* Le téléchargement reste possible, mais discret sous les actions principales. */
+/* Downloading stays available, but quiet, below the main actions. */
 .output__actions-aside {
   display: flex;
   justify-content: center;
@@ -856,7 +856,7 @@ code {
   background: var(--surface-soft);
 }
 
-/* `text-transform` neutralise : une boite de dialogue peut vivre dans une carte. */
+/* `text-transform` reset: a dialog can live inside a card. */
 .modal__head h2 {
   font-family: var(--font-display);
   font-size: 19px;
@@ -935,7 +935,7 @@ code {
 .modal__section {
   display: grid;
   gap: 8px;
-  /* Sans cela, une commande longue élargirait la boîte au lieu de défiler. */
+  /* Without this, a long command would widen the dialog instead of scrolling. */
   min-width: 0;
 }
 
@@ -1014,7 +1014,7 @@ code {
   border-color: var(--border-strong);
 }
 
-/* -------------------------------------------------- editeur de membre */
+/* ------------------------------------------------------- member editor */
 .form-field {
   display: grid;
   gap: 6px;
@@ -1040,7 +1040,7 @@ code {
   min-width: 0;
 }
 
-/* L'apercu se cale sur le champ de recherche, pas sur le bloc entier. */
+/* The preview aligns with the search field, not with the whole block. */
 .emoji__head {
   display: flex;
   align-items: flex-start;
@@ -1064,7 +1064,7 @@ code {
   min-width: 0;
 }
 
-/* Une seule rangee, qui defile : la grille mangeait la moitie du formulaire. */
+/* A single scrolling row: the grid was eating half the form. */
 .emoji__grid {
   display: flex;
   gap: 4px;
@@ -1103,7 +1103,7 @@ code {
   border-color: var(--accent);
 }
 
-/* ------------------------------------------------------------ sauvegardes */
+/* ------------------------------------------------------------------ saves */
 .saves {
   display: grid;
   gap: 8px;
@@ -1143,7 +1143,7 @@ code {
   color: var(--text);
 }
 
-/* Quatre colonnes fixes : deux rangées au plus, et des lignes de même hauteur. */
+/* Four fixed columns: two rows at most, and rows all the same height. */
 .save__icons {
   flex: 0 0 auto;
   display: grid;

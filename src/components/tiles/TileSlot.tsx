@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 interface TileSlotProps {
   readonly children: ReactNode;
-  /** Contrôle superposé à la fiche : un bouton ne peut pas en contenir un autre. */
+  /** Control laid over the tile: a button cannot be nested inside another one. */
   readonly action: ReactNode;
 }
 

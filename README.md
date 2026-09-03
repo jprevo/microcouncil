@@ -59,7 +59,7 @@ npm install
 | `npm run build`     | **Produit `dist/`** : typecheck strict, puis build de production (HTML, CSS et JS avec empreinte).                                                  |
 | `npm run preview`   | Sert `dist/` en local, pour vérifier le build de production avant livraison.                                                                        |
 | `npm run skill`     | **Régénère `skill/`** : le skill agent, à jour des compagnons, des environnements et du gabarit.                                                    |
-| `npm run emoji`     | **Régénère `src/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes.                                                            |
+| `npm run emoji`     | **Régénère `src/data/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes.                                                       |
 
 `dist/` est un site statique ordinaire : à déposer tel quel derrière n'importe quel serveur
 de fichiers (ou sur GitHub Pages, Netlify…). Les chemins sont relatifs, donc il fonctionne
@@ -143,7 +143,7 @@ Le découpage privilégie des composants très courts, à responsabilité unique
 - `src/lib/` et `src/prompt.ts`, `src/storage.ts` — la logique pure, sans React,
   testable et réutilisable telle quelle.
 
-Les catalogues affichés ne sont jamais `src/members.json` et `src/environments.json` tels quels :
+Les catalogues affichés ne sont jamais `src/data/members.json` et `src/data/environments.json` tels quels :
 `src/lib/library.ts` superpose à un catalogue livré une **bibliothèque locale** — les fiches créées
 par l'utilisateur, et les surcharges des fiches livrées, indexées par leur nom d'origine. C'est ce
 qui permet de rétablir une fiche livrée après l'avoir réécrite, ou renommée. Une fiche renommée
@@ -174,12 +174,12 @@ demanderait de doter les fiches personnelles d'un identifiant stable.
 
 Tout le contenu éditorial vit hors du code :
 
-- `src/members.json` — le catalogue des compagnons (`name`, `icon`, `job`, `description`, `traits`,
+- `src/data/members.json` — le catalogue des compagnons (`name`, `icon`, `job`, `description`, `traits`,
   `tags`) ; les `tags` sont des mots-clés de recherche : ils alimentent le filtre du catalogue mais
   n'apparaissent jamais dans le prompt ;
-- `src/environments.json` — les décors (`title`, `icon`, `summary`, `description`) ; le `summary`
+- `src/data/environments.json` — les décors (`title`, `icon`, `summary`, `description`) ; le `summary`
   est la phrase affichée sur la fiche : il n'apparaît jamais dans le prompt ;
-- `src/emoji.json` — la table `shortcode -> caractère` du sélecteur d'icônes, **produite** par
+- `src/data/emoji.json` — la table `shortcode -> caractère` du sélecteur d'icônes, **produite** par
   `npm run emoji` à partir de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet)
   (l'ordre et les shortcodes) et de l'API emoji de GitHub (les caractères eux-mêmes) ;
 - `docs/data/prompt.md` — le gabarit du prompt, avec les jetons `{{username}}`, `{{membres}}`,

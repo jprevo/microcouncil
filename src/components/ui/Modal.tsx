@@ -8,7 +8,7 @@ interface ModalProps {
   readonly children: ReactNode;
 }
 
-/** Boîte de dialogue native : focus piégé et fond bloquant viennent de `<dialog>`. */
+/** Native dialog: `<dialog>` provides both the focus trap and the blocking backdrop. */
 export function Modal({ open, labelledBy, onClose, children }: ModalProps) {
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -17,8 +17,8 @@ export function Modal({ open, labelledBy, onClose, children }: ModalProps) {
     if (dialog === null) return;
     if (open && !dialog.open) {
       dialog.showModal();
-      // `showModal` vise le premier élément focalisable — souvent la croix de
-      // fermeture. Une boîte qui désigne son champ d'entrée reprend la main.
+      // `showModal` focuses the first focusable element, often the close cross. A
+      // dialog that names its own input field takes that choice back.
       const target = dialog.querySelector<HTMLElement>("[data-autofocus]");
       target?.focus();
       if (target instanceof HTMLInputElement) target.select();
@@ -26,12 +26,12 @@ export function Modal({ open, labelledBy, onClose, children }: ModalProps) {
     if (!open && dialog.open) dialog.close();
   }, [open]);
 
-  // Un clic sur l'arrière-plan vise l'élément `dialog` lui-même, jamais le panneau.
+  // A click on the backdrop lands on the `dialog` element itself, never on the panel.
   const onBackdropClick = (event: MouseEvent<HTMLDialogElement>): void => {
     if (event.target === event.currentTarget) onClose();
   };
 
-  // Certains navigateurs embarqués n'émettent pas la demande de fermeture native sur Échap.
+  // Some embedded browsers never fire the native close request on Escape.
   const onEscape = (event: KeyboardEvent<HTMLDialogElement>): void => {
     if (event.key === "Escape") onClose();
   };

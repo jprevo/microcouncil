@@ -1,20 +1,20 @@
 interface IconButtonProps {
   readonly glyph: string;
-  /** Libellé visible, et nom accessible par défaut. */
+  /** The visible label, and the accessible name unless overridden. */
   readonly label: string;
-  /** Nom accessible, lorsqu'il doit dire autre chose que le libellé. */
+  /** Accessible name, for when it needs to say something other than the label. */
   readonly ariaLabel?: string;
   readonly onClick: () => void;
-  /** Décompte affiché après le libellé ; zéro n'affiche rien. */
+  /** Count shown after the label; zero shows nothing. */
   readonly count?: number;
-  /** Le libellé quitte l'écran mais reste annoncé : l'icône se suffit. */
+  /** The label leaves the screen but is still announced: the icon carries it. */
   readonly iconOnly?: boolean;
   readonly hasPopup?: boolean;
-  /** Annonce le changement de libellé, pour un bouton qui bascule. */
+  /** Announces the label changing, for a button that toggles. */
   readonly live?: boolean;
 }
 
-/** Pilule de la barre du haut et du pied de page : une icône, un libellé, parfois un compte. */
+/** The pill used in the top bar and the footer: an icon, a label, sometimes a count. */
 export function IconButton({
   glyph,
   label,

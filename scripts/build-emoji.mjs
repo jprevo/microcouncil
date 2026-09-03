@@ -1,5 +1,5 @@
 /**
- * Regenerates src/emoji.json — the shortcode -> character table used by the emoji
+ * Regenerates src/data/emoji.json — the shortcode -> character table used by the emoji
  * picker when creating or editing a council member.
  *
  *   npm run emoji
@@ -20,7 +20,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const TARGET = join(ROOT, "src", "emoji.json");
+const TARGET = join(ROOT, "src", "data", "emoji.json");
 
 const CHEAT_SHEET_URL =
   "https://raw.githubusercontent.com/ikatyang/emoji-cheat-sheet/master/README.md";
@@ -90,5 +90,5 @@ if (count < 1000)
 
 writeFileSync(TARGET, `${JSON.stringify(table, null, 0)}\n`, "utf8");
 console.log(
-  `\n  ✅  src/emoji.json — ${count} shortcodes (${missing} without a Unicode character).\n`,
+  `\n  ✅  src/data/emoji.json — ${count} shortcodes (${missing} without a Unicode character).\n`,
 );

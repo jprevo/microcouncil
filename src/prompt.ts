@@ -3,26 +3,26 @@ import type { Environment, Member } from "./types";
 
 const USERNAME_FALLBACK = "l'utilisateur";
 
-/** Le nom tel qu'il se lira dans le prompt : la saisie, ou une tournure neutre si elle est vide. */
+/** The name as the prompt will read it: what was typed, or a neutral stand-in when nothing was. */
 export function resolveUsername(username: string): string {
   const trimmed = username.trim();
   return trimmed === "" ? USERNAME_FALLBACK : trimmed;
 }
 
 /**
- * Nombre moyen de caractères par token. Les tokeniseurs BPE (Claude, GPT, Gemini)
- * diffèrent les uns des autres, mais découpent tous le français autour de 3,5 à 3,8
- * caractères par token — sensiblement moins bien que l'anglais, d'où vient
- * l'approximation courante de 4 caractères. L'affichage reste donc explicitement approché.
+ * Average characters per token. BPE tokenizers (Claude, GPT, Gemini) all differ,
+ * but they all split French at roughly 3.5 to 3.8 characters per token — noticeably
+ * worse than English, which is where the familiar 4-character rule of thumb comes
+ * from. The figure is shown as an estimate for that reason.
  */
 const CHARS_PER_TOKEN = 3.6;
 
-/** Estimation du coût en tokens du prompt, à titre indicatif. */
+/** Rough token cost of the prompt, for guidance only. */
 export function estimateTokens(text: string): number {
   return Math.ceil(text.length / CHARS_PER_TOKEN);
 }
 
-/** Remplace un placeholder sans jamais interpréter les motifs `$&`, `$1`… du remplacement. */
+/** Fills a placeholder without ever expanding `$&`, `$1`… patterns in the replacement. */
 function fill(template: string, placeholder: string, value: string): string {
   return template.split(`{{${placeholder}}}`).join(value);
 }
@@ -51,9 +51,9 @@ export interface PromptInput {
 }
 
 /**
- * Retire du gabarit la section `##` dont le corps se résume à ce jeton : une section
- * restée vide n'apporte rien au modèle. Opère avant substitution, donc le contenu
- * saisi par l'utilisateur ne peut jamais être confondu avec un titre.
+ * Drops the `##` section whose whole body is this token: an empty section teaches
+ * the model nothing. It runs before substitution, so text the user typed can never
+ * be mistaken for a heading.
  */
 function dropSection(template: string, placeholder: string): string {
   const lines = template.split("\n");
@@ -62,7 +62,7 @@ function dropSection(template: string, placeholder: string): string {
   );
   if (tokenIndex === -1) return template;
 
-  // `## ` (avec l'espace) ne peut pas confondre un titre de section et un `###` de fiche.
+  // `## ` (with the space) tells a section heading apart from an entry's `###`.
   let start = tokenIndex;
   while (start > 0 && !(lines[start] ?? "").startsWith("## ")) start -= 1;
   if (!(lines[start] ?? "").startsWith("## ")) return template;
@@ -74,17 +74,17 @@ function dropSection(template: string, placeholder: string): string {
   return lines.join("\n");
 }
 
-/** Construit le prompt final à partir du gabarit de docs/data/prompt.md. */
+/** Builds the final prompt from the docs/data/prompt.md template. */
 export function buildPrompt(input: PromptInput): string {
   const username = resolveUsername(input.username);
   const custom = input.customInstructions.trim();
   const subject = input.subject.trim();
 
-  const membres =
+  const memberSection =
     input.members.length > 0
       ? input.members.map(renderMember).join("\n\n")
       : "_Aucun membre sélectionné._";
-  const environment =
+  const environmentSection =
     input.environment === null
       ? "_Aucun environnement sélectionné._"
       : renderEnvironment(input.environment);
@@ -93,11 +93,11 @@ export function buildPrompt(input: PromptInput): string {
   if (custom === "") output = dropSection(output, "custom");
   if (subject === "") output = dropSection(output, "subject");
 
-  output = fill(output, "membres", membres);
-  output = fill(output, "environment", environment);
+  output = fill(output, "membres", memberSection);
+  output = fill(output, "environment", environmentSection);
   output = fill(output, "custom", custom);
   output = fill(output, "subject", subject);
-  // En dernier : le nom peut aussi apparaître dans les fiches et l'environnement.
+  // Last, because the name can also appear inside the entries and the setting.
   output = fill(output, "username", username);
 
   return `${output.trimEnd()}\n`;

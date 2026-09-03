@@ -5,7 +5,7 @@ interface AddEntryButtonProps {
   readonly onClick: () => void;
 }
 
-/** Appel à l'action en bas d'une liste : créer une fiche de toutes pièces. */
+/** Call to action at the foot of a list: create an entry from scratch. */
 export function AddEntryButton({ label, onClick }: AddEntryButtonProps) {
   return (
     <button

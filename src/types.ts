@@ -4,7 +4,7 @@ export interface Member {
   readonly job: string;
   readonly description: string;
   readonly traits: readonly string[];
-  /** Mots-clés de recherche : jamais affichés dans le prompt, seulement indexés. */
+  /** Search keywords: indexed only, never shown in the prompt. */
   readonly tags: readonly string[];
 }
 
@@ -53,38 +53,38 @@ export type Theme = "light" | "dark";
 
 export interface AppState {
   username: string;
-  /** Noms des membres sélectionnés, dans l'ordre du catalogue. */
+  /** Names of the selected members, in catalog order. */
   selectedMembers: string[];
-  /** Titre de l'environnement sélectionné, ou null. */
+  /** Title of the selected setting, or null when none is picked. */
   selectedEnvironment: string | null;
   customInstructions: string;
   subject: string;
   theme: Theme;
-  /** Membres ajoutés ou modifiés localement, superposés au catalogue livré. */
+  /** Locally added or edited members, layered over the shipped catalog. */
   memberLibrary: MemberLibrary;
-  /** Environnements ajoutés ou modifiés localement, superposés au catalogue livré. */
+  /** Locally added or edited settings, layered over the shipped catalog. */
   environmentLibrary: EnvironmentLibrary;
 }
 
 /**
- * Une fiche telle qu'elle était à l'enregistrement, avec l'emplacement qu'elle
- * occupait. Le nom seul ne suffirait pas : une fiche renommée, réécrite ou
- * supprimée depuis laisserait le conseil amputé.
+ * An entry as it stood when the council was saved, together with the slot it
+ * occupied. The name alone would not be enough: an entry renamed, rewritten or
+ * deleted since would come back missing from the council.
  */
 export interface SavedEntry<T> {
   readonly target: LibraryTarget;
   readonly item: T;
   /**
-   * Vrai si la fiche portait une retouche locale. Une fiche livrée intacte se
-   * rétablit en retirant la surcharge, sans quoi le catalogue se remplirait de
-   * copies conformes marquées « modifié ».
+   * True when the entry carried a local edit. An untouched built-in is restored
+   * by dropping the override instead, otherwise the catalog would fill up with
+   * identical copies all flagged as edited.
    */
   readonly edited: boolean;
 }
 
 /**
- * Ce qu'une sauvegarde restitue : le conseil et les fiches sur lesquelles il est
- * bâti. Le thème, lui, est un réglage d'affichage et ne voyage pas.
+ * What a save restores: the council, plus the entries it is built on. The theme
+ * is a display preference and deliberately stays behind.
  */
 export interface CouncilConfig {
   readonly username: string;
@@ -94,10 +94,10 @@ export interface CouncilConfig {
   readonly subject: string;
 }
 
-/** Un conseil rangé en mémoire, sous le nom que l'utilisateur lui a donné. */
+/** A council kept in storage, under the name the user gave it. */
 export interface CouncilSave extends CouncilConfig {
   readonly id: string;
   readonly name: string;
-  /** Horodatage de l'enregistrement, qui classe la liste et désigne la plus vieille. */
+  /** When it was saved: orders the list, and identifies the oldest save. */
   readonly savedAt: number;
 }

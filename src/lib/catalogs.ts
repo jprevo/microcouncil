@@ -1,7 +1,7 @@
 import { createCatalog } from "./library";
 import { ENVIRONMENTS, MEMBERS } from "../data";
 
-/** Les deux catalogues de l'application, livrés puis recouverts par les éditions locales. */
+/** The app's two catalogs: what ships, with local edits layered on top. */
 export const memberCatalog = createCatalog(
   MEMBERS,
   (member) => member.name,

@@ -12,7 +12,7 @@ interface EnvironmentsGridProps {
   readonly onEdit: (environment: CatalogEnvironment) => void;
 }
 
-/** Tabulation itinérante : le groupe radio garde toujours un point d'entrée au clavier. */
+/** Roving tab index: the radio group always keeps one keyboard entry point. */
 function focusableTitle(
   catalog: readonly CatalogEnvironment[],
   selected: string | null,

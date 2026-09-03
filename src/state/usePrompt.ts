@@ -3,7 +3,7 @@ import { buildPrompt } from "../prompt";
 import { useAppState } from "./hooks";
 import { useSelectedEnvironment, useSelectedMembers } from "./selectors";
 
-/** Le prompt final, recalculé à chaque changement de l'état. */
+/** The final prompt, recomputed whenever the state changes. */
 export function usePrompt(): string {
   const { username, customInstructions, subject } = useAppState();
   const members = useSelectedMembers();

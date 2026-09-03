@@ -5,7 +5,7 @@ import { useAppDispatch } from "../../state/hooks";
 import type { CatalogMember } from "../../types";
 
 interface MemberEditorProps {
-  /** La fiche à modifier, ou null pour en créer une. */
+  /** The entry to edit, or null to create a new one. */
   readonly member: CatalogMember | null;
   readonly titleId: string;
   readonly onClose: () => void;

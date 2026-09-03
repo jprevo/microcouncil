@@ -12,7 +12,7 @@ import { useAppDispatch, useAppState } from "../../state/hooks";
 import { useToast } from "../../toast/useToast";
 import type { CatalogEnvironment } from "../../types";
 
-/** Brouillon d'environnement : saisie, validation, puis enregistrement dans le catalogue. */
+/** A setting being drafted: typed, validated, then written into the catalog. */
 export function useEnvironmentDraft(
   environment: CatalogEnvironment | null,
   onSaved: () => void,

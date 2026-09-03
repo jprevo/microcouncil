@@ -6,8 +6,8 @@ import { normalize } from "../lib/text";
 import type { CouncilConfig, CouncilSave } from "../types";
 
 /**
- * Les conseils enregistrés, tenus à part de l'état de l'application : les modifier
- * ne rejoue pas le prompt, et taper dans le sujet ne réécrit pas la liste.
+ * Saved councils, kept apart from the app state: changing them does not rebuild the
+ * prompt, and typing in the subject field does not rewrite the list.
  */
 export function SavesProvider({ children }: { readonly children: ReactNode }) {
   const [saves, setSaves] = useState<readonly CouncilSave[]>(readSaves);

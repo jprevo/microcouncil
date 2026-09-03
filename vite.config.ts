@@ -3,11 +3,11 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   root: "src",
-  // Chemins relatifs : dist/ se sert depuis la racine d'un domaine comme depuis un sous-chemin.
+  // Relative paths: dist/ is served from a domain root and from a sub-path alike.
   base: "./",
   plugins: [react()],
   server: {
-    // Le gabarit du prompt et les instructions d'exemple vivent dans docs/data.
+    // The prompt template and the example instructions live in docs/data.
     fs: { allow: [".."] },
   },
   build: {

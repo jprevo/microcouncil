@@ -16,7 +16,7 @@ export function SaveButton() {
         hasPopup
         onClick={() => setOpen(true)}
       />
-      {/* Monté seulement à l'ouverture : le nom proposé suit le sujet du moment. */}
+      {/* Mounted only once open, so the suggested name follows the current subject. */}
       <Modal open={open} labelledBy="save-title" onClose={close}>
         {open ? <SaveDialog onClose={close} /> : null}
       </Modal>

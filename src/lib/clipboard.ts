@@ -1,4 +1,4 @@
-/** Repli pour les contextes non sécurisés (fichier local ouvert sans serveur). */
+/** Fallback for insecure contexts, such as the page opened as a local file. */
 function copyViaScratchArea(text: string): boolean {
   const scratch = document.createElement("textarea");
   scratch.value = text;
@@ -9,7 +9,7 @@ function copyViaScratchArea(text: string): boolean {
   scratch.select();
   let copied: boolean;
   try {
-    // `execCommand` est obsolète mais reste le seul recours hors contexte sécurisé.
+    // `execCommand` is deprecated, but it is the only option outside a secure context.
     // eslint-disable-next-line sonarjs/deprecation
     copied = document.execCommand("copy");
   } catch {

@@ -1,4 +1,4 @@
-import emojiTable from "../emoji.json";
+import emojiTable from "../data/emoji.json";
 import { normalize } from "./text";
 
 /** Shortcode -> character, generated from the emoji cheat sheet by `npm run emoji`. */

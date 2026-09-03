@@ -9,7 +9,7 @@ const STEPS: Readonly<Record<string, number>> = {
   ArrowUp: -1,
 };
 
-/** Navigation aux flèches dans le groupe radio des environnements. */
+/** Arrow-key navigation inside the settings radio group. */
 export function useEnvironmentKeys(
   environments: readonly Environment[],
   focus: (title: string) => void,

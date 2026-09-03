@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export interface DraftForm<D> {
   readonly draft: D;
-  /** Message de validation, affiché seulement après une tentative d'enregistrement. */
+  /** Validation message, shown only once saving has been attempted. */
   readonly error: string | null;
   readonly update: (patch: Partial<D>) => void;
   readonly save: () => void;
@@ -11,11 +11,11 @@ export interface DraftForm<D> {
 interface DraftFormOptions<D> {
   readonly initial: D;
   readonly validate: (draft: D) => string | null;
-  /** Enregistrement effectif : appelé seulement sur un brouillon valide. */
+  /** The actual save: only ever called with a valid draft. */
   readonly commit: (draft: D) => void;
 }
 
-/** Brouillon de fiche : saisie champ par champ, validation à l'enregistrement. */
+/** An entry being drafted: typed field by field, validated on save. */
 export function useDraftForm<D extends object>({
   initial,
   validate,

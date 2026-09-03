@@ -16,7 +16,7 @@ interface EnvironmentTileProps {
   readonly onEdit: (environment: CatalogEnvironment) => void;
 }
 
-/** Fiche d'un environnement : bouton radio (sélection unique) et crayon d'édition. */
+/** A setting's tile: a radio button (single selection) and an edit pencil. */
 export function EnvironmentTile({
   environment,
   tabIndex,

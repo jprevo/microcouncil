@@ -3,6 +3,6 @@ import type { Dispatch } from "react";
 import type { AppAction } from "./reducer";
 import type { AppState } from "../types";
 
-/** Deux contextes séparés : les consommateurs de `dispatch` ne re-rendent pas à chaque frappe. */
+/** Two separate contexts, so `dispatch` consumers don't re-render on every keystroke. */
 export const StateContext = createContext<AppState | null>(null);
 export const DispatchContext = createContext<Dispatch<AppAction> | null>(null);

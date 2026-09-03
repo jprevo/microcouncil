@@ -126,9 +126,13 @@ function verifyReferences(skillMarkdown) {
 
 function build() {
   const version = readJson("package.json").version;
-  const members = withSlugs(readJson("src/members.json"), "name", "member");
+  const members = withSlugs(
+    readJson("src/data/members.json"),
+    "name",
+    "member",
+  );
   const environments = withSlugs(
-    readJson("src/environments.json"),
+    readJson("src/data/environments.json"),
     "title",
     "environment",
   );

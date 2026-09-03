@@ -9,7 +9,7 @@ interface EnvironmentFieldsProps {
   readonly onChange: (patch: Partial<EnvironmentDraft>) => void;
 }
 
-/** Les champs d'un environnement, sans aucune logique d'enregistrement. */
+/** The fields of a setting entry, with no saving logic of their own. */
 export function EnvironmentFields({ draft, onChange }: EnvironmentFieldsProps) {
   return (
     <>

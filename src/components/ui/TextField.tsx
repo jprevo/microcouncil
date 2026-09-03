@@ -7,9 +7,9 @@ interface TextFieldProps {
   readonly autoComplete?: string;
   readonly ariaLabel?: string;
   readonly modifier?: "search";
-  /** Validation au clavier, pour les boîtes qui n'ont qu'un champ à remplir. */
+  /** Submit from the keyboard, for dialogs with a single field to fill in. */
   readonly onEnter?: () => void;
-  /** Champ que sa boîte de dialogue focalise à l'ouverture, contenu pré-sélectionné. */
+  /** The field its dialog focuses on opening, with the content pre-selected. */
   readonly autoFocus?: boolean;
 }
 

@@ -7,7 +7,7 @@ interface IconFieldProps {
   readonly onPick: (icon: string) => void;
 }
 
-/** Le choix d'icône, identique dans tous les formulaires. */
+/** The icon picker, identical in every form. */
 export function IconField({ id, icon, onPick }: IconFieldProps) {
   return (
     <Field htmlFor={id} label="Icône">

@@ -7,7 +7,7 @@ interface ThemeControl {
   readonly toggle: () => void;
 }
 
-/** Reflète le thème sur `<html data-theme>`, où le CSS le lit. */
+/** Mirrors the theme onto `<html data-theme>`, where the CSS picks it up. */
 export function useTheme(): ThemeControl {
   const { theme } = useAppState();
   const dispatch = useAppDispatch();

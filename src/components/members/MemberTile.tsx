@@ -16,7 +16,7 @@ interface MemberTileProps {
   readonly onEdit: (member: CatalogMember) => void;
 }
 
-/** Fiche d'un compagnon : bouton bascule (sélection multiple) et crayon d'édition. */
+/** A companion's tile: a toggle button (multiple selection) and an edit pencil. */
 export function MemberTile({ member, onEdit }: MemberTileProps) {
   const selected = useIsMemberSelected(member.name);
   const { username } = useAppState();

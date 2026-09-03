@@ -16,7 +16,7 @@ export function ExportButton() {
         hasPopup
         onClick={() => setOpen(true)}
       />
-      {/* Monté seulement à l'ouverture : les comptes annoncés sont ceux du moment. */}
+      {/* Mounted only once open, so the counts it announces are the current ones. */}
       <Modal open={open} labelledBy="export-title" onClose={close}>
         {open ? <ExportDialog onClose={close} /> : null}
       </Modal>

@@ -3,13 +3,13 @@ import { environmentCatalog, memberCatalog } from "../lib/catalogs";
 import { useAppState } from "./hooks";
 import type { CatalogEnvironment, CatalogMember } from "../types";
 
-/** Le catalogue effectif des membres, tel que l'utilisateur l'a laissé. */
+/** The member catalog as it actually stands, with the user's edits applied. */
 export function useMemberCatalog(): readonly CatalogMember[] {
   const { memberLibrary } = useAppState();
   return useMemo(() => memberCatalog.build(memberLibrary), [memberLibrary]);
 }
 
-/** Le catalogue effectif des environnements, tel que l'utilisateur l'a laissé. */
+/** The setting catalog as it actually stands, with the user's edits applied. */
 export function useEnvironmentCatalog(): readonly CatalogEnvironment[] {
   const { environmentLibrary } = useAppState();
   return useMemo(
@@ -18,7 +18,7 @@ export function useEnvironmentCatalog(): readonly CatalogEnvironment[] {
   );
 }
 
-/** Les fiches sélectionnées, avec leur origine : une sauvegarde en a besoin. */
+/** The selected entries, origin included — saving a council needs it. */
 export function useSelectedMembers(): readonly CatalogMember[] {
   const { selectedMembers } = useAppState();
   const catalog = useMemberCatalog();

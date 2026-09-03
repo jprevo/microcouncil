@@ -4,7 +4,7 @@ import {
   useSelectedMembers,
 } from "../../state/selectors";
 
-/** Ce qu'il manque pour un prompt complet, dans l'ordre de lecture du formulaire. */
+/** What is still missing for a complete prompt, in the order the form reads. */
 export function useMissingPieces(): readonly string[] {
   const { username } = useAppState();
   const members = useSelectedMembers();

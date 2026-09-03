@@ -6,7 +6,7 @@ interface ButtonProps {
   readonly variant: ButtonVariant;
   readonly onClick: () => void;
   readonly children: ReactNode;
-  /** Classe d'état additionnelle, par exemple `is-done`. */
+  /** Extra state class, `is-done` for instance. */
   readonly state?: string;
 }
 

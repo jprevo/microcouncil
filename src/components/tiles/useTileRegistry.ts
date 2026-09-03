@@ -3,12 +3,12 @@ import { useCallback, useRef } from "react";
 type RefCallback = (node: HTMLButtonElement | null) => void;
 
 interface TileRegistry {
-  /** Callback de ref stable pour une clé donnée, afin de ne pas détacher la ref à chaque rendu. */
+  /** A ref callback that stays stable per key, so the ref is not detached on every render. */
   readonly register: (key: string) => RefCallback;
   readonly focus: (key: string) => void;
 }
 
-/** Garde une poignée sur les tuiles montées, pour déplacer le focus au clavier. */
+/** Keeps a handle on the mounted tiles, so the keyboard can move focus between them. */
 export function useTileRegistry(): TileRegistry {
   const tiles = useRef(new Map<string, HTMLButtonElement>());
   const callbacks = useRef(new Map<string, RefCallback>());

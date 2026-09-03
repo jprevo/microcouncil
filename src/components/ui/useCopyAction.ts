@@ -9,7 +9,7 @@ export interface CopyControl {
   readonly copy: () => void;
 }
 
-/** Copie `text`, marque le bouton un instant, puis annonce `message` dans un toast. */
+/** Copies `text`, flags the button for a moment, then announces `message` in a toast. */
 export function useCopyAction(text: string, message: string): CopyControl {
   const [copied, setCopied] = useState(false);
   const timer = useRef(0);
