@@ -9,7 +9,8 @@
   "footer": {
     "license": "© 2026 Micro Council · Open source project available on {github}",
     "githubLinkText": "GitHub",
-    "privacy": "No cookies are used. Your settings never leave your browser."
+    "privacy": "No cookies are used. Your settings never leave your browser.",
+    "language": "Language"
   },
   "theme": {
     "toDark": "Switch to dark theme",

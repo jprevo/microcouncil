@@ -41,6 +41,8 @@ export interface UiStrings {
     readonly license: string;
     readonly githubLinkText: string;
     readonly privacy: string;
+    /** Accessible name of the language picker; the options name themselves. */
+    readonly language: string;
   };
   readonly theme: {
     readonly toDark: string;

@@ -1,3 +1,4 @@
+import { LocalePicker } from "./LocalePicker";
 import { ExportButton } from "../backup/ExportButton";
 import { ImportButton } from "../backup/ImportButton";
 import { SkillHelp } from "../skill/SkillHelp";
@@ -25,6 +26,8 @@ export function Footer() {
         {after}
       </p>
       <div className="footer__links">
+        <LocalePicker />
+        <span aria-hidden="true">·</span>
         <ExportButton />
         <span aria-hidden="true">·</span>
         <ImportButton />

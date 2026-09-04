@@ -8,7 +8,7 @@ instructions additionnelles optionnelles et le sujet de la demande (optionnel lu
 prompt est reconstruit en direct à partir du gabarit `prompt.md` de la langue active, puis copié
 en un clic.
 
-Le site est **international** : anglais par défaut (`index.html`), français sur `fr.html`, une
+Le site est **international** : anglais par défaut (`/`), français sur `/fr`, une
 page HTML par langue avec ses propres balises `<title>`, `description` et Open Graph — voir
 [Internationalisation](#internationalisation).
 
@@ -134,7 +134,9 @@ Le découpage privilégie des composants très courts, à responsabilité unique
 
 - `src/locale/` — le contexte de langue : `LocaleProvider` construit les deux catalogues
   (`createCatalogs`) à partir du `LocaleBundle` actif et les met à disposition, avec le bundle
-  lui-même, via `useLocale()` ; `useT()` raccourcit l'accès aux chaînes d'interface ;
+  lui-même, via `useLocale()` ; `useT()` raccourcit l'accès aux chaînes d'interface. C'est aussi
+  là que vit le choix de la langue — `registry.ts` (la liste), `preference.ts` (le choix retenu),
+  `redirect.ts` (l'atterrissage) — voir [Internationalisation](#internationalisation) ;
 - `src/state/` — `reducer.ts` (`createReducer(catalogues)` : toutes les transitions, liées aux
   catalogues de la langue active), `AppStateProvider.tsx` (état + persistance), `selectors.ts` et
   `usePrompt.ts` (dérivations mémoïsées). L'état et le `dispatch` voyagent dans deux contextes
@@ -192,8 +194,8 @@ Le site est décliné en plusieurs langues, chacune sur sa propre page HTML, san
 contenu des autres :
 
 - `src/locales/registry.json` liste les langues (`code`, `label`, `dir`, `default`). L'anglais
-  (`en`) est la langue par défaut, servie à la racine (`index.html`) ; le français (`fr`) est
-  servi sur `fr.html`. Ajouter une langue est une entrée dans ce fichier plus un nouveau dossier
+  (`en`) est la langue par défaut, servie à la racine (`/`) ; le français (`fr`) est servi sur
+  `/fr`. Ajouter une langue est une entrée dans ce fichier plus un nouveau dossier
   `src/locales/<code>/` ;
 - `src/catalog/` porte ce qui est **structurel et partagé par toutes les langues** : `id` stable et
   `icon` pour chaque membre et environnement (`members.json`, `environments.json`), dans l'ordre
@@ -212,6 +214,48 @@ contenu des autres :
   `src/entries/<code>.tsx` qui importe _uniquement_ le bundle de sa langue. Ces fichiers sont
   générés — jamais commités (voir `.gitignore`) — et `vite.config.ts` lit le même registre pour
   fournir une entrée Rollup par langue à `npm run build`.
+- `src/locale/registry.ts` relit ce même `registry.json` **côté navigateur** : c'est la seule liste
+  des langues que connaît l'application (le sélecteur, la négociation, la redirection), et la seule
+  donnée d'autres langues qu'une page embarque — un code, un libellé et une direction chacune.
+
+### Choix de la langue
+
+Trois chemins, dans cet ordre de priorité, tous décidés dans `src/locale/` :
+
+1. **Le choix explicite.** Le sélecteur du pied de page (`LocalePicker`) écrit le code retenu dans
+   le `localStorage` sous `microcouncil.locale` (`src/locale/preference.ts`) avant de naviguer vers
+   la page correspondante — chaque langue étant une page, changer de langue est un chargement, pas
+   un rendu. Ce choix prime sur tout le reste, à chaque visite suivante ;
+2. **La langue du navigateur.** À défaut de choix enregistré, `matchLocale()` confronte
+   `navigator.languages` au registre : correspondance exacte d'abord, puis première langue de même
+   base — `fr-CA` tombe sur `fr`, et le jour où le registre porte une entrée régionale, `pt` tombe
+   sur `pt-BR` ;
+3. **La langue par défaut**, si le visiteur ne demande rien que le site parle.
+
+`redirectToPreferredLocale()` (`src/locale/redirect.ts`) applique cette décision **avant le premier
+rendu**, depuis le point d'entrée généré de la page : au moment où il s'exécute le document n'est
+qu'un `#root` vide, donc un visiteur redirigé ne voit jamais passer la mauvaise langue. Seule la
+page par défaut redirige — c'est l'adresse qu'on atteint en tapant le domaine, alors que `/fr` et
+ses semblables sont délibérés (un lien partagé, un favori, un résultat de recherche) et les
+détourner rendrait une langue impossible à lier. La navigation se fait en `replace` : la page
+quittée n'a rien à faire dans l'historique.
+
+Les URLs sont **sans extension** : le build écrit toujours `index.html` et `<code>.html`, mais rien
+ne les référence sous ce nom. `localeHref()` et le `canonical`/`hreflang` de chaque page pointent
+sur `./` et `./<code>`, parce que l'hébergement (Cloudflare Pages) sert `fr.html` sur `/fr` et
+redirige `/fr.html` vers cette même adresse — un lien vers le fichier ne ferait que dépenser une
+redirection. Elles restent relatives, donc valables depuis une racine de domaine comme depuis un
+sous-chemin. Un hébergement qui ne ferait pas cette correspondance demanderait de renommer les deux
+(`pageHref()` dans `scripts/build-pages.mjs`, `localeHref()` dans `src/locale/registry.ts`).
+
+Ces `<link>` portent un attribut `vite-ignore`, que Vite honore puis retire de la sortie. Sans lui,
+tout `link[href]` est pris pour un actif : le `canonical` faisait recopier la page dans
+`dist/assets/<code>-<empreinte>.html` et pointait sur cette copie — chaque page déclarait donc une
+URL canonique qui n'était ni la sienne ni destinée à être indexée. Ce sont des adresses de pages,
+pas des références à des entrées de build.
+
+Ajouter une langue ne demande donc de toucher à rien de tout ça : le sélecteur, la négociation et
+la redirection sortent du registre.
 
 Chaque page ne charge donc que le JavaScript de sa propre langue : Rollup découpe un chunk par
 langue plus un chunk commun (React, composants, logique), et rien n'oblige une page anglaise à
@@ -222,7 +266,8 @@ traduire) suit le même principe à l'échelle de la page : `import()` dynamique
 
 Le `localStorage` est cloisonné par langue (`microcouncil.state.<code>.v2`,
 `microcouncil.saves.<code>.v3`) : un conseil composé en français n'apparaît jamais sur la page
-anglaise, et réciproquement. Un export (`microcouncil-AAAA-MM-JJ.json`) porte désormais un champ
+anglaise, et réciproquement. Seule exception, la langue choisie à la main (`microcouncil.locale`),
+qui n'appartient par nature à aucune page en particulier. Un export (`microcouncil-AAAA-MM-JJ.json`) porte désormais un champ
 `locale` ; l'import prévient si le fichier vient d'une autre langue que la page sur laquelle il est
 importé, mais ne bloque pas l'opération.
 

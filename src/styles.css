@@ -829,6 +829,37 @@ button.footer-link {
   color: var(--text);
 }
 
+/* The language switch: a footer link that happens to be a menu, not a form
+   control — the native arrow is the only thing marking it as one. */
+.locale-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.locale-picker__select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0 2px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.locale-picker__select:hover,
+.locale-picker__select:focus-visible {
+  color: var(--text);
+}
+
+/* The dropdown is drawn by the OS over the page, so it needs opaque colours of
+   its own rather than the transparent background of the closed control. */
+.locale-picker__select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
 /* ----------------------------------------------------------------- modal */
 .modal {
   width: min(580px, calc(100vw - 28px));

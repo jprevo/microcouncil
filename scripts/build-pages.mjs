@@ -20,6 +20,19 @@
  * absolute URL isn't available at build time. Most crawlers resolve relative
  * `hreflang`/`canonical` hrefs against the page they were found on, which is
  * good enough here; a deployment pinned to one domain could tighten this.
+ *
+ * They are also extensionless — `./fr`, not `./fr.html` — because the host maps
+ * one onto the other (Cloudflare Pages serves `fr.html` at `/fr` and redirects
+ * `/fr.html` there). A host that doesn't would need `pageHref()` below, and
+ * `localeHref()` in `src/locale/registry.ts`, to name the files instead.
+ *
+ * Each of those links carries `vite-ignore`, which Vite honours and then strips
+ * from the output. Without it every `link[href]` is taken for an asset: a
+ * canonical pointing at `./fr.html` had Vite copy the page to
+ * `dist/assets/fr-<hash>.html` and rewrite the link onto that copy, so each page
+ * ended up declaring a canonical URL that was neither its own nor meant to be
+ * crawled. These hrefs address pages; they are not references to build inputs,
+ * and Vite has no business resolving them.
  */
 
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -44,8 +57,21 @@ function escapeAttr(value) {
     .replaceAll("<", "&lt;");
 }
 
+/** The file written for a language — what Vite takes as a Rollup entry. */
 function htmlPath(locale) {
   return locale.default ? "index.html" : `${locale.code}.html`;
+}
+
+/**
+ * The URL that same page is linked by, which is not its file name: the host
+ * serves `fr.html` at `/fr` and redirects the `.html` form onto it, so a
+ * canonical pointing at the file would only redirect onto this address.
+ *
+ * Mirrored by `localeHref()` in `src/locale/registry.ts`, which the picker and
+ * the landing redirect navigate with — the two must agree.
+ */
+function pageHref(locale) {
+  return locale.default ? "./" : `./${locale.code}`;
 }
 
 function entryPath(code) {
@@ -56,16 +82,21 @@ function renderEntry(locale) {
   return `import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "../App";
+import { redirectToPreferredLocale } from "../locale/redirect";
 import { bundle } from "../locales/${locale.code}";
 
-const container = document.getElementById("root");
-if (container === null) throw new Error("Mount point #root not found.");
+// A visitor whose language lives on another page is sent there before anything
+// mounts, so they never see a flash of the one they did not ask for.
+if (!redirectToPreferredLocale(bundle.meta.code)) {
+  const container = document.getElementById("root");
+  if (container === null) throw new Error("Mount point #root not found.");
 
-createRoot(container).render(
-  <StrictMode>
-    <App bundle={bundle} />
-  </StrictMode>,
-);
+  createRoot(container).render(
+    <StrictMode>
+      <App bundle={bundle} />
+    </StrictMode>,
+  );
+}
 `;
 }
 
@@ -73,7 +104,7 @@ function renderHtml(locale, registry, meta) {
   const hreflangs = registry
     .map(
       (other) =>
-        `    <link rel="alternate" hreflang="${other.code}" href="./${htmlPath(other)}" />`,
+        `    <link rel="alternate" hreflang="${other.code}" href="${pageHref(other)}" vite-ignore />`,
     )
     .join("\n");
   const defaultLocale = registry.find((entry) => entry.default);
@@ -88,9 +119,9 @@ function renderHtml(locale, registry, meta) {
     />
     <title>${escapeAttr(meta.title)}</title>
     <meta name="description" content="${escapeAttr(meta.description)}" />
-    <link rel="canonical" href="./${htmlPath(locale)}" />
+    <link rel="canonical" href="${pageHref(locale)}" vite-ignore />
 ${hreflangs}
-    <link rel="alternate" hreflang="x-default" href="./${htmlPath(defaultLocale)}" />
+    <link rel="alternate" hreflang="x-default" href="${pageHref(defaultLocale)}" vite-ignore />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="${escapeAttr(meta.title)}" />
     <meta property="og:description" content="${escapeAttr(meta.description)}" />
