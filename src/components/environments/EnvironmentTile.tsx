@@ -6,6 +6,9 @@ import { TileEditButton } from "../tiles/TileEditButton";
 import { TileName } from "../tiles/TileName";
 import { TileSlot } from "../tiles/TileSlot";
 import { humanizeUsernameToken } from "../../lib/text";
+import { format } from "../../locale/i18n";
+import { useLocale } from "../../locale/useLocale";
+import { useT } from "../../locale/useT";
 import { useAppDispatch, useAppState } from "../../state/hooks";
 import type { CatalogEnvironment } from "../../types";
 
@@ -25,12 +28,14 @@ export function EnvironmentTile({
 }: EnvironmentTileProps) {
   const selected = useAppState().selectedEnvironment === environment.title;
   const dispatch = useAppDispatch();
+  const { bundle } = useLocale();
+  const t = useT();
 
   return (
     <TileSlot
       action={
         <TileEditButton
-          label={`Modifier ${environment.title}`}
+          label={format(t.environments.edit, { title: environment.title })}
           onClick={() => onEdit(environment)}
         />
       }
@@ -48,7 +53,7 @@ export function EnvironmentTile({
         <TileName>{environment.title}</TileName>
         <OriginBadge origin={environment} />
         <TileDescription>
-          {humanizeUsernameToken(environment.summary)}
+          {humanizeUsernameToken(environment.summary, bundle.meta.youWord)}
         </TileDescription>
       </Tile>
     </TileSlot>

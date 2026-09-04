@@ -264,7 +264,7 @@ def build_prompt(
     if topic == "":
         output = drop_section(output, "subject")
 
-    output = fill(output, "membres", rendered_members)
+    output = fill(output, "members", rendered_members)
     output = fill(output, "environment", rendered_environment)
     output = fill(output, "custom", custom)
     output = fill(output, "subject", topic)

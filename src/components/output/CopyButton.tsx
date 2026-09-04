@@ -1,9 +1,11 @@
 import { useCopyPrompt } from "./useCopyPrompt";
 import { Button } from "../ui/Button";
 import { Emoji } from "../ui/Emoji";
+import { useT } from "../../locale/useT";
 
 export function CopyButton({ prompt }: { readonly prompt: string }) {
   const { copied, copy } = useCopyPrompt(prompt);
+  const t = useT();
 
   return (
     <Button
@@ -12,7 +14,7 @@ export function CopyButton({ prompt }: { readonly prompt: string }) {
       {...(copied ? { state: "is-done" } : {})}
     >
       <Emoji glyph="📋" />{" "}
-      <span>{copied ? "Copié !" : "Copier le prompt"}</span>
+      <span>{copied ? t.output.copied : t.output.copy}</span>
     </Button>
   );
 }

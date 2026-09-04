@@ -1,7 +1,7 @@
-import { environmentCatalog, memberCatalog } from "./lib/catalogs";
 import { asRecord, asStringArray, readJson, writeJson } from "./lib/json";
 import { EMPTY_LIBRARY } from "./lib/library";
 import type { Catalog } from "./lib/library";
+import type { Catalogs } from "./lib/catalogs";
 import { asEnvironment, asMember } from "./lib/parse";
 import type {
   AppState,
@@ -11,7 +11,16 @@ import type {
   Theme,
 } from "./types";
 
-const STORAGE_KEY = "microcouncil.state.v1";
+const STORAGE_VERSION = "v2";
+
+/**
+ * One storage key per language: a French-only override of "Naomi" and an
+ * English-only override of "Naomi" would otherwise collide in the same
+ * `localStorage`, since every page of this app shares one browser origin.
+ */
+function storageKey(locale: string): string {
+  return `microcouncil.state.${locale}.${STORAGE_VERSION}`;
+}
 
 function isTheme(value: unknown): value is Theme {
   return value === "light" || value === "dark";
@@ -49,10 +58,9 @@ function asLibrary<T>(
   const overrides: Record<string, T> = {};
   const storedOverrides = asRecord(record["overrides"]);
   if (storedOverrides !== null) {
-    for (const [name, stored] of Object.entries(storedOverrides)) {
+    for (const [id, stored] of Object.entries(storedOverrides)) {
       const item = asItem(stored);
-      if (item !== null && catalog.builtinNames.has(name))
-        overrides[name] = item;
+      if (item !== null && catalog.builtinIds.has(id)) overrides[id] = item;
     }
   }
 
@@ -74,28 +82,30 @@ function asLibrary<T>(
   return { custom, overrides };
 }
 
-/** Reads a stored state, dropping whatever no longer matches the catalog. */
-export function parseState(value: unknown): AppState {
+/** Reads a stored state back, dropping whatever no longer matches the catalogs. */
+export function parseState(value: unknown, catalogs: Catalogs): AppState {
   const fallback = defaultState();
   const record = asRecord(value);
   if (record === null) return fallback;
 
   const memberLibrary: MemberLibrary = asLibrary(
     record["memberLibrary"],
-    memberCatalog,
+    catalogs.memberCatalog,
     asMember,
   );
   const environmentLibrary: EnvironmentLibrary = asLibrary(
     record["environmentLibrary"],
-    environmentCatalog,
+    catalogs.environmentCatalog,
     asEnvironment,
   );
 
   const knownMembers = new Set(
-    memberCatalog.build(memberLibrary).map((entry) => entry.label),
+    catalogs.memberCatalog.build(memberLibrary).map((entry) => entry.label),
   );
   const knownEnvironments = new Set(
-    environmentCatalog.build(environmentLibrary).map((entry) => entry.label),
+    catalogs.environmentCatalog
+      .build(environmentLibrary)
+      .map((entry) => entry.label),
   );
   const environment = record["selectedEnvironment"];
 
@@ -125,10 +135,10 @@ export function parseState(value: unknown): AppState {
   };
 }
 
-export function loadState(): AppState {
-  return parseState(readJson(STORAGE_KEY));
+export function loadState(locale: string, catalogs: Catalogs): AppState {
+  return parseState(readJson(storageKey(locale)), catalogs);
 }
 
-export function saveState(state: AppState): void {
-  writeJson(STORAGE_KEY, state);
+export function saveState(locale: string, state: AppState): void {
+  writeJson(storageKey(locale), state);
 }

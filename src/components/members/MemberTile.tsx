@@ -7,6 +7,9 @@ import { TileName } from "../tiles/TileName";
 import { TileSlot } from "../tiles/TileSlot";
 import { TraitList } from "../tiles/TraitList";
 import { fillUsernameToken } from "../../lib/text";
+import { format } from "../../locale/i18n";
+import { useLocale } from "../../locale/useLocale";
+import { useT } from "../../locale/useT";
 import { useAppDispatch, useAppState } from "../../state/hooks";
 import { useIsMemberSelected } from "../../state/selectors";
 import type { CatalogMember } from "../../types";
@@ -21,14 +24,20 @@ export function MemberTile({ member, onEdit }: MemberTileProps) {
   const selected = useIsMemberSelected(member.name);
   const { username } = useAppState();
   const dispatch = useAppDispatch();
+  const { bundle } = useLocale();
+  const t = useT();
 
-  const description = fillUsernameToken(member.description, username);
+  const description = fillUsernameToken(
+    member.description,
+    username,
+    bundle.meta.usernameFallback,
+  );
 
   return (
     <TileSlot
       action={
         <TileEditButton
-          label={`Modifier ${member.name}`}
+          label={format(t.members.edit, { name: member.name })}
           onClick={() => onEdit(member)}
         />
       }

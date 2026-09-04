@@ -1,0 +1,243 @@
+{
+  "brand": "Micro Council",
+  "lede": "Créez un prompt à copier dans votre IA préférée pour discuter avec un panel de spécialistes.",
+  "prompt": {
+    "noMembers": "_Aucun membre sélectionné._",
+    "noEnvironment": "_Aucun environnement sélectionné._",
+    "personalityLabel": "Personnalité : "
+  },
+  "footer": {
+    "license": "© 2026 Micro Council · Projet open source disponible sur {github}",
+    "githubLinkText": "GitHub",
+    "privacy": "Aucun cookie n'est utilisé. Vos réglages ne quittent jamais votre navigateur."
+  },
+  "theme": {
+    "toDark": "Passer au thème sombre",
+    "toLight": "Passer au thème clair"
+  },
+  "topbar": {
+    "save": "Sauvegarder",
+    "saveAria": "Sauvegarder ce conseil",
+    "load": "Charger",
+    "loadAria": "Charger un conseil enregistré",
+    "loadAriaWithCount": "Charger un conseil enregistré ({count})"
+  },
+  "identity": {
+    "title": "Votre nom",
+    "placeholder": "Votre nom"
+  },
+  "members": {
+    "title": "Les membres du conseil",
+    "hint": "Idéalement entre 3 et 7 membres.",
+    "clearAll": "Tout effacer",
+    "filterPlaceholder": "Filtrer par nom, métier, trait ou mot-clé…",
+    "filterAriaLabel": "Filtrer les membres",
+    "empty": "Aucun membre ne correspond à ce filtre.",
+    "add": "Ajouter un membre",
+    "selectedCount": { "one": "sélectionné", "other": "sélectionnés" },
+    "edit": "Modifier {name}",
+    "editorCreateTitle": "✨ Nouveau membre",
+    "toastCreated": "{name} rejoint le conseil",
+    "toastUpdated": "{name} est à jour",
+    "fields": {
+      "name": "Nom",
+      "namePlaceholder": "Ada",
+      "job": "Métier",
+      "jobPlaceholder": "Ingénieure logiciel",
+      "description": "Description",
+      "descriptionHint": "Écrivez {{username}} là où votre nom doit apparaître.",
+      "descriptionPlaceholder": "Ce que ce membre apporte au conseil, et comment il s'adresse à {{username}}.",
+      "traits": "Traits",
+      "traitsHint": "Séparés par des virgules.",
+      "traitsPlaceholder": "curieuse, rigoureuse, directe",
+      "tags": "Tags",
+      "tagsHint": "Mots-clés de recherche, séparés par des virgules. Absents du prompt.",
+      "tagsPlaceholder": "algorithmes, code, dette technique"
+    },
+    "validation": {
+      "nameRequired": "Le nom est obligatoire.",
+      "nameTaken": "Ce nom est déjà pris par un autre membre.",
+      "iconRequired": "Choisissez une icône.",
+      "jobRequired": "Le métier est obligatoire.",
+      "descriptionRequired": "La description est obligatoire."
+    }
+  },
+  "environments": {
+    "title": "L'environnement",
+    "hint": "Le décor dans lequel se tient la discussion.",
+    "clear": "Effacer",
+    "add": "Ajouter un environnement",
+    "edit": "Modifier {title}",
+    "editorCreateTitle": "✨ Nouvel environnement",
+    "toastCreated": "{title} rejoint les décors",
+    "toastUpdated": "{title} est à jour",
+    "fields": {
+      "title": "Titre",
+      "titlePlaceholder": "Le refuge de montagne",
+      "summary": "Résumé",
+      "summaryHint": "Une phrase, affichée sur la fiche. Absente du prompt.",
+      "summaryPlaceholder": "Ce que ce décor change à la discussion, en une phrase.",
+      "description": "Description",
+      "descriptionHint": "Le décor tel qu'il est posé dans le prompt. Écrivez {{username}} là où votre nom doit apparaître.",
+      "descriptionPlaceholder": "Vous êtes réunis autour du poêle d'un refuge, la nuit tombe sur la vallée."
+    },
+    "validation": {
+      "titleRequired": "Le titre est obligatoire.",
+      "titleTaken": "Ce titre est déjà pris par un autre environnement.",
+      "iconRequired": "Choisissez une icône.",
+      "summaryRequired": "Le résumé est obligatoire.",
+      "descriptionRequired": "La description est obligatoire."
+    }
+  },
+  "icon": {
+    "label": "Icône"
+  },
+  "emojiPicker": {
+    "searchPlaceholder": "Chercher : brain, rocket, chart…",
+    "empty": "Aucune icône pour cette recherche.",
+    "gridLabel": "Icônes proposées",
+    "loading": "Chargement des icônes…"
+  },
+  "editor": {
+    "close": "Fermer",
+    "deleteConfirm": "Supprimer définitivement {label} ?",
+    "deleted": "{label} quitte le catalogue",
+    "restore": "Revenir à l'original",
+    "restored": "Version d'origine rétablie",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "save": "Enregistrer"
+  },
+  "custom": {
+    "title": "Instructions additionnelles",
+    "hint": "Optionnel — sauvegardé automatiquement dans votre navigateur.",
+    "example": "Exemple",
+    "clear": "Effacer",
+    "placeholder": "Par exemple : contraintes de format, mémoire à utiliser, sujets à éviter…"
+  },
+  "subject": {
+    "title": "Le sujet de votre demande",
+    "optional": "optionnel",
+    "hint": "Si vous le laissez vide, un membre vous le demandera.",
+    "clear": "Effacer",
+    "placeholder": "Par exemple : je dois choisir entre deux offres d'emploi et je n'arrive pas à trancher."
+  },
+  "output": {
+    "title": "Votre prompt",
+    "meta": "{chars} caractères · ~{tokens} tokens",
+    "warningMissing": "Il manque {items}.",
+    "missingMembers": "au moins un membre",
+    "missingEnvironment": "un environnement",
+    "missingUsername": "votre nom",
+    "note": "Collez-le tel quel dans Claude, ChatGPT, Gemini ou tout autre assistant.",
+    "copy": "Copier le prompt",
+    "copied": "Copié !",
+    "copiedToast": "Prompt copié dans le presse-papiers",
+    "download": "Télécharger",
+    "downloadedToast": "Prompt téléchargé"
+  },
+  "saves": {
+    "title": "📂 Vos conseils enregistrés",
+    "empty": "Rien d'enregistré pour l'instant. Le bouton « Sauvegarder », juste à gauche, range le conseil en cours.",
+    "membersCount": { "one": "membre", "other": "membres" },
+    "deleteAria": "Supprimer {name}",
+    "deleteConfirm": "Supprimer définitivement « {name} » ?",
+    "loadedToast": "« {name} » est chargé",
+    "deletedToast": "« {name} » est supprimé",
+    "dialogTitle": "💾 Enregistrer ce conseil",
+    "nameLabel": "Nom de la sauvegarde",
+    "nameHint": "Votre nom, les fiches des membres, l'environnement, vos instructions et le sujet sont rangés dans ce navigateur. Les fiches partent entières : recharger ce conseil les rétablit telles qu'elles sont maintenant, même si vous les modifiez ou les supprimez d'ici là.",
+    "namePlaceholder": "Conseil produit",
+    "nameRequired": "Donnez un nom à cette sauvegarde pour la retrouver.",
+    "replaceConfirm": "Remplacer la sauvegarde « {name} » ?",
+    "maxReached": "Vous avez atteint {max} sauvegardes : la plus ancienne cédera sa place.",
+    "savedToast": "« {name} » est enregistré — à retrouver dans Charger",
+    "suggestedNamePrefix": "Conseil du {date}"
+  },
+  "backup": {
+    "cardsWord": {
+      "one": "fiche de membre ou d'environnement",
+      "other": "fiches de membre ou d'environnement"
+    },
+    "savesWord": {
+      "one": "conseil enregistré",
+      "other": "conseils enregistrés"
+    },
+    "export": {
+      "button": "Exporter",
+      "buttonAria": "Exporter toutes mes données au format JSON",
+      "title": "📤 Exporter vos données",
+      "confirmLabel": "Télécharger le fichier",
+      "intro": "Par défaut, Micro Council garde tout dans votre navigateur : vider son stockage, changer de machine ou de navigateur, vous fait perdre toutes vos données. L'export vous permet d'avoir une sauvegarde globale dans un seul fichier, que vous pouvez conserver et réimporter plus tard.",
+      "sectionTitle": "Ce que le fichier emporte",
+      "settingsLine": "Votre nom, vos instructions, le sujet en cours, la sélection.",
+      "cardsLine": {
+        "zero": "Les fiches que vous créerez ou modifierez — aucune pour l'instant.",
+        "one": "{count} fiche de membre ou d'environnement créée ou modifiée.",
+        "other": "{count} fiches de membre ou d'environnement créées ou modifiées."
+      },
+      "savesLine": {
+        "zero": "Vos conseils enregistrés — aucun pour l'instant.",
+        "one": "{count} conseil enregistré, avec les fiches sur lesquelles il repose.",
+        "other": "{count} conseils enregistrés, avec les fiches sur lesquelles ils reposent."
+      },
+      "downloadedToast": "Vos données sont téléchargées"
+    },
+    "import": {
+      "button": "Importer",
+      "buttonAria": "Importer des données depuis un fichier JSON",
+      "title": "📥 Importer des données",
+      "confirmLabel": "Remplacer mes données",
+      "intro": "Ce fichier est lisible, et voici ce qu'il contient. Rien n'est encore écrit : c'est le bouton ci-dessous qui décide.",
+      "sectionTitle": "Le fichier",
+      "exportedAtUnknown": "Exporté à une date illisible.",
+      "exportedAt": "Exporté le {date}, au format version {version}.",
+      "cardsSavesLine": "{cards} {cardsWord}, et {saves} {savesWord}.",
+      "settingsLine": "Le nom, les instructions, le sujet, la sélection et le thème qui étaient les vôtres ce jour-là.",
+      "warningTitle": "Tout ce que contient ce navigateur sera écrasé",
+      "warning": " : votre nom, vos réglages, vos fiches et vos conseils enregistrés cèdent la place à ceux du fichier. L'opération est irréversible — au besoin, exportez vos données actuelles avant de continuer.",
+      "restoredToast": "Vos données sont restaurées",
+      "localeMismatch": "Ce fichier a été exporté depuis la version {locale} de Micro Council."
+    },
+    "errors": {
+      "unreadableJson": "Ce fichier n'est pas du JSON lisible.",
+      "notABackup": "Ce fichier n'est pas une sauvegarde Micro Council.",
+      "noVersion": "Ce fichier ne porte pas de numéro de version.",
+      "versionTooNew": "Ce fichier vient d'une version plus récente (version {version}).",
+      "versionUnsupported": "La version {version} de ce fichier n'est plus prise en charge.",
+      "noState": "Ce fichier ne contient pas de réglages.",
+      "noSaves": "Ce fichier ne contient pas de liste de sauvegardes.",
+      "fileUnreadable": "Ce fichier n'a pas pu être lu."
+    }
+  },
+  "skill": {
+    "button": "Installer le skill",
+    "title": "🧩 Le skill Micro Council",
+    "intro": "Le même conseil, mais directement dans votre agent : il compose le conseil, assemble le prompt et joue la scène, sans copier-coller.",
+    "overviewTitle": "En deux mots",
+    "overviewBullet1": "Vous demandez un conseil, l'agent propose trois entrées : créer un conseil pas à pas, charger un conseil déjà enregistré, ou automatique — il choisit les membres lui-même d'après votre sujet.",
+    "overviewBullet2": "Un petit script local pioche dans le même catalogue de compagnons et d'environnements que ce site, et produit exactement le même prompt.",
+    "overviewBullet3": "Chaque conseil créé est enregistré sur votre machine : les membres, l'environnement, vos instructions — mais jamais le sujet. Il suffit ensuite de le rappeler par son nom, « lance le conseil ABC sur… », pour le retrouver à l'identique.",
+    "hermesTitle": "Hermes",
+    "hermesChatIntro": "Dans un chat :",
+    "installCommand": "Installe le skill jprevo/microcouncil/skill",
+    "hermesCliIntro": "Ou en ligne de commande :",
+    "hermesCliCommand": "hermes skills install jprevo/microcouncil/skill --force",
+    "claudeCodeTitle": "Claude Code",
+    "claudeCodeChatIntro": "Dans un nouveau chat :",
+    "claudeInstallCommand": "Installe le skill https://github.com/jprevo/microcouncil/tree/main/skill",
+    "claudeCodeInvokeIntro": "Puis, pour convoquer le conseil :",
+    "claudeCodeCommand": "/microcouncil J'aimerais discuter de ma prochaine série",
+    "note": "Le format `SKILL.md` est commun à Hermes, Claude Code et agentskills.io : le dossier `skill/` du dépôt se copie tel quel dans n'importe quel autre harnais."
+  },
+  "tiles": {
+    "added": "ajouté",
+    "modified": "modifié"
+  },
+  "misc": {
+    "copyFailed": "Copie impossible — sélectionnez le texte manuellement",
+    "commandCopiedToast": "Commande copiée dans le presse-papiers",
+    "commandCopiedAria": "Commande copiée",
+    "commandCopyAria": "Copier la commande"
+  }
+}

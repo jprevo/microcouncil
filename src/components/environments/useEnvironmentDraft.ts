@@ -1,6 +1,5 @@
 import { useDraftForm } from "../editor/useDraftForm";
 import type { DraftForm } from "../editor/useDraftForm";
-import { environmentCatalog } from "../../lib/catalogs";
 import {
   EMPTY_DRAFT,
   draftOf,
@@ -8,6 +7,9 @@ import {
   validateDraft,
 } from "../../lib/environmentDraft";
 import type { EnvironmentDraft } from "../../lib/environmentDraft";
+import { format } from "../../locale/i18n";
+import { useLocale } from "../../locale/useLocale";
+import { useT } from "../../locale/useT";
 import { useAppDispatch, useAppState } from "../../state/hooks";
 import { useToast } from "../../toast/useToast";
 import type { CatalogEnvironment } from "../../types";
@@ -18,8 +20,10 @@ export function useEnvironmentDraft(
   onSaved: () => void,
 ): DraftForm<EnvironmentDraft> {
   const { environmentLibrary } = useAppState();
+  const { environmentCatalog } = useLocale();
   const dispatch = useAppDispatch();
   const toast = useToast();
+  const t = useT();
   const target = environment?.target ?? null;
 
   return useDraftForm<EnvironmentDraft>({
@@ -28,14 +32,18 @@ export function useEnvironmentDraft(
       validateDraft(
         draft,
         environmentCatalog.takenNames(environmentLibrary, target),
+        t.environments.validation,
       ),
     commit: (draft) => {
       const saved = environmentOf(draft);
       dispatch({ type: "saveEnvironment", target, environment: saved });
       toast(
-        environment === null
-          ? `${saved.title} rejoint les décors`
-          : `${saved.title} est à jour`,
+        format(
+          environment === null
+            ? t.environments.toastCreated
+            : t.environments.toastUpdated,
+          { title: saved.title },
+        ),
       );
       onSaved();
     },

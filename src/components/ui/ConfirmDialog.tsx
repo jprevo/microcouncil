@@ -1,6 +1,7 @@
 import { DialogHead } from "./DialogHead";
 import type { ReactNode } from "react";
 import { Button } from "./Button";
+import { useT } from "../../locale/useT";
 
 interface ConfirmDialogProps {
   /** Id of the heading a `Modal` points its `labelledBy` at. */
@@ -23,6 +24,7 @@ export function ConfirmDialog({
   onClose,
   children,
 }: ConfirmDialogProps) {
+  const t = useT();
   return (
     <>
       <DialogHead id={id} title={title} onClose={onClose} />
@@ -31,7 +33,7 @@ export function ConfirmDialog({
         <div className="modal__foot-left" />
         <div className="modal__foot-right">
           <Button variant="quiet" onClick={onClose}>
-            Annuler
+            {t.editor.cancel}
           </Button>
           <Button variant="primary" onClick={onConfirm}>
             {confirmLabel}

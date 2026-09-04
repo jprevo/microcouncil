@@ -6,12 +6,14 @@ import { CardTitle } from "../ui/CardTitle";
 import { Button } from "../ui/Button";
 import { Pill } from "../ui/Pill";
 import { TextArea } from "../ui/TextArea";
+import { useT } from "../../locale/useT";
 import { useAppDispatch, useAppState } from "../../state/hooks";
 
 export function SubjectCard() {
   const { subject } = useAppState();
   const dispatch = useAppDispatch();
   const field = useRef<HTMLTextAreaElement>(null);
+  const t = useT();
 
   const clear = (): void => {
     dispatch({ type: "subject", value: "" });
@@ -23,16 +25,14 @@ export function SubjectCard() {
       <CardHead
         actions={
           <Button variant="quiet" onClick={clear}>
-            Effacer
+            {t.subject.clear}
           </Button>
         }
       >
         <CardTitle id="title-subject">
-          Le sujet de votre demande <Pill tone="soft">optionnel</Pill>
+          {t.subject.title} <Pill tone="soft">{t.subject.optional}</Pill>
         </CardTitle>
-        <CardHint>
-          Si vous le laissez vide, un membre vous le demandera.
-        </CardHint>
+        <CardHint>{t.subject.hint}</CardHint>
       </CardHead>
       <TextArea
         id="subject"
@@ -41,7 +41,7 @@ export function SubjectCard() {
         textareaRef={field}
         value={subject}
         onChange={(value) => dispatch({ type: "subject", value })}
-        placeholder="Par exemple : je dois choisir entre deux offres d'emploi et je n'arrive pas à trancher."
+        placeholder={t.subject.placeholder}
       />
     </Card>
   );

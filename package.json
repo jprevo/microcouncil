@@ -24,7 +24,10 @@
   ],
   "author": "Jonathan Prévost <microcouncil.nemesis515@passmail.net>",
   "scripts": {
+    "pages": "node scripts/build-pages.mjs",
+    "predev": "npm run pages",
     "dev": "vite",
+    "prebuild": "npm run pages",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
@@ -33,6 +36,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "knip": "knip",
+    "pregate": "npm run pages",
     "gate": "node scripts/gate.mjs",
     "skill": "node scripts/build-skill.mjs",
     "emoji": "node scripts/build-emoji.mjs",
@@ -40,6 +44,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "@vitejs/plugin-react": "^5.2.0",

@@ -2,6 +2,7 @@ import { IconField } from "../editor/IconField";
 import { Field } from "../ui/Field";
 import { TextArea } from "../ui/TextArea";
 import { TextField } from "../ui/TextField";
+import { useT } from "../../locale/useT";
 import type { MemberDraft } from "../../lib/memberDraft";
 
 interface MemberFieldsProps {
@@ -11,23 +12,26 @@ interface MemberFieldsProps {
 
 /** The fields of a member entry, with no saving logic of their own. */
 export function MemberFields({ draft, onChange }: MemberFieldsProps) {
+  const t = useT();
+  const f = t.members.fields;
+
   return (
     <>
-      <Field htmlFor="member-name" label="Nom">
+      <Field htmlFor="member-name" label={f.name}>
         <TextField
           id="member-name"
           value={draft.name}
           onChange={(name) => onChange({ name })}
-          placeholder="Ada"
+          placeholder={f.namePlaceholder}
         />
       </Field>
 
-      <Field htmlFor="member-job" label="Métier">
+      <Field htmlFor="member-job" label={f.job}>
         <TextField
           id="member-job"
           value={draft.job}
           onChange={(job) => onChange({ job })}
-          placeholder="Ingénieure logiciel"
+          placeholder={f.jobPlaceholder}
         />
       </Field>
 
@@ -39,41 +43,33 @@ export function MemberFields({ draft, onChange }: MemberFieldsProps) {
 
       <Field
         htmlFor="member-description"
-        label="Description"
-        hint="Écrivez {{username}} là où votre nom doit apparaître."
+        label={f.description}
+        hint={f.descriptionHint}
       >
         <TextArea
           id="member-description"
           rows={3}
           value={draft.description}
           onChange={(description) => onChange({ description })}
-          placeholder="Ce que ce membre apporte au conseil, et comment il s'adresse à {{username}}."
+          placeholder={f.descriptionPlaceholder}
         />
       </Field>
 
-      <Field
-        htmlFor="member-traits"
-        label="Traits"
-        hint="Séparés par des virgules."
-      >
+      <Field htmlFor="member-traits" label={f.traits} hint={f.traitsHint}>
         <TextField
           id="member-traits"
           value={draft.traits}
           onChange={(traits) => onChange({ traits })}
-          placeholder="curieuse, rigoureuse, directe"
+          placeholder={f.traitsPlaceholder}
         />
       </Field>
 
-      <Field
-        htmlFor="member-tags"
-        label="Tags"
-        hint="Mots-clés de recherche, séparés par des virgules. Absents du prompt."
-      >
+      <Field htmlFor="member-tags" label={f.tags} hint={f.tagsHint}>
         <TextField
           id="member-tags"
           value={draft.tags}
           onChange={(tags) => onChange({ tags })}
-          placeholder="algorithmes, code, dette technique"
+          placeholder={f.tagsPlaceholder}
         />
       </Field>
     </>

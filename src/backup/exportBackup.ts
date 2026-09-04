@@ -6,11 +6,13 @@ import type { AppState, CouncilSave } from "../types";
 export function buildBackup(
   state: AppState,
   saves: readonly CouncilSave[],
+  locale: string,
   now: number = Date.now(),
 ): Backup {
   return {
     version: BACKUP_VERSION,
     exportedAt: new Date(now).toISOString(),
+    locale,
     state,
     saves,
   };

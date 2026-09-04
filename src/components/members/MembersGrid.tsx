@@ -2,6 +2,7 @@ import { MemberTile } from "./MemberTile";
 import { EmptyMessage } from "../ui/EmptyMessage";
 import { Grid } from "../ui/Grid";
 import { targetKey } from "../../lib/library";
+import { useT } from "../../locale/useT";
 import type { CatalogMember } from "../../types";
 
 interface MembersGridProps {
@@ -10,8 +11,10 @@ interface MembersGridProps {
 }
 
 export function MembersGrid({ members, onEdit }: MembersGridProps) {
+  const t = useT();
+
   if (members.length === 0) {
-    return <EmptyMessage>Aucun membre ne correspond à ce filtre.</EmptyMessage>;
+    return <EmptyMessage>{t.members.empty}</EmptyMessage>;
   }
 
   return (

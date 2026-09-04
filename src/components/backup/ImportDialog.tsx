@@ -4,7 +4,10 @@ import { exportedInstant } from "../../backup/format";
 import type { Backup } from "../../backup/format";
 import { summarize } from "../../backup/summary";
 import { useApplyBackup } from "../../backup/useApplyBackup";
-import { formatDate, plural } from "../../lib/text";
+import { formatDate } from "../../lib/text";
+import { format, pluralize } from "../../locale/i18n";
+import { useLocale } from "../../locale/useLocale";
+import { useT } from "../../locale/useT";
 
 interface ImportDialogProps {
   /** The file, already validated: only its content is still to be confirmed. */
@@ -17,6 +20,8 @@ export function ImportDialog({ backup, onClose }: ImportDialogProps) {
   const apply = useApplyBackup();
   const { cards, saves } = summarize(backup.state, backup.saves);
   const at = exportedInstant(backup);
+  const { bundle } = useLocale();
+  const t = useT();
 
   const confirm = (): void => {
     apply(backup);
@@ -26,39 +31,45 @@ export function ImportDialog({ backup, onClose }: ImportDialogProps) {
   return (
     <ConfirmDialog
       id="import-title"
-      title="📥 Importer des données"
-      confirmLabel="Remplacer mes données"
+      title={t.backup.import.title}
+      confirmLabel={t.backup.import.confirmLabel}
       onConfirm={confirm}
       onClose={onClose}
     >
-      <p className="modal__lede">
-        Ce fichier est lisible, et voici ce qu'il contient. Rien n'est encore
-        écrit : c'est le bouton ci-dessous qui décide.
-      </p>
+      <p className="modal__lede">{t.backup.import.intro}</p>
 
       <section className="modal__section">
-        <h3>Le fichier</h3>
+        <h3>{t.backup.import.sectionTitle}</h3>
         <ul className="modal__list">
           <li>
             {at === null
-              ? "Exporté à une date illisible."
-              : `Exporté le ${formatDate(at)}, au format version ${String(backup.version)}.`}
+              ? t.backup.import.exportedAtUnknown
+              : format(t.backup.import.exportedAt, {
+                  date: formatDate(at, bundle.meta.numberLocale),
+                  version: backup.version,
+                })}
           </li>
           <li>
-            {`${String(cards)} ${plural(cards, "fiche")} de membre ou d'environnement, et ${String(saves)} ${plural(saves, "conseil")} ${plural(saves, "enregistré")}.`}
+            {format(t.backup.import.cardsSavesLine, {
+              cards,
+              cardsWord: pluralize(cards, t.backup.cardsWord),
+              saves,
+              savesWord: pluralize(saves, t.backup.savesWord),
+            })}
           </li>
-          <li>
-            Le nom, les instructions, le sujet, la sélection et le thème qui
-            étaient les vôtres ce jour-là.
-          </li>
+          <li>{t.backup.import.settingsLine}</li>
         </ul>
       </section>
 
+      {backup.locale !== "" && backup.locale !== bundle.meta.code ? (
+        <Notice>
+          {format(t.backup.import.localeMismatch, { locale: backup.locale })}
+        </Notice>
+      ) : null}
+
       <Notice>
-        <strong>Tout ce que contient ce navigateur sera écrasé</strong> : votre
-        nom, vos réglages, vos fiches et vos conseils enregistrés cèdent la
-        place à ceux du fichier. L'opération est irréversible — au besoin,
-        exportez vos données actuelles avant de continuer.
+        <strong>{t.backup.import.warningTitle}</strong>
+        {t.backup.import.warning}
       </Notice>
     </ConfirmDialog>
   );

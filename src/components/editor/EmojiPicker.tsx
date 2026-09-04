@@ -1,7 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { EmptyMessage } from "../ui/EmptyMessage";
 import { TextField } from "../ui/TextField";
-import { searchEmojis } from "../../lib/emoji";
+import { loadEmojiEntries, searchEmojis } from "../../lib/emoji";
+import type { EmojiEntry } from "../../lib/emoji";
+import { useT } from "../../locale/useT";
 
 /** Past this, the grid scrolls forever without making the search any more useful. */
 const MAX_RESULTS = 84;
@@ -12,10 +14,30 @@ interface EmojiPickerProps {
   readonly onPick: (icon: string) => void;
 }
 
-/** Shortcode search over the emoji cheat sheet table. */
+/** Shortcode search over the emoji cheat sheet table, loaded lazily on first open. */
 export function EmojiPicker({ inputId, icon, onPick }: EmojiPickerProps) {
   const [query, setQuery] = useState("");
-  const matches = useMemo(() => searchEmojis(query, MAX_RESULTS), [query]);
+  const [entries, setEntries] = useState<readonly EmojiEntry[] | null>(null);
+  const t = useT();
+
+  useEffect(() => {
+    let active = true;
+    void loadEmojiEntries().then((loaded) => {
+      if (active) setEntries(loaded);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const matches = useMemo(
+    () => (entries === null ? [] : searchEmojis(entries, query, MAX_RESULTS)),
+    [entries, query],
+  );
+
+  let message: string | null = null;
+  if (entries === null) message = t.emojiPicker.loading;
+  else if (matches.length === 0) message = t.emojiPicker.empty;
 
   return (
     <div className="emoji">
@@ -28,14 +50,18 @@ export function EmojiPicker({ inputId, icon, onPick }: EmojiPickerProps) {
           type="search"
           value={query}
           onChange={setQuery}
-          placeholder="Chercher : brain, rocket, chart…"
+          placeholder={t.emojiPicker.searchPlaceholder}
         />
       </div>
 
-      {matches.length === 0 ? (
-        <EmptyMessage>Aucune icône pour cette recherche.</EmptyMessage>
+      {message !== null ? (
+        <EmptyMessage>{message}</EmptyMessage>
       ) : (
-        <div className="emoji__grid" role="group" aria-label="Icônes proposées">
+        <div
+          className="emoji__grid"
+          role="group"
+          aria-label={t.emojiPicker.gridLabel}
+        >
           {matches.map((entry) => (
             <button
               key={entry.code}

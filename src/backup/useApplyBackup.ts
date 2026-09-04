@@ -3,12 +3,14 @@ import type { Backup } from "./format";
 import { useSaves } from "../saves/useSaves";
 import { useAppDispatch } from "../state/hooks";
 import { useToast } from "../toast/useToast";
+import { useT } from "../locale/useT";
 
 /** Puts a validated backup in place of everything this browser holds. */
 export function useApplyBackup(): (backup: Backup) => void {
   const dispatch = useAppDispatch();
   const { replaceAll } = useSaves();
   const toast = useToast();
+  const t = useT();
 
   return useCallback(
     (backup: Backup): void => {
@@ -16,8 +18,8 @@ export function useApplyBackup(): (backup: Backup) => void {
       // render mixes the old council with the new list.
       dispatch({ type: "replaceState", state: backup.state });
       replaceAll(backup.saves);
-      toast("Vos données sont restaurées");
+      toast(t.backup.import.restoredToast);
     },
-    [dispatch, replaceAll, toast],
+    [dispatch, replaceAll, toast, t],
   );
 }

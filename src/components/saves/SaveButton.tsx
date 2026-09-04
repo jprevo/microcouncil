@@ -2,17 +2,19 @@ import { useState } from "react";
 import { SaveDialog } from "./SaveDialog";
 import { IconButton } from "../ui/IconButton";
 import { Modal } from "../ui/Modal";
+import { useT } from "../../locale/useT";
 
 export function SaveButton() {
   const [open, setOpen] = useState(false);
   const close = (): void => setOpen(false);
+  const t = useT();
 
   return (
     <>
       <IconButton
         glyph="💾"
-        label="Sauvegarder"
-        ariaLabel="Sauvegarder ce conseil"
+        label={t.topbar.save}
+        ariaLabel={t.topbar.saveAria}
         hasPopup
         onClick={() => setOpen(true)}
       />

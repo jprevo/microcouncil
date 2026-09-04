@@ -4,24 +4,28 @@ import { Shell } from "./components/layout/Shell";
 import { TopBar } from "./components/layout/TopBar";
 import { ConfigColumn } from "./components/panels/ConfigColumn";
 import { OutputColumn } from "./components/panels/OutputColumn";
+import { LocaleProvider } from "./locale/LocaleProvider";
+import type { LocaleBundle } from "./locale/types";
 import { SavesProvider } from "./saves/SavesProvider";
 import { AppStateProvider } from "./state/AppStateProvider";
 import { ToastProvider } from "./toast/ToastProvider";
 
-export function App() {
+export function App({ bundle }: { readonly bundle: LocaleBundle }) {
   return (
-    <AppStateProvider>
-      <SavesProvider>
-        <ToastProvider>
-          <Aurora />
-          <TopBar />
-          <Shell>
-            <ConfigColumn />
-            <OutputColumn />
-          </Shell>
-          <Footer />
-        </ToastProvider>
-      </SavesProvider>
-    </AppStateProvider>
+    <LocaleProvider bundle={bundle}>
+      <AppStateProvider>
+        <SavesProvider>
+          <ToastProvider>
+            <Aurora />
+            <TopBar />
+            <Shell>
+              <ConfigColumn />
+              <OutputColumn />
+            </Shell>
+            <Footer />
+          </ToastProvider>
+        </SavesProvider>
+      </AppStateProvider>
+    </LocaleProvider>
   );
 }

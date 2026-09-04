@@ -1,11 +1,12 @@
 /**
- * Shuffles the order of the members in src/data/members.json, in place.
+ * Shuffles the order of the members in src/catalog/members.json, in place.
  *
  *   npm run shuffle
  *
- * That file is the catalog behind the member picker, and its order is the order the
- * members are offered in. New members are always appended, so without a shuffle the
- * most recent arrivals would stay bunched at the bottom of the catalog.
+ * That file is the structural catalog behind the member picker — ids and icons
+ * only, shared by every language — and its order is the order the members are
+ * offered in, in every locale at once. New members are always appended, so
+ * without a shuffle the most recent arrivals would stay bunched at the bottom.
  *
  * The draw is a Fisher-Yates, so every permutation is equally likely, and `randomInt`
  * avoids the modulo bias of a scaled `Math.random()`. Only the order changes: no
@@ -19,11 +20,11 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const TARGET = join(ROOT, "src", "data", "members.json");
+const TARGET = join(ROOT, "src", "catalog", "members.json");
 
 const members = JSON.parse(readFileSync(TARGET, "utf8"));
 if (!Array.isArray(members))
-  throw new Error("src/data/members.json does not hold an array of members");
+  throw new Error("src/catalog/members.json does not hold an array of members");
 
 for (let i = members.length - 1; i > 0; i -= 1) {
   const j = randomInt(i + 1);
@@ -41,5 +42,5 @@ execFileSync(process.execPath, [PRETTIER, "--write", TARGET], {
 });
 
 console.log(
-  `\n  ✅  src/data/members.json — ${members.length} members shuffled.\n`,
+  `\n  ✅  src/catalog/members.json — ${members.length} members shuffled.\n`,
 );

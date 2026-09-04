@@ -1,3 +1,6 @@
+import { useT } from "../../locale/useT";
+
 export function Brand() {
-  return <h1 className="brand">Micro Council</h1>;
+  const t = useT();
+  return <h1 className="brand">{t.brand}</h1>;
 }

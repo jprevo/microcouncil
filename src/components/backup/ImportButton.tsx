@@ -5,11 +5,15 @@ import { IconButton } from "../ui/IconButton";
 import { Modal } from "../ui/Modal";
 import type { Backup } from "../../backup/format";
 import { readBackupFile } from "../../backup/readBackupFile";
+import { useLocale } from "../../locale/useLocale";
+import { useT } from "../../locale/useT";
 import { useToast } from "../../toast/useToast";
 
 export function ImportButton() {
   const input = useRef<HTMLInputElement>(null);
   const toast = useToast();
+  const { memberCatalog, environmentCatalog } = useLocale();
+  const t = useT();
   /** The validated file waiting for a yes; nothing is written until then. */
   const [pending, setPending] = useState<Backup | null>(null);
 
@@ -22,7 +26,11 @@ export function ImportButton() {
     if (file === undefined) return;
 
     // An unreadable file is turned away here: only a valid one reaches the dialog.
-    const parsed = await readBackupFile(file);
+    const parsed = await readBackupFile(
+      file,
+      { memberCatalog, environmentCatalog },
+      t.backup.errors,
+    );
     if (parsed.ok) setPending(parsed.backup);
     else toast(parsed.reason);
   };
@@ -31,8 +39,8 @@ export function ImportButton() {
     <>
       <IconButton
         glyph="📥"
-        label="Importer"
-        ariaLabel="Importer des données depuis un fichier JSON"
+        label={t.backup.import.button}
+        ariaLabel={t.backup.import.buttonAria}
         hasPopup
         onClick={() => input.current?.click()}
       />

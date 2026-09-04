@@ -2,7 +2,12 @@ import { asNumber, asRecord, asString, readJson, writeJson } from "../lib/json";
 import { asEnvironment, asMember, asTarget } from "../lib/parse";
 import type { CouncilSave, Environment, Member, SavedEntry } from "../types";
 
-const STORAGE_KEY = "microcouncil.saves.v2";
+const STORAGE_VERSION = "v3";
+
+/** One saves list per language: a save's cards carry text in that language. */
+function storageKey(locale: string): string {
+  return `microcouncil.saves.${locale}.${STORAGE_VERSION}`;
+}
 
 /** Past this count, the oldest saves make room for new ones. */
 export const MAX_SAVES = 100;
@@ -70,12 +75,15 @@ export function parseSaves(value: unknown): readonly CouncilSave[] {
 }
 
 /** The stored list, newest first. */
-export function readSaves(): readonly CouncilSave[] {
-  return parseSaves(readJson(STORAGE_KEY));
+export function readSaves(locale: string): readonly CouncilSave[] {
+  return parseSaves(readJson(storageKey(locale)));
 }
 
-export function writeSaves(saves: readonly CouncilSave[]): void {
-  writeJson(STORAGE_KEY, saves);
+export function writeSaves(
+  locale: string,
+  saves: readonly CouncilSave[],
+): void {
+  writeJson(storageKey(locale), saves);
 }
 
 /** Sorts newest first and drops the oldest ones past the limit. */

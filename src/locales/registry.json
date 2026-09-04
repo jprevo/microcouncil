@@ -1,0 +1,4 @@
+[
+  { "code": "en", "label": "English", "dir": "ltr", "default": true },
+  { "code": "fr", "label": "Français", "dir": "ltr", "default": false }
+]

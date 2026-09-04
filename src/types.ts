@@ -16,11 +16,14 @@ export interface Environment {
 }
 
 /**
- * The catalog slot an edit writes into. It never changes when an entry is renamed,
- * so a built-in stays recognizable — and restorable — whatever the user calls it.
+ * The catalog slot an edit writes into. A built-in is addressed by its stable,
+ * locale-independent `id` — never by its (translated, renamable) display name — so
+ * it stays recognizable and restorable whatever the user calls it and whatever
+ * language the page is in. A custom entry has no such id, so its current name is
+ * the only handle available.
  */
 export type LibraryTarget =
-  | { readonly kind: "builtin"; readonly name: string }
+  | { readonly kind: "builtin"; readonly id: string }
   | { readonly kind: "custom"; readonly name: string };
 
 /** Everything the user added to, or changed in, one of the shipped catalogs. */

@@ -1,4 +1,5 @@
 import { normalize } from "./text";
+import type { UiStrings } from "../locale/types";
 import type { Environment } from "../types";
 
 /** The form's own shape: every field is free text. */
@@ -41,13 +42,13 @@ export function environmentOf(draft: EnvironmentDraft): Environment {
 export function validateDraft(
   draft: EnvironmentDraft,
   taken: ReadonlySet<string>,
+  strings: UiStrings["environments"]["validation"],
 ): string | null {
   const environment = environmentOf(draft);
-  if (environment.title === "") return "Le titre est obligatoire.";
-  if (taken.has(normalize(environment.title)))
-    return "Ce titre est déjà pris par un autre environnement.";
-  if (environment.icon === "") return "Choisissez une icône.";
-  if (environment.summary === "") return "Le résumé est obligatoire.";
-  if (environment.description === "") return "La description est obligatoire.";
+  if (environment.title === "") return strings.titleRequired;
+  if (taken.has(normalize(environment.title))) return strings.titleTaken;
+  if (environment.icon === "") return strings.iconRequired;
+  if (environment.summary === "") return strings.summaryRequired;
+  if (environment.description === "") return strings.descriptionRequired;
   return null;
 }

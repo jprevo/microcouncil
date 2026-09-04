@@ -1,7 +1,8 @@
 import { ConfirmDialog } from "../ui/ConfirmDialog";
 import { summarize } from "../../backup/summary";
 import { useExportBackup } from "../../backup/useExportBackup";
-import { plural } from "../../lib/text";
+import { format, pluralizeZero } from "../../locale/i18n";
+import { useT } from "../../locale/useT";
 import { useSaves } from "../../saves/useSaves";
 import { useAppState } from "../../state/hooks";
 
@@ -11,41 +12,37 @@ export function ExportDialog({ onClose }: { readonly onClose: () => void }) {
   const { saves } = useSaves();
   const exportBackup = useExportBackup();
   const { cards, saves: savedCount } = summarize(state, saves);
+  const t = useT();
 
   const confirm = (): void => {
     exportBackup();
     onClose();
   };
 
-  const cardsLine =
-    cards === 0
-      ? "Les fiches que vous créerez ou modifierez — aucune pour l'instant."
-      : `${String(cards)} ${plural(cards, "fiche")} de membre ou d'environnement ${plural(cards, "créée")} ou ${plural(cards, "modifiée")}.`;
-
-  const savesLine =
-    savedCount === 0
-      ? "Vos conseils enregistrés — aucun pour l'instant."
-      : `${String(savedCount)} ${plural(savedCount, "conseil")} ${plural(savedCount, "enregistré")}, avec les fiches sur lesquelles ${plural(savedCount, "il")} ${plural(savedCount, "repose", "nt")}.`;
+  const cardsLine = format(pluralizeZero(cards, t.backup.export.cardsLine), {
+    count: cards,
+  });
+  const savesLine = format(
+    pluralizeZero(savedCount, t.backup.export.savesLine),
+    {
+      count: savedCount,
+    },
+  );
 
   return (
     <ConfirmDialog
       id="export-title"
-      title="📤 Exporter vos données"
-      confirmLabel="Télécharger le fichier"
+      title={t.backup.export.title}
+      confirmLabel={t.backup.export.confirmLabel}
       onConfirm={confirm}
       onClose={onClose}
     >
-      <p className="modal__lede">
-        Par défaut, Micro Council garde tout dans votre navigateur : vider son
-        stockage, changer de machine ou de navigateur, vous fait perdre toutes
-        vos données. L'export vous permet d'avoir une sauvegarde globale dans un
-        seul fichier, que vous pouvez conserver et réimporter plus tard.
-      </p>
+      <p className="modal__lede">{t.backup.export.intro}</p>
 
       <section className="modal__section">
-        <h3>Ce que le fichier emporte</h3>
+        <h3>{t.backup.export.sectionTitle}</h3>
         <ul className="modal__list">
-          <li>Votre nom, vos instructions, le sujet en cours, la sélection.</li>
+          <li>{t.backup.export.settingsLine}</li>
           <li>{cardsLine}</li>
           <li>{savesLine}</li>
         </ul>

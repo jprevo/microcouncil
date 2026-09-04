@@ -1,0 +1,9 @@
+{
+  "title": "Micro Council",
+  "description": "Compose your council, pick a setting, and generate a prompt ready to paste into Claude, ChatGPT or Gemini.",
+  "ogLocale": "en_US",
+  "numberLocale": "en-US",
+  "usernameFallback": "the user",
+  "youWord": "you",
+  "charsPerToken": 4
+}

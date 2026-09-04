@@ -3,21 +3,24 @@ import { SavesList } from "./SavesList";
 import { IconButton } from "../ui/IconButton";
 import { Modal } from "../ui/Modal";
 import { useSaves } from "../../saves/useSaves";
+import { format } from "../../locale/i18n";
+import { useT } from "../../locale/useT";
 
 export function LoadButton() {
   const { saves } = useSaves();
   const [open, setOpen] = useState(false);
   const close = (): void => setOpen(false);
+  const t = useT();
 
   return (
     <>
       <IconButton
         glyph="📂"
-        label="Charger"
+        label={t.topbar.load}
         ariaLabel={
           saves.length === 0
-            ? "Charger un conseil enregistré"
-            : `Charger un conseil enregistré (${saves.length})`
+            ? t.topbar.loadAria
+            : format(t.topbar.loadAriaWithCount, { count: saves.length })
         }
         count={saves.length}
         hasPopup

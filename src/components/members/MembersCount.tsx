@@ -1,12 +1,14 @@
 import { Pill } from "../ui/Pill";
-import { plural } from "../../lib/text";
+import { pluralize } from "../../locale/i18n";
+import { useT } from "../../locale/useT";
 import { useAppState } from "../../state/hooks";
 
 export function MembersCount() {
   const count = useAppState().selectedMembers.length;
+  const t = useT();
   return (
     <Pill>
-      {count} {plural(count, "sélectionné")}
+      {count} {pluralize(count, t.members.selectedCount)}
     </Pill>
   );
 }

@@ -1,20 +1,25 @@
 import { useMemo } from "react";
-import { environmentCatalog, memberCatalog } from "../lib/catalogs";
 import { useAppState } from "./hooks";
+import { useLocale } from "../locale/useLocale";
 import type { CatalogEnvironment, CatalogMember } from "../types";
 
 /** The member catalog as it actually stands, with the user's edits applied. */
 export function useMemberCatalog(): readonly CatalogMember[] {
   const { memberLibrary } = useAppState();
-  return useMemo(() => memberCatalog.build(memberLibrary), [memberLibrary]);
+  const { memberCatalog } = useLocale();
+  return useMemo(
+    () => memberCatalog.build(memberLibrary),
+    [memberCatalog, memberLibrary],
+  );
 }
 
 /** The setting catalog as it actually stands, with the user's edits applied. */
 export function useEnvironmentCatalog(): readonly CatalogEnvironment[] {
   const { environmentLibrary } = useAppState();
+  const { environmentCatalog } = useLocale();
   return useMemo(
     () => environmentCatalog.build(environmentLibrary),
-    [environmentLibrary],
+    [environmentCatalog, environmentLibrary],
   );
 }
 

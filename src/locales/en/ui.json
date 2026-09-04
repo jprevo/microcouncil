@@ -1,0 +1,240 @@
+{
+  "brand": "Micro Council",
+  "lede": "Create a prompt to paste into your favorite AI, and talk with a panel of specialists.",
+  "prompt": {
+    "noMembers": "_No member selected._",
+    "noEnvironment": "_No setting selected._",
+    "personalityLabel": "Personality: "
+  },
+  "footer": {
+    "license": "© 2026 Micro Council · Open source project available on {github}",
+    "githubLinkText": "GitHub",
+    "privacy": "No cookies are used. Your settings never leave your browser."
+  },
+  "theme": {
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme"
+  },
+  "topbar": {
+    "save": "Save",
+    "saveAria": "Save this council",
+    "load": "Load",
+    "loadAria": "Load a saved council",
+    "loadAriaWithCount": "Load a saved council ({count})"
+  },
+  "identity": {
+    "title": "Your name",
+    "placeholder": "Your name"
+  },
+  "members": {
+    "title": "Council members",
+    "hint": "Ideally between 3 and 7 members.",
+    "clearAll": "Clear all",
+    "filterPlaceholder": "Filter by name, job, trait or keyword…",
+    "filterAriaLabel": "Filter members",
+    "empty": "No member matches this filter.",
+    "add": "Add a member",
+    "selectedCount": { "one": "selected", "other": "selected" },
+    "edit": "Edit {name}",
+    "editorCreateTitle": "✨ New member",
+    "toastCreated": "{name} joins the council",
+    "toastUpdated": "{name} is up to date",
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Ada",
+      "job": "Job",
+      "jobPlaceholder": "Software engineer",
+      "description": "Description",
+      "descriptionHint": "Write {{username}} where your name should appear.",
+      "descriptionPlaceholder": "What this member brings to the council, and how they talk to {{username}}.",
+      "traits": "Traits",
+      "traitsHint": "Comma-separated.",
+      "traitsPlaceholder": "curious, rigorous, direct",
+      "tags": "Tags",
+      "tagsHint": "Search keywords, comma-separated. Not included in the prompt.",
+      "tagsPlaceholder": "algorithms, code, technical debt"
+    },
+    "validation": {
+      "nameRequired": "Name is required.",
+      "nameTaken": "This name is already taken by another member.",
+      "iconRequired": "Choose an icon.",
+      "jobRequired": "Job is required.",
+      "descriptionRequired": "Description is required."
+    }
+  },
+  "environments": {
+    "title": "The setting",
+    "hint": "The setting the conversation takes place in.",
+    "clear": "Clear",
+    "add": "Add a setting",
+    "edit": "Edit {title}",
+    "editorCreateTitle": "✨ New setting",
+    "toastCreated": "{title} joins the settings",
+    "toastUpdated": "{title} is up to date",
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "The mountain refuge",
+      "summary": "Summary",
+      "summaryHint": "One sentence, shown on the card. Not included in the prompt.",
+      "summaryPlaceholder": "What this setting changes about the conversation, in one sentence.",
+      "description": "Description",
+      "descriptionHint": "The setting exactly as it appears in the prompt. Write {{username}} where your name should appear.",
+      "descriptionPlaceholder": "You're gathered around the stove in a mountain refuge, night falling over the valley."
+    },
+    "validation": {
+      "titleRequired": "Title is required.",
+      "titleTaken": "This title is already taken by another setting.",
+      "iconRequired": "Choose an icon.",
+      "summaryRequired": "Summary is required.",
+      "descriptionRequired": "Description is required."
+    }
+  },
+  "icon": {
+    "label": "Icon"
+  },
+  "emojiPicker": {
+    "searchPlaceholder": "Search: brain, rocket, chart…",
+    "empty": "No icon for this search.",
+    "gridLabel": "Suggested icons",
+    "loading": "Loading icons…"
+  },
+  "editor": {
+    "close": "Close",
+    "deleteConfirm": "Permanently delete {label}?",
+    "deleted": "{label} leaves the catalog",
+    "restore": "Revert to original",
+    "restored": "Original version restored",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "custom": {
+    "title": "Additional instructions",
+    "hint": "Optional — saved automatically in your browser.",
+    "example": "Example",
+    "clear": "Clear",
+    "placeholder": "For example: format constraints, memory to use, topics to avoid…"
+  },
+  "subject": {
+    "title": "Your topic",
+    "optional": "optional",
+    "hint": "If you leave it blank, a member will ask you.",
+    "clear": "Clear",
+    "placeholder": "For example: I have to choose between two job offers and I can't decide."
+  },
+  "output": {
+    "title": "Your prompt",
+    "meta": "{chars} characters · ~{tokens} tokens",
+    "warningMissing": "Still missing {items}.",
+    "missingMembers": "at least one member",
+    "missingEnvironment": "a setting",
+    "missingUsername": "your name",
+    "note": "Paste it as-is into Claude, ChatGPT, Gemini or any other assistant.",
+    "copy": "Copy prompt",
+    "copied": "Copied!",
+    "copiedToast": "Prompt copied to clipboard",
+    "download": "Download",
+    "downloadedToast": "Prompt downloaded"
+  },
+  "saves": {
+    "title": "📂 Your saved councils",
+    "empty": "Nothing saved yet. The \"Save\" button, just to the left, stores the current council.",
+    "membersCount": { "one": "member", "other": "members" },
+    "deleteAria": "Delete {name}",
+    "deleteConfirm": "Permanently delete \"{name}\"?",
+    "loadedToast": "\"{name}\" is loaded",
+    "deletedToast": "\"{name}\" is deleted",
+    "dialogTitle": "💾 Save this council",
+    "nameLabel": "Save name",
+    "nameHint": "Your name, the member cards, the setting, your instructions and the topic are stored in this browser. Cards travel whole: reloading this council restores them exactly as they are now, even if you change or delete them later.",
+    "namePlaceholder": "Product council",
+    "nameRequired": "Give this save a name so you can find it again.",
+    "replaceConfirm": "Replace the save \"{name}\"?",
+    "maxReached": "You've reached {max} saves: the oldest one will make room.",
+    "savedToast": "\"{name}\" is saved — find it again under Load",
+    "suggestedNamePrefix": "Council from {date}"
+  },
+  "backup": {
+    "cardsWord": {
+      "one": "member or setting card",
+      "other": "member or setting cards"
+    },
+    "savesWord": { "one": "saved council", "other": "saved councils" },
+    "export": {
+      "button": "Export",
+      "buttonAria": "Export all my data as JSON",
+      "title": "📤 Export your data",
+      "confirmLabel": "Download the file",
+      "intro": "By default, Micro Council keeps everything in your browser: clearing its storage, or switching machine or browser, loses all your data. Exporting gives you one single backup file you can keep and re-import later.",
+      "sectionTitle": "What the file carries",
+      "settingsLine": "Your name, your instructions, the current topic, your selection.",
+      "cardsLine": {
+        "zero": "The cards you'll create or edit — none for now.",
+        "one": "{count} member or setting card created or modified.",
+        "other": "{count} member or setting cards created or modified."
+      },
+      "savesLine": {
+        "zero": "Your saved councils — none for now.",
+        "one": "{count} saved council, with the cards it rests on.",
+        "other": "{count} saved councils, with the cards they rest on."
+      },
+      "downloadedToast": "Your data is downloaded"
+    },
+    "import": {
+      "button": "Import",
+      "buttonAria": "Import data from a JSON file",
+      "title": "📥 Import data",
+      "confirmLabel": "Replace my data",
+      "intro": "This file is readable, and here's what it contains. Nothing is written yet: the button below decides.",
+      "sectionTitle": "The file",
+      "exportedAtUnknown": "Exported on an unreadable date.",
+      "exportedAt": "Exported on {date}, format version {version}.",
+      "cardsSavesLine": "{cards} {cardsWord}, and {saves} {savesWord}.",
+      "settingsLine": "The name, instructions, topic, selection and theme as they were on that day.",
+      "warningTitle": "Everything this browser holds will be overwritten",
+      "warning": ": your name, your settings, your cards and your saved councils give way to the ones in the file. This can't be undone — if needed, export your current data before continuing.",
+      "restoredToast": "Your data is restored",
+      "localeMismatch": "This file was exported from the {locale} version of Micro Council."
+    },
+    "errors": {
+      "unreadableJson": "This file isn't readable JSON.",
+      "notABackup": "This file isn't a Micro Council backup.",
+      "noVersion": "This file doesn't carry a version number.",
+      "versionTooNew": "This file comes from a newer version (version {version}).",
+      "versionUnsupported": "Version {version} of this file is no longer supported.",
+      "noState": "This file doesn't contain any settings.",
+      "noSaves": "This file doesn't contain a list of saves.",
+      "fileUnreadable": "This file couldn't be read."
+    }
+  },
+  "skill": {
+    "button": "Install the skill",
+    "title": "🧩 The Micro Council skill",
+    "intro": "The same council, but directly in your agent: it composes the council, assembles the prompt and plays out the scene, no copy-pasting required.",
+    "overviewTitle": "In short",
+    "overviewBullet1": "You ask for a council, and the agent offers three options: create a council step by step, load one you've already saved, or go automatic — it picks the members itself based on your topic.",
+    "overviewBullet2": "A small local script draws from the same catalog of companions and settings as this site, and produces exactly the same prompt.",
+    "overviewBullet3": "Every council you create is saved on your machine: the members, the setting, your instructions — but never the topic. Afterwards, just call it back by name, \"run council ABC about…\", to get it back exactly as it was.",
+    "hermesTitle": "Hermes",
+    "hermesChatIntro": "In a chat:",
+    "installCommand": "Install the skill jprevo/microcouncil/skill",
+    "hermesCliIntro": "Or from the command line:",
+    "hermesCliCommand": "hermes skills install jprevo/microcouncil/skill --force",
+    "claudeCodeTitle": "Claude Code",
+    "claudeCodeChatIntro": "In a new chat:",
+    "claudeInstallCommand": "Install the skill https://github.com/jprevo/microcouncil/tree/main/skill",
+    "claudeCodeInvokeIntro": "Then, to convene the council:",
+    "claudeCodeCommand": "/microcouncil I'd like to talk about which show to watch next",
+    "note": "The `SKILL.md` format is shared by Hermes, Claude Code and agentskills.io: the `skill/` folder in the repository copies as-is into the skills directory of any other harness."
+  },
+  "tiles": {
+    "added": "added",
+    "modified": "modified"
+  },
+  "misc": {
+    "copyFailed": "Couldn't copy — select the text manually",
+    "commandCopiedToast": "Command copied to clipboard",
+    "commandCopiedAria": "Command copied",
+    "commandCopyAria": "Copy the command"
+  }
+}

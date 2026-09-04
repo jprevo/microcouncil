@@ -27,13 +27,17 @@ Quelque chose de supplémentaire prend part à la conversation : le narrateur. I
 Si {{username}} ne précise pas l'objet de sa demande dans le prompt initial, il faut simplement qu'un seul des membres du conseil lui demande : une question simple et directe.
 
 ## Membres
-{{membres}}
+
+{{members}}
 
 ## Environnement
+
 {{environment}}
 
 ## Autres instructions
+
 {{custom}}
 
 ## Le sujet de {{username}}
+
 {{subject}}

@@ -1,25 +1,19 @@
-import { PROMPT_TEMPLATE } from "./data";
 import type { Environment, Member } from "./types";
 
-const USERNAME_FALLBACK = "l'utilisateur";
-
 /** The name as the prompt will read it: what was typed, or a neutral stand-in when nothing was. */
-export function resolveUsername(username: string): string {
+export function resolveUsername(username: string, fallback: string): string {
   const trimmed = username.trim();
-  return trimmed === "" ? USERNAME_FALLBACK : trimmed;
+  return trimmed === "" ? fallback : trimmed;
 }
 
 /**
- * Average characters per token. BPE tokenizers (Claude, GPT, Gemini) all differ,
- * but they all split French at roughly 3.5 to 3.8 characters per token — noticeably
- * worse than English, which is where the familiar 4-character rule of thumb comes
- * from. The figure is shown as an estimate for that reason.
+ * Rough characters-per-token, sourced from `LocaleMeta.charsPerToken`. BPE
+ * tokenizers (Claude, GPT, Gemini) all differ, and they also split languages
+ * unevenly — French runs noticeably worse than English, for instance — so the
+ * figure is locale-specific and shown as an estimate only.
  */
-const CHARS_PER_TOKEN = 3.6;
-
-/** Rough token cost of the prompt, for guidance only. */
-export function estimateTokens(text: string): number {
-  return Math.ceil(text.length / CHARS_PER_TOKEN);
+export function estimateTokens(text: string, charsPerToken: number): number {
+  return Math.ceil(text.length / charsPerToken);
 }
 
 /** Fills a placeholder without ever expanding `$&`, `$1`… patterns in the replacement. */
@@ -27,13 +21,13 @@ function fill(template: string, placeholder: string, value: string): string {
   return template.split(`{{${placeholder}}}`).join(value);
 }
 
-function renderMember(member: Member): string {
+function renderMember(member: Member, personalityLabel: string): string {
   const lines = [
     `### ${member.icon} ${member.name}`,
     `${member.job}. ${member.description}`,
   ];
   if (member.traits.length > 0) {
-    lines.push(`Personnalité : ${member.traits.join(", ")}`);
+    lines.push(`${personalityLabel}${member.traits.join(", ")}`);
   }
   return lines.join("\n");
 }
@@ -48,6 +42,15 @@ export interface PromptInput {
   readonly environment: Environment | null;
   readonly customInstructions: string;
   readonly subject: string;
+}
+
+/** The locale-specific fallback wording `buildPrompt` fills the template with. */
+export interface PromptStrings {
+  readonly usernameFallback: string;
+  readonly noMembers: string;
+  readonly noEnvironment: string;
+  /** Precedes the comma-separated trait list, e.g. "Personality: " / "Personnalité : ". */
+  readonly personalityLabel: string;
 }
 
 /**
@@ -74,26 +77,32 @@ function dropSection(template: string, placeholder: string): string {
   return lines.join("\n");
 }
 
-/** Builds the final prompt from the src/data/prompt.md template. */
-export function buildPrompt(input: PromptInput): string {
-  const username = resolveUsername(input.username);
+/** Builds the final prompt from the active locale's `prompt.md` template. */
+export function buildPrompt(
+  input: PromptInput,
+  template: string,
+  strings: PromptStrings,
+): string {
+  const username = resolveUsername(input.username, strings.usernameFallback);
   const custom = input.customInstructions.trim();
   const subject = input.subject.trim();
 
   const memberSection =
     input.members.length > 0
-      ? input.members.map(renderMember).join("\n\n")
-      : "_Aucun membre sélectionné._";
+      ? input.members
+          .map((member) => renderMember(member, strings.personalityLabel))
+          .join("\n\n")
+      : strings.noMembers;
   const environmentSection =
     input.environment === null
-      ? "_Aucun environnement sélectionné._"
+      ? strings.noEnvironment
       : renderEnvironment(input.environment);
 
-  let output = PROMPT_TEMPLATE;
+  let output = template;
   if (custom === "") output = dropSection(output, "custom");
   if (subject === "") output = dropSection(output, "subject");
 
-  output = fill(output, "membres", memberSection);
+  output = fill(output, "members", memberSection);
   output = fill(output, "environment", environmentSection);
   output = fill(output, "custom", custom);
   output = fill(output, "subject", subject);

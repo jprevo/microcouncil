@@ -5,7 +5,12 @@ ou n'importe quel autre assistant.
 
 L'interface permet de choisir son nom, les membres du conseil, un environnement, des
 instructions additionnelles optionnelles et le sujet de la demande (optionnel lui aussi). Le
-prompt est reconstruit en direct à partir du gabarit `src/data/prompt.md`, puis copié en un clic.
+prompt est reconstruit en direct à partir du gabarit `prompt.md` de la langue active, puis copié
+en un clic.
+
+Le site est **international** : anglais par défaut (`index.html`), français sur `fr.html`, une
+page HTML par langue avec ses propres balises `<title>`, `description` et Open Graph — voir
+[Internationalisation](#internationalisation).
 
 Les membres **et les environnements** se créent et se modifient depuis l'interface, de la même
 façon : le bouton en bas de la liste ouvre une fiche vierge, le crayon d'une carte ouvre la fiche
@@ -48,18 +53,20 @@ le reste.
 npm install
 ```
 
-| Commande            | Effet                                                                                                                                               |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`       | Serveur de développement Vite.                                                                                                                      |
-| `npm run typecheck` | Vérification TypeScript stricte, sans émission.                                                                                                     |
-| `npm run gate`      | **Le gate** : `format:check`, `lint`, `typecheck`, `knip` à la suite. Doit passer avant toute fusion — la CI le rejoue sur `main` et sur chaque PR. |
-| `npm run lint`      | ESLint (TypeScript typé, React Hooks, SonarJS). `npm run lint:fix` corrige ce qui est corrigible.                                                   |
-| `npm run format`    | Prettier sur tout le dépôt. `npm run format:check` se contente de vérifier.                                                                         |
-| `npm run knip`      | Fichiers, exports et dépendances jamais utilisés.                                                                                                   |
-| `npm run build`     | **Produit `dist/`** : typecheck strict, puis build de production (HTML, CSS et JS avec empreinte).                                                  |
-| `npm run preview`   | Sert `dist/` en local, pour vérifier le build de production avant livraison.                                                                        |
-| `npm run skill`     | **Régénère `skill/`** : le skill agent, à jour des compagnons, des environnements et du gabarit.                                                    |
-| `npm run emoji`     | **Régénère `src/data/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes.                                                       |
+| Commande            | Effet                                                                                                                                                                                                          |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`       | Serveur de développement Vite (régénère d'abord les pages, voir `npm run pages`).                                                                                                                              |
+| `npm run pages`     | **Régénère `src/*.html` et `src/entries/*.tsx`** : une page et un point d'entrée par langue de `src/locales/registry.json`. Sortie générée, non commitée — voir [Internationalisation](#internationalisation). |
+| `npm run typecheck` | Vérification TypeScript stricte, sans émission.                                                                                                                                                                |
+| `npm run gate`      | **Le gate** : `format:check`, `lint`, `typecheck`, `knip` à la suite. Doit passer avant toute fusion — la CI le rejoue sur `main` et sur chaque PR.                                                            |
+| `npm run lint`      | ESLint (TypeScript typé, React Hooks, SonarJS). `npm run lint:fix` corrige ce qui est corrigible.                                                                                                              |
+| `npm run format`    | Prettier sur tout le dépôt. `npm run format:check` se contente de vérifier.                                                                                                                                    |
+| `npm run knip`      | Fichiers, exports et dépendances jamais utilisés.                                                                                                                                                              |
+| `npm run build`     | **Produit `dist/`** : régénère les pages, typecheck strict, puis build de production (une entrée Rollup par langue, HTML/CSS/JS avec empreinte).                                                               |
+| `npm run preview`   | Sert `dist/` en local, pour vérifier le build de production avant livraison.                                                                                                                                   |
+| `npm run skill`     | **Régénère `skill/`** : le skill agent (français), à jour des compagnons, des environnements et du gabarit.                                                                                                    |
+| `npm run emoji`     | **Régénère `src/catalog/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes, partagée par toutes les langues.                                                                              |
+| `npm run shuffle`   | Mélange l'ordre de `src/catalog/members.json` — le même ordre pour toutes les langues, puisque le texte suit l'`id`.                                                                                           |
 
 `dist/` est un site statique ordinaire : à déposer tel quel derrière n'importe quel serveur
 de fichiers (ou sur GitHub Pages, Netlify…). Les chemins sont relatifs, donc il fonctionne
@@ -125,10 +132,14 @@ dans `dist/` (React inclus dans le bundle : aucune requête vers un tiers à l'e
 
 Le découpage privilégie des composants très courts, à responsabilité unique :
 
-- `src/state/` — `reducer.ts` (toutes les transitions), `AppStateProvider.tsx` (état + persistance),
-  `selectors.ts` et `usePrompt.ts` (dérivations mémoïsées). L'état et le `dispatch` voyagent dans
-  deux contextes distincts, pour que les composants qui n'écrivent que via `dispatch` ne se
-  re-rendent pas à chaque frappe ;
+- `src/locale/` — le contexte de langue : `LocaleProvider` construit les deux catalogues
+  (`createCatalogs`) à partir du `LocaleBundle` actif et les met à disposition, avec le bundle
+  lui-même, via `useLocale()` ; `useT()` raccourcit l'accès aux chaînes d'interface ;
+- `src/state/` — `reducer.ts` (`createReducer(catalogues)` : toutes les transitions, liées aux
+  catalogues de la langue active), `AppStateProvider.tsx` (état + persistance), `selectors.ts` et
+  `usePrompt.ts` (dérivations mémoïsées). L'état et le `dispatch` voyagent dans deux contextes
+  distincts, pour que les composants qui n'écrivent que via `dispatch` ne se re-rendent pas à
+  chaque frappe ;
 - `src/components/ui/` — les primitives sans logique métier (`Button`, `Card`, `TextField`…) ;
 - `src/components/tiles/` — la coquille commune aux fiches (`Tile`) et ses fragments ;
 - `src/components/editor/` — ce que partagent les deux formulaires d'édition : la coquille de la
@@ -143,17 +154,22 @@ Le découpage privilégie des composants très courts, à responsabilité unique
 - `src/lib/` et `src/prompt.ts`, `src/storage.ts` — la logique pure, sans React,
   testable et réutilisable telle quelle.
 
-Les catalogues affichés ne sont jamais `src/data/members.json` et `src/data/environments.json` tels quels :
+Les catalogues affichés ne sont jamais `src/catalog/*.json` tels quels :
 `src/lib/library.ts` superpose à un catalogue livré une **bibliothèque locale** — les fiches créées
-par l'utilisateur, et les surcharges des fiches livrées, indexées par leur nom d'origine. C'est ce
-qui permet de rétablir une fiche livrée après l'avoir réécrite, ou renommée. Une fiche renommée
+par l'utilisateur, et les surcharges des fiches livrées, indexées par leur `id` d'origine. Cet `id`
+est stable et indépendant de la langue (`src/catalog/members.json` et `environments.json` ne
+portent que `id` et `icon`, dans l'ordre d'affichage ; le texte de chaque langue vit dans
+`src/locales/<code>/*.json`, keyé par ce même `id`) — c'est ce qui permet de rétablir une fiche
+livrée après l'avoir réécrite ou renommée, **dans n'importe quelle langue**. Une fiche renommée
 reste sélectionnée : le reducer déplace la sélection en même temps que le nom.
 
 Ce mécanisme est écrit une seule fois : `createCatalog(livrés, nomDe)` en produit une instance par
 domaine (`src/lib/catalogs.ts`), et seule la lecture du champ qui porte le nom — `name` pour un
-membre, `title` pour un environnement — distingue les deux. Les bibliothèques sont enregistrées
-dans le `localStorage` avec le reste de l'état, et relues en écartant les fiches illisibles, les
-doublons et les surcharges devenues orphelines.
+membre, `title` pour un environnement — distingue les deux. `createCatalogs(bundle)` en construit
+une paire pour la langue active ; `LocaleProvider` s'en charge une fois par page. Les bibliothèques
+sont enregistrées dans le `localStorage` — sous une clé par langue, `microcouncil.state.<code>.v2`,
+pour qu'une surcharge écrite en français ne s'affiche jamais sur la page anglaise — et relues en
+écartant les fiches illisibles, les doublons et les surcharges devenues orphelines.
 
 Une sauvegarde ne retient pas les **noms** des fiches retenues mais les fiches entières, chacune
 accompagnée de l'emplacement (`LibraryTarget`) qu'elle occupait. Le nom seul ne suffirait pas : le
@@ -164,36 +180,90 @@ ultérieure du catalogue. Le drapeau `edited` enregistré avec la fiche évite d
 conforme par-dessus une fiche livrée intacte, qui s'afficherait à tort comme « modifiée » : dans
 ce cas la surcharge est simplement retirée.
 
-**Une limite connue** : une fiche livrée a un emplacement stable — son nom d'origine — mais une
+**Une limite connue** : une fiche livrée a un identifiant stable — son `id` de catalogue — mais une
 fiche personnelle est identifiée par son nom courant. Renommer une fiche personnelle puis
 recharger une sauvegarde antérieure la recrée donc sous son ancien nom, à côté de la nouvelle,
 au lieu de la retrouver. Le conseil reste complet, mais le catalogue gagne un doublon. Le lever
-demanderait de doter les fiches personnelles d'un identifiant stable.
+demanderait de doter les fiches personnelles, elles aussi, d'un identifiant stable.
+
+## Internationalisation
+
+Le site est décliné en plusieurs langues, chacune sur sa propre page HTML, sans embarquer le
+contenu des autres :
+
+- `src/locales/registry.json` liste les langues (`code`, `label`, `dir`, `default`). L'anglais
+  (`en`) est la langue par défaut, servie à la racine (`index.html`) ; le français (`fr`) est
+  servi sur `fr.html`. Ajouter une langue est une entrée dans ce fichier plus un nouveau dossier
+  `src/locales/<code>/` ;
+- `src/catalog/` porte ce qui est **structurel et partagé par toutes les langues** : `id` stable et
+  `icon` pour chaque membre et environnement (`members.json`, `environments.json`), dans l'ordre
+  d'affichage, et la table d'icônes du sélecteur (`emoji.json`, chargée à la demande — voir
+  plus bas) ;
+- `src/locales/<code>/` porte tout ce qui est **traduit** : `members.json` et `environments.json`
+  (texte, keyé par `id`), `ui.json` (les chaînes d'interface, typées par `UiStrings` dans
+  `src/locale/types.ts`), `meta.json` (titre, description, `og:locale`, format des nombres/dates,
+  repli de `{{username}}`, caractères par token — voir `LocaleMeta`), `prompt.md` (le gabarit) et
+  `custom.md` (l'exemple d'instructions additionnelles) ;
+- `src/locales/<code>/index.ts` assemble tout ça en un `LocaleBundle`, en joignant `src/catalog/`
+  et le texte de la langue par `id` ;
+- `scripts/build-pages.mjs` (`npm run pages`, rejoué par `predev`/`prebuild`/`pregate`) régénère,
+  pour chaque langue du registre, une page HTML (balises `<html lang dir>`, `title`, `description`,
+  Open Graph, `hreflang` croisés vers chaque autre langue plus `x-default`) et un point d'entrée
+  `src/entries/<code>.tsx` qui importe _uniquement_ le bundle de sa langue. Ces fichiers sont
+  générés — jamais commités (voir `.gitignore`) — et `vite.config.ts` lit le même registre pour
+  fournir une entrée Rollup par langue à `npm run build`.
+
+Chaque page ne charge donc que le JavaScript de sa propre langue : Rollup découpe un chunk par
+langue plus un chunk commun (React, composants, logique), et rien n'oblige une page anglaise à
+télécharger la moindre chaîne française. La table d'emoji (~45 Ko, un seul jeu de shortcodes
+anglais partagé par toutes les langues — ce sont des raccourcis techniques, pas du texte à
+traduire) suit le même principe à l'échelle de la page : `import()` dynamique dans
+`src/lib/emoji.ts`, chargée seulement à l'ouverture du sélecteur d'icônes.
+
+Le `localStorage` est cloisonné par langue (`microcouncil.state.<code>.v2`,
+`microcouncil.saves.<code>.v3`) : un conseil composé en français n'apparaît jamais sur la page
+anglaise, et réciproquement. Un export (`microcouncil-AAAA-MM-JJ.json`) porte désormais un champ
+`locale` ; l'import prévient si le fichier vient d'une autre langue que la page sur laquelle il est
+importé, mais ne bloque pas l'opération.
+
+Le skill agent (`skill/`, voir plus bas) reste **en français** pour l'instant, indépendamment de la
+langue du site : `npm run skill` lit toujours `src/locales/fr/`.
 
 ## Sources de données
 
-Tout le contenu éditorial vit hors du code :
+Tout le contenu éditorial vit hors du code, réparti entre le structurel (`src/catalog/`, une seule
+copie) et le traduit (`src/locales/<code>/`, une copie par langue — voir
+[Internationalisation](#internationalisation)) :
 
-- `src/data/members.json` — le catalogue des compagnons (`name`, `icon`, `job`, `description`, `traits`,
-  `tags`) ; les `tags` sont des mots-clés de recherche : ils alimentent le filtre du catalogue mais
-  n'apparaissent jamais dans le prompt ;
-- `src/data/environments.json` — les décors (`title`, `icon`, `summary`, `description`) ; le `summary`
-  est la phrase affichée sur la fiche : il n'apparaît jamais dans le prompt ;
-- `src/data/emoji.json` — la table `shortcode -> caractère` du sélecteur d'icônes, **produite** par
-  `npm run emoji` à partir de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet)
+- `members.json` — le catalogue des compagnons ; `id` et `icon` dans `src/catalog/`, le reste
+  (`name`, `job`, `description`, `traits`, `tags`) dans `src/locales/<code>/`. Les `tags` sont des
+  mots-clés de recherche : ils alimentent le filtre du catalogue mais n'apparaissent jamais dans
+  le prompt ;
+- `environments.json` — les décors ; `id` et `icon` dans `src/catalog/`, le reste (`title`,
+  `summary`, `description`) dans `src/locales/<code>/`. Le `summary` est la phrase affichée sur la
+  fiche : il n'apparaît jamais dans le prompt ;
+- `src/catalog/emoji.json` — la table `shortcode -> caractère` du sélecteur d'icônes, **produite**
+  par `npm run emoji` à partir de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet)
   (l'ordre et les shortcodes) et de l'API emoji de GitHub (les caractères eux-mêmes) ;
-- `src/data/prompt.md` — le gabarit du prompt, avec les jetons `{{username}}`, `{{membres}}`,
-  `{{environment}}`, `{{custom}}` et `{{subject}}` ;
-- `src/data/custom.md` — l'exemple d'instructions additionnelles, inséré à la demande via le
-  bouton « Exemple » (aucune instruction n'est pré-remplie par défaut).
+- `src/locales/<code>/prompt.md` — le gabarit du prompt, avec les jetons `{{username}}`,
+  `{{members}}`, `{{environment}}`, `{{custom}}` et `{{subject}}` — des jetons de code, jamais
+  traduits, identiques dans chaque langue ;
+- `src/locales/<code>/custom.md` — l'exemple d'instructions additionnelles, inséré à la demande via
+  le bouton « Exemple » (aucune instruction n'est pré-remplie par défaut) ;
+- `src/locales/<code>/ui.json` — toutes les chaînes de l'interface, y compris les formes pluriel
+  (`{one, other}`, et `{zero, one, other}` là où un état « rien pour l'instant » a sa propre
+  formulation).
 
-- `skill-src/` — le contenu rédigé du skill agent (`SKILL.md`, `scripts/microcouncil.py`,
-  `references/`), d'où `npm run skill` produit `skill/`.
+- `skill-src/` — le contenu rédigé du skill agent, en français (`SKILL.md`,
+  `scripts/microcouncil.py`, `references/`), d'où `npm run skill` produit `skill/`.
 
-Ajouter un compagnon ou un environnement ne demande donc qu'une entrée JSON : l'interface, le
-prompt et le skill suivent (`npm run skill` pour ce dernier). Le jeton `{{username}}` est remplacé partout, y compris à l'intérieur des fiches.
-Une section `##` dont le corps se réduit à un jeton vide (« Autres instructions », « Le sujet
-de … ») est retirée du prompt final plutôt que laissée en titre orphelin.
+Ajouter un compagnon ou un environnement demande une entrée dans `src/catalog/` (`id`, `icon`) plus
+une entrée par langue dans `src/locales/<code>/` : l'interface et le prompt suivent aussitôt, le
+skill après un `npm run skill`. Le jeton `{{username}}` est remplacé partout, y compris à
+l'intérieur des fiches, par le mot que la langue active utilise en repli (`usernameFallback` dans
+`meta.json`) quand rien n'a été tapé. Une section `##` dont le corps se réduit à un jeton vide
+(« Autres instructions », « Le sujet de … ») est retirée du prompt final plutôt que laissée en
+titre orphelin.
 
 ## Licence
 
@@ -210,7 +280,7 @@ Deux emprunts extérieurs voyagent avec le dépôt et gardent leur propre licenc
   [`licenses/Fraunces-OFL.txt`](licenses/Fraunces-OFL.txt) — et l'en-tête de `src/fonts.css`
   porte l'avis de copyright sous forme de commentaire `@license`, que le minifieur préserve
   jusque dans `dist/`.
-- **`src/data/emoji.json`**, produit par `npm run emoji` à partir de l'[emoji cheat
+- **`src/catalog/emoji.json`**, produit par `npm run emoji` à partir de l'[emoji cheat
   sheet](https://github.com/ikatyang/emoji-cheat-sheet) (MIT) et de l'API emoji de GitHub.
 
 Les fiches de compagnons et d'environnements, le gabarit de prompt et l'exemple d'instructions

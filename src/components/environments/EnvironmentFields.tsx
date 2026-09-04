@@ -2,6 +2,7 @@ import { IconField } from "../editor/IconField";
 import { Field } from "../ui/Field";
 import { TextArea } from "../ui/TextArea";
 import { TextField } from "../ui/TextField";
+import { useT } from "../../locale/useT";
 import type { EnvironmentDraft } from "../../lib/environmentDraft";
 
 interface EnvironmentFieldsProps {
@@ -11,14 +12,17 @@ interface EnvironmentFieldsProps {
 
 /** The fields of a setting entry, with no saving logic of their own. */
 export function EnvironmentFields({ draft, onChange }: EnvironmentFieldsProps) {
+  const t = useT();
+  const f = t.environments.fields;
+
   return (
     <>
-      <Field htmlFor="environment-title" label="Titre">
+      <Field htmlFor="environment-title" label={f.title}>
         <TextField
           id="environment-title"
           value={draft.title}
           onChange={(title) => onChange({ title })}
-          placeholder="Le refuge de montagne"
+          placeholder={f.titlePlaceholder}
         />
       </Field>
 
@@ -30,29 +34,29 @@ export function EnvironmentFields({ draft, onChange }: EnvironmentFieldsProps) {
 
       <Field
         htmlFor="environment-summary"
-        label="Résumé"
-        hint="Une phrase, affichée sur la fiche. Absente du prompt."
+        label={f.summary}
+        hint={f.summaryHint}
       >
         <TextArea
           id="environment-summary"
           rows={1}
           value={draft.summary}
           onChange={(summary) => onChange({ summary })}
-          placeholder="Ce que ce décor change à la discussion, en une phrase."
+          placeholder={f.summaryPlaceholder}
         />
       </Field>
 
       <Field
         htmlFor="environment-description"
-        label="Description"
-        hint="Le décor tel qu'il est posé dans le prompt. Écrivez {{username}} là où votre nom doit apparaître."
+        label={f.description}
+        hint={f.descriptionHint}
       >
         <TextArea
           id="environment-description"
           rows={4}
           value={draft.description}
           onChange={(description) => onChange({ description })}
-          placeholder="Vous êtes réunis autour du poêle d'un refuge, la nuit tombe sur la vallée."
+          placeholder={f.descriptionPlaceholder}
         />
       </Field>
     </>

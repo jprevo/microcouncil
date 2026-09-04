@@ -24,10 +24,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "vite.config.ts",
-    "scripts/**/*.mjs"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "scripts/**/*.mjs"]
 }

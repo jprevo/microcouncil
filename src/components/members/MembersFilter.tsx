@@ -1,4 +1,5 @@
 import { TextField } from "../ui/TextField";
+import { useT } from "../../locale/useT";
 
 interface MembersFilterProps {
   readonly query: string;
@@ -6,6 +7,7 @@ interface MembersFilterProps {
 }
 
 export function MembersFilter({ query, onChange }: MembersFilterProps) {
+  const t = useT();
   return (
     <TextField
       id="members-filter"
@@ -13,8 +15,8 @@ export function MembersFilter({ query, onChange }: MembersFilterProps) {
       modifier="search"
       value={query}
       onChange={onChange}
-      ariaLabel="Filtrer les membres"
-      placeholder="Filtrer par nom, métier, trait ou mot-clé…"
+      ariaLabel={t.members.filterAriaLabel}
+      placeholder={t.members.filterPlaceholder}
     />
   );
 }

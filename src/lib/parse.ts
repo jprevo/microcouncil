@@ -36,7 +36,13 @@ export function asTarget(value: unknown): LibraryTarget | null {
   const record = asRecord(value);
   if (record === null) return null;
   const kind = asString(record["kind"]);
-  const name = asString(record["name"]).trim();
-  if (name === "" || (kind !== "builtin" && kind !== "custom")) return null;
-  return { kind, name };
+  if (kind === "builtin") {
+    const id = asString(record["id"]).trim();
+    return id === "" ? null : { kind: "builtin", id };
+  }
+  if (kind === "custom") {
+    const name = asString(record["name"]).trim();
+    return name === "" ? null : { kind: "custom", name };
+  }
+  return null;
 }

@@ -1,4 +1,7 @@
-import { formatDate, plural } from "../../lib/text";
+import { formatDate } from "../../lib/text";
+import { format, pluralize } from "../../locale/i18n";
+import { useLocale } from "../../locale/useLocale";
+import { useT } from "../../locale/useT";
 import { useSaves } from "../../saves/useSaves";
 import { useAppDispatch } from "../../state/hooks";
 import { useToast } from "../../toast/useToast";
@@ -16,28 +19,30 @@ export function SaveRow({ save, onLoaded }: SaveRowProps) {
   const dispatch = useAppDispatch();
   const { remove } = useSaves();
   const toast = useToast();
+  const { numberLocale } = useLocale().bundle.meta;
+  const t = useT();
 
   const icons = save.members.map((member) => member.item.icon);
   const shown = icons.slice(0, ICON_LIMIT);
   const hidden = icons.length - shown.length;
   const count = save.members.length;
   const meta = [
-    `${count} ${plural(count, "membre")}`,
+    `${count} ${pluralize(count, t.saves.membersCount)}`,
     save.environment?.item.title ?? null,
-    formatDate(save.savedAt),
+    formatDate(save.savedAt, numberLocale),
   ].filter((part): part is string => part !== null);
 
   const load = (): void => {
     dispatch({ type: "loadCouncil", council: save });
-    toast(`« ${save.name} » est chargé`);
+    toast(format(t.saves.loadedToast, { name: save.name }));
     onLoaded();
   };
 
   const drop = (): void => {
-    if (!globalThis.confirm(`Supprimer définitivement « ${save.name} » ?`))
+    if (!globalThis.confirm(format(t.saves.deleteConfirm, { name: save.name })))
       return;
     remove(save.id);
-    toast(`« ${save.name} » est supprimé`);
+    toast(format(t.saves.deletedToast, { name: save.name }));
   };
 
   return (
@@ -57,7 +62,7 @@ export function SaveRow({ save, onLoaded }: SaveRowProps) {
       <button
         className="save__delete"
         type="button"
-        aria-label={`Supprimer ${save.name}`}
+        aria-label={format(t.saves.deleteAria, { name: save.name })}
         onClick={drop}
       >
         <span aria-hidden="true">✕</span>

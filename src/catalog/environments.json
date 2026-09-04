@@ -1,0 +1,30 @@
+[
+  {
+    "id": "le-salon-de-the",
+    "icon": "☕"
+  },
+  {
+    "id": "la-salle-de-reunion",
+    "icon": "💼"
+  },
+  {
+    "id": "le-conseil-d-elrond",
+    "icon": "🧝‍♂️"
+  },
+  {
+    "id": "la-randonnee",
+    "icon": "🥾"
+  },
+  {
+    "id": "le-podcast",
+    "icon": "🎙️"
+  },
+  {
+    "id": "sur-la-passerelle",
+    "icon": "🚀"
+  },
+  {
+    "id": "la-gare",
+    "icon": "🚄"
+  }
+]

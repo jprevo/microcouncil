@@ -5,11 +5,16 @@ export const EMPTY_LIBRARY: Library<never> = { custom: [], overrides: {} };
 
 /** Stable identifier of a slot: unique across renames and across both namespaces. */
 export function targetKey(target: LibraryTarget): string {
-  return `${target.kind}:${target.name}`;
+  return target.kind === "builtin"
+    ? `builtin:${target.id}`
+    : `custom:${target.name}`;
 }
 
 function sameTarget(a: LibraryTarget, b: LibraryTarget): boolean {
-  return a.kind === b.kind && a.name === b.name;
+  if (a.kind !== b.kind) return false;
+  return a.kind === "builtin" && b.kind === "builtin"
+    ? a.id === b.id
+    : a.kind === "custom" && b.kind === "custom" && a.name === b.name;
 }
 
 /** The card alone, stripped of where it came from: what a library actually stores. */
@@ -34,6 +39,12 @@ interface Reinstated<T> {
   readonly library: Library<T>;
   /** The name the card came back under — suffixed when its own was taken. */
   readonly label: string;
+}
+
+/** One shipped entry, with the stable id it is addressed by. */
+export interface Builtin<T> {
+  readonly id: string;
+  readonly item: T;
 }
 
 /** A shipped catalog and the operations that overlay a local library on top of it. */
@@ -73,20 +84,26 @@ export interface Catalog<T> {
   ) => Reinstated<T>;
   /** Reads the field an entry is named by. */
   readonly nameOf: (item: T) => string;
-  /** Names of the shipped entries, used to spot orphan overrides when reloading. */
-  readonly builtinNames: ReadonlySet<string>;
+  /** Ids of the shipped entries, used to spot orphan overrides when reloading. */
+  readonly builtinIds: ReadonlySet<string>;
 }
 
 /**
  * Builds the operations of one catalog. `nameOf` reads the field an entry is named
  * by — `name` for a member, `title` for an environment — `withName` rewrites it,
- * and nothing else here needs to know which of the two it is working on.
+ * and nothing else here needs to know which of the two it is working on. Each
+ * built-in carries a stable `id`, locale-independent, that never changes even when
+ * the entry is renamed or its text rewritten by a local override.
  */
 export function createCatalog<T>(
-  builtins: readonly T[],
+  builtins: readonly Builtin<T>[],
   nameOf: (item: T) => string,
   withName: (item: T, name: string) => T,
 ): Catalog<T> {
+  const originalNameById = new Map(
+    builtins.map(({ id, item }) => [id, nameOf(item)]),
+  );
+
   const entry = (
     item: T,
     target: LibraryTarget,
@@ -94,12 +111,11 @@ export function createCatalog<T>(
   ): CatalogEntry<T> => ({ ...item, label: nameOf(item), target, edited });
 
   const build = (library: Library<T>): readonly CatalogEntry<T>[] => {
-    const shipped = builtins.map((item) => {
-      const name = nameOf(item);
-      const override = library.overrides[name];
+    const shipped = builtins.map(({ id, item }) => {
+      const override = library.overrides[id];
       return entry(
         override ?? item,
-        { kind: "builtin", name },
+        { kind: "builtin", id },
         override !== undefined,
       );
     });
@@ -116,8 +132,8 @@ export function createCatalog<T>(
     build(library).find((candidate) => sameTarget(candidate.target, target));
 
   /**
-   * Built-ins keep a claim on their original name even after a rename, so restoring
-   * one can never collide with an entry created in the meantime.
+   * Built-ins keep a claim on their original (shipped) name even after a rename, so
+   * restoring one can never collide with an entry created in the meantime.
    */
   const takenNames = (
     library: Library<T>,
@@ -127,8 +143,10 @@ export function createCatalog<T>(
     for (const candidate of build(library)) {
       if (target !== null && sameTarget(candidate.target, target)) continue;
       taken.add(normalize(candidate.label));
-      if (candidate.target.kind === "builtin")
-        taken.add(normalize(candidate.target.name));
+      if (candidate.target.kind === "builtin") {
+        const original = originalNameById.get(candidate.target.id);
+        if (original !== undefined) taken.add(normalize(original));
+      }
     }
     return taken;
   };
@@ -144,7 +162,7 @@ export function createCatalog<T>(
     if (target.kind === "builtin") {
       return {
         ...library,
-        overrides: { ...library.overrides, [target.name]: item },
+        overrides: { ...library.overrides, [target.id]: item },
       };
     }
     return {
@@ -166,10 +184,10 @@ export function createCatalog<T>(
   };
 
   const restore = (library: Library<T>, target: LibraryTarget): Library<T> => {
-    if (target.kind !== "builtin" || !(target.name in library.overrides))
+    if (target.kind !== "builtin" || !(target.id in library.overrides))
       return library;
     const overrides = { ...library.overrides };
-    delete overrides[target.name];
+    delete overrides[target.id];
     return { ...library, overrides };
   };
 
@@ -208,6 +226,6 @@ export function createCatalog<T>(
     restore,
     reinstate,
     nameOf,
-    builtinNames: new Set(builtins.map(nameOf)),
+    builtinIds: new Set(builtins.map(({ id }) => id)),
   };
 }

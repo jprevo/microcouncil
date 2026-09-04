@@ -1,17 +1,26 @@
-import emojiTable from "../data/emoji.json";
 import { normalize } from "./text";
-
-/** Shortcode -> character, generated from the emoji cheat sheet by `npm run emoji`. */
-const TABLE: Readonly<Record<string, string>> = emojiTable;
 
 export interface EmojiEntry {
   readonly code: string;
   readonly char: string;
 }
 
-const ENTRIES: readonly EmojiEntry[] = Object.entries(TABLE).map(
-  ([code, char]) => ({ code, char }),
-);
+/**
+ * Shortcode -> character, generated from the emoji cheat sheet by `npm run emoji`.
+ * Shortcodes are English by convention (GitHub's own emoji API), shared by every
+ * language rather than duplicated per locale, and loaded on demand — only once the
+ * picker actually opens — so its ~45 KB never rides along with the rest of a page.
+ */
+let entries: Promise<readonly EmojiEntry[]> | null = null;
+
+export function loadEmojiEntries(): Promise<readonly EmojiEntry[]> {
+  entries ??= import("../catalog/emoji.json").then((module) =>
+    Object.entries(module.default as Record<string, string>).map(
+      ([code, char]) => ({ code, char }),
+    ),
+  );
+  return entries;
+}
 
 /** `:Grinning Face:` and `grinning face` both end up looking for `grinning_face`. */
 function normalizeQuery(query: string): string {
@@ -22,16 +31,17 @@ function normalizeQuery(query: string): string {
 
 /** Best matches first: the exact shortcode, then prefixes, then anything containing it. */
 export function searchEmojis(
+  entries: readonly EmojiEntry[],
   query: string,
   limit: number,
 ): readonly EmojiEntry[] {
   const needle = normalizeQuery(query);
-  if (needle === "") return ENTRIES.slice(0, limit);
+  if (needle === "") return entries.slice(0, limit);
 
   const exact: EmojiEntry[] = [];
   const prefixed: EmojiEntry[] = [];
   const rest: EmojiEntry[] = [];
-  for (const entry of ENTRIES) {
+  for (const entry of entries) {
     if (entry.code === needle) exact.push(entry);
     else if (entry.code.startsWith(needle)) prefixed.push(entry);
     else if (entry.code.includes(needle)) rest.push(entry);

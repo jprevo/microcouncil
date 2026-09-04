@@ -24,15 +24,11 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SOURCE = join(ROOT, "skill-src");
 const TARGET = join(ROOT, "skill");
 
-/** `Le salon de thé` -> `le-salon-de-the`. Must match slugify() in microcouncil.py. */
-function slugify(value) {
-  return value
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
+/**
+ * The skill ships French only (its own catalogue and prompt, independent of the
+ * site's other languages) — this is the locale its content is read from.
+ */
+const SKILL_LOCALE = "fr";
 
 function readJson(path) {
   return JSON.parse(readFileSync(join(ROOT, path), "utf8"));
@@ -42,23 +38,21 @@ function readText(path) {
   return readFileSync(join(ROOT, path), "utf8");
 }
 
-/** Adds a `slug` to every entry, and refuses to ship two entries that collide. */
-function withSlugs(entries, key, label) {
-  const seen = new Map();
-  return entries.map((entry) => {
-    const slug = slugify(entry[key]);
-    if (slug === "") {
-      throw new Error(
-        `${label} ${JSON.stringify(entry[key])} produces an empty slug`,
-      );
+/**
+ * Joins the structural catalog (`id`, `icon`, display order — shared by every
+ * language) with one locale's text, keyed by that same `id`. The catalog's `id`
+ * doubles as the skill's `slug`: it is already the slugified form of the
+ * original name, computed once and never revisited, which is exactly what
+ * `slugify()` in microcouncil.py recomputes from `name` at read time — so the
+ * two keep matching without this script needing its own copy of that function.
+ */
+function withText(catalog, text, label) {
+  return catalog.map(({ id, ...rest }) => {
+    const entry = text[id];
+    if (entry === undefined) {
+      throw new Error(`${label} "${id}" has no ${SKILL_LOCALE} text entry`);
     }
-    if (seen.has(slug)) {
-      throw new Error(
-        `${label} slug collision on "${slug}": ${seen.get(slug)} and ${entry[key]}`,
-      );
-    }
-    seen.set(slug, entry[key]);
-    return { slug, ...entry };
+    return { slug: id, ...rest, ...entry };
   });
 }
 
@@ -126,14 +120,14 @@ function verifyReferences(skillMarkdown) {
 
 function build() {
   const version = readJson("package.json").version;
-  const members = withSlugs(
-    readJson("src/data/members.json"),
-    "name",
+  const members = withText(
+    readJson("src/catalog/members.json"),
+    readJson(`src/locales/${SKILL_LOCALE}/members.json`),
     "member",
   );
-  const environments = withSlugs(
-    readJson("src/data/environments.json"),
-    "title",
+  const environments = withText(
+    readJson("src/catalog/environments.json"),
+    readJson(`src/locales/${SKILL_LOCALE}/environments.json`),
     "environment",
   );
 
@@ -160,10 +154,13 @@ function build() {
       "assets/environments.json",
       `${JSON.stringify(environments, null, 2)}\n`,
     ),
-    writeFile("assets/prompt.md", `${readText("src/data/prompt.md").trim()}\n`),
+    writeFile(
+      "assets/prompt.md",
+      `${readText(join("src", "locales", SKILL_LOCALE, "prompt.md")).trim()}\n`,
+    ),
     writeFile(
       "assets/custom-example.md",
-      `${readText("src/data/custom.md").trim()}\n`,
+      `${readText(join("src", "locales", SKILL_LOCALE, "custom.md")).trim()}\n`,
     ),
   ];
 

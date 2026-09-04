@@ -12,6 +12,7 @@ import { CardHint } from "../ui/CardHint";
 import { CardTitle } from "../ui/CardTitle";
 import { Modal } from "../ui/Modal";
 import { filterMembers } from "../../lib/search";
+import { useT } from "../../locale/useT";
 import { useMemberCatalog } from "../../state/selectors";
 import type { CatalogMember } from "../../types";
 
@@ -25,18 +26,19 @@ export function MembersCard() {
     [catalog, query],
   );
   const editor = useEditorModal<CatalogMember>();
+  const t = useT();
 
   return (
     <Card labelledBy="title-members">
       <CardHead actions={<MembersActions />}>
         <CardTitle id="title-members">
-          Les membres du conseil <MembersCount />
+          {t.members.title} <MembersCount />
         </CardTitle>
-        <CardHint>Idéalement entre 3 et 7 membres.</CardHint>
+        <CardHint>{t.members.hint}</CardHint>
       </CardHead>
       <MembersFilter query={query} onChange={setQuery} />
       <MembersGrid members={visible} onEdit={editor.edit} />
-      <AddEntryButton label="Ajouter un membre" onClick={editor.create} />
+      <AddEntryButton label={t.members.add} onClick={editor.create} />
 
       <Modal
         open={editor.open}

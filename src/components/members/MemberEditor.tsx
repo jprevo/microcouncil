@@ -1,6 +1,7 @@
 import { MemberFields } from "./MemberFields";
 import { useMemberDraft } from "./useMemberDraft";
 import { EntryEditor } from "../editor/EntryEditor";
+import { useT } from "../../locale/useT";
 import { useAppDispatch } from "../../state/hooks";
 import type { CatalogMember } from "../../types";
 
@@ -14,12 +15,13 @@ interface MemberEditorProps {
 export function MemberEditor({ member, titleId, onClose }: MemberEditorProps) {
   const dispatch = useAppDispatch();
   const form = useMemberDraft(member, onClose);
+  const t = useT();
 
   return (
     <EntryEditor
       entry={member}
       titleId={titleId}
-      createTitle="✨ Nouveau membre"
+      createTitle={t.members.editorCreateTitle}
       error={form.error}
       onDelete={(target) => dispatch({ type: "deleteMember", target })}
       onRestore={(target) => dispatch({ type: "restoreMember", target })}

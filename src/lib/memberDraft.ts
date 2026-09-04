@@ -1,4 +1,5 @@
 import { normalize } from "./text";
+import type { UiStrings } from "../locale/types";
 import type { Member } from "../types";
 
 /** The form's own shape: every field is free text, traits and tags included. */
@@ -60,13 +61,13 @@ export function memberOf(draft: MemberDraft): Member {
 export function validateDraft(
   draft: MemberDraft,
   taken: ReadonlySet<string>,
+  strings: UiStrings["members"]["validation"],
 ): string | null {
   const member = memberOf(draft);
-  if (member.name === "") return "Le nom est obligatoire.";
-  if (taken.has(normalize(member.name)))
-    return "Ce nom est déjà pris par un autre membre.";
-  if (member.icon === "") return "Choisissez une icône.";
-  if (member.job === "") return "Le métier est obligatoire.";
-  if (member.description === "") return "La description est obligatoire.";
+  if (member.name === "") return strings.nameRequired;
+  if (taken.has(normalize(member.name))) return strings.nameTaken;
+  if (member.icon === "") return strings.iconRequired;
+  if (member.job === "") return strings.jobRequired;
+  if (member.description === "") return strings.descriptionRequired;
   return null;
 }

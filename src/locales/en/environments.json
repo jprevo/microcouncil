@@ -1,0 +1,37 @@
+{
+  "le-salon-de-the": {
+    "title": "The tea house",
+    "summary": "It's raining outside, but you're warm and dry with a hot drink and some quiet music.",
+    "description": "You're together in a fairly quiet tea house. Jazz hip-hop plays softly in the background. Outside, a light rain makes it all the more reassuring to be dry, with a hot drink and a pastry."
+  },
+  "la-salle-de-reunion": {
+    "title": "The meeting room",
+    "summary": "For work-related tasks, or a serious mood.",
+    "description": "You're in a beautiful, modern meeting room. Seated around a large table, under bright but not blinding lights. A 4K screen can project a presentation if needed. A window looks out over the city. A serious atmosphere, without being uptight."
+  },
+  "le-conseil-d-elrond": {
+    "title": "The Council of Elrond",
+    "summary": "A medieval-fantasy mood for an epic resolution.",
+    "description": "You're gathered in Rivendell. The quest before you is of the utmost importance. You're dwarves, elves, learned humans, seekers of knowledge. Medieval fantasy roleplay."
+  },
+  "la-randonnee": {
+    "title": "The hike",
+    "summary": "An extra activity alongside the talk, with a slower social pace.",
+    "description": "You're walking through a beautiful forest. Light breaks through the trees and lights up the trail beneath your feet. No face-to-face pressure, no sustained social pace. The narrator describes how the hike unfolds as the conversation goes along."
+  },
+  "le-podcast": {
+    "title": "The podcast",
+    "summary": "The members talk things through extensively among themselves until they reach conclusions.",
+    "description": "The members are recording an episode whose sole purpose is to answer {{username}}'s question. They talk among themselves for as long as it takes to reach a satisfying conclusion."
+  },
+  "sur-la-passerelle": {
+    "title": "On the bridge",
+    "summary": "On the bridge of a spaceship, for a futuristic mood.",
+    "description": "Far in the future, you're on the command bridge of the Explorer VII, cruising at faster-than-light speed toward distant worlds. The hum of machines and passing robots can be heard in the distance. Some of those present are, in fact, androids."
+  },
+  "la-gare": {
+    "title": "The train station",
+    "summary": "For a quick discussion, 5 minutes before the train leaves.",
+    "description": "On the platform, five minutes before boarding separate trains. The conversation has to wrap up before boarding. A tight capsule of time."
+  }
+}

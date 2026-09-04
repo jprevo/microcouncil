@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { copyText } from "../../lib/clipboard";
+import { useT } from "../../locale/useT";
 import { useToast } from "../../toast/useToast";
 
 const DONE_MS = 1800;
@@ -14,13 +15,14 @@ export function useCopyAction(text: string, message: string): CopyControl {
   const [copied, setCopied] = useState(false);
   const timer = useRef(0);
   const toast = useToast();
+  const t = useT();
 
   useEffect(() => () => globalThis.clearTimeout(timer.current), []);
 
   const copy = (): void => {
     void copyText(text).then((success) => {
       if (!success) {
-        toast("Copie impossible — sélectionnez le texte manuellement");
+        toast(t.misc.copyFailed);
         return;
       }
       setCopied(true);

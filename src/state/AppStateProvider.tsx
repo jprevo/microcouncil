@@ -1,19 +1,32 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useMemo, useReducer } from "react";
 import type { ReactNode } from "react";
 import { loadState, saveState } from "../storage";
 import { DispatchContext, StateContext } from "./contexts";
-import { reducer } from "./reducer";
+import { createReducer } from "./reducer";
+import { useLocale } from "../locale/useLocale";
 
 export function AppStateProvider({
   children,
 }: {
   readonly children: ReactNode;
 }) {
-  const [state, dispatch] = useReducer(reducer, null, loadState);
+  const { bundle, memberCatalog, environmentCatalog } = useLocale();
+  const locale = bundle.meta.code;
+  const catalogs = useMemo(
+    () => ({ memberCatalog, environmentCatalog }),
+    [memberCatalog, environmentCatalog],
+  );
+  const reducer = useMemo(
+    () => createReducer(memberCatalog, environmentCatalog),
+    [memberCatalog, environmentCatalog],
+  );
+  const [state, dispatch] = useReducer(reducer, null, () =>
+    loadState(locale, catalogs),
+  );
 
   useEffect(() => {
-    saveState(state);
-  }, [state]);
+    saveState(locale, state);
+  }, [locale, state]);
 
   return (
     <StateContext value={state}>

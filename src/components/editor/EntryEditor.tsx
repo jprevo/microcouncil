@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { Button } from "../ui/Button";
 import { Notice } from "../ui/Notice";
+import { format } from "../../locale/i18n";
+import { useT } from "../../locale/useT";
 import { useToast } from "../../toast/useToast";
 import type { CatalogOrigin, LibraryTarget } from "../../types";
 
@@ -36,20 +38,25 @@ export function EntryEditor({
   children,
 }: EntryEditorProps) {
   const toast = useToast();
+  const t = useT();
 
   const remove = (): void => {
     if (entry === null) return;
-    if (!globalThis.confirm(`Supprimer définitivement ${entry.label} ?`))
+    if (
+      !globalThis.confirm(
+        format(t.editor.deleteConfirm, { label: entry.label }),
+      )
+    )
       return;
     onDelete(entry.target);
-    toast(`${entry.label} quitte le catalogue`);
+    toast(format(t.editor.deleted, { label: entry.label }));
     onClose();
   };
 
   const restore = (): void => {
     if (entry === null) return;
     onRestore(entry.target);
-    toast("Version d’origine rétablie");
+    toast(t.editor.restored);
     onClose();
   };
 
@@ -62,7 +69,7 @@ export function EntryEditor({
         <button
           className="modal__close"
           type="button"
-          aria-label="Fermer"
+          aria-label={t.editor.close}
           onClick={onClose}
         >
           <span aria-hidden="true">✕</span>
@@ -82,21 +89,21 @@ export function EntryEditor({
         <div className="modal__foot-left">
           {entry?.target.kind === "custom" ? (
             <Button variant="quiet" onClick={remove}>
-              Supprimer
+              {t.editor.delete}
             </Button>
           ) : null}
           {entry?.edited === true ? (
             <Button variant="quiet" onClick={restore}>
-              Revenir à l'original
+              {t.editor.restore}
             </Button>
           ) : null}
         </div>
         <div className="modal__foot-right">
           <Button variant="quiet" onClick={onClose}>
-            Annuler
+            {t.editor.cancel}
           </Button>
           <Button variant="primary" onClick={onSave}>
-            Enregistrer
+            {t.editor.save}
           </Button>
         </div>
       </div>
