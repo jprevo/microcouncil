@@ -1,9 +1,8 @@
 import { EnvironmentTile } from "./EnvironmentTile";
-import { useEnvironmentKeys } from "./useEnvironmentKeys";
 import { RadioGrid } from "../ui/RadioGrid";
-import { useTileRegistry } from "../tiles/useTileRegistry";
+import { useRovingGrid } from "../tiles/useRovingGrid";
 import { targetKey } from "../../lib/library";
-import { useAppState } from "../../state/hooks";
+import { useAppDispatch, useAppState } from "../../state/hooks";
 import { useEnvironmentCatalog } from "../../state/selectors";
 import type { CatalogEnvironment } from "../../types";
 
@@ -12,33 +11,35 @@ interface EnvironmentsGridProps {
   readonly onEdit: (environment: CatalogEnvironment) => void;
 }
 
-/** Roving tab index: the radio group always keeps one keyboard entry point. */
-function focusableTitle(
-  catalog: readonly CatalogEnvironment[],
-  selected: string | null,
-): string | undefined {
-  if (selected !== null) return selected;
-  return catalog[0]?.title;
-}
-
 export function EnvironmentsGrid({
   labelledBy,
   onEdit,
 }: EnvironmentsGridProps) {
   const { selectedEnvironment } = useAppState();
+  const dispatch = useAppDispatch();
   const catalog = useEnvironmentCatalog();
-  const { register, focus } = useTileRegistry();
-  const onKeyDown = useEnvironmentKeys(catalog, focus);
-  const entry = focusableTitle(catalog, selectedEnvironment);
+  const titles = catalog.map((environment) => environment.title);
+
+  /*
+   * Moving inside a radio group is choosing: that is the one behaviour that sets
+   * this grid apart from the member toolbar next to it, where the arrows have to
+   * leave every toggle exactly as they found it.
+   */
+  const roving = useRovingGrid(
+    titles,
+    selectedEnvironment ?? undefined,
+    (title) => dispatch({ type: "environment", title }),
+  );
 
   return (
-    <RadioGrid labelledBy={labelledBy} onKeyDown={onKeyDown}>
+    <RadioGrid labelledBy={labelledBy} onKeyDown={roving.onKeyDown}>
       {catalog.map((environment) => (
         <EnvironmentTile
           key={targetKey(environment.target)}
           environment={environment}
-          tabIndex={environment.title === entry ? 0 : -1}
-          buttonRef={register(environment.title)}
+          tabIndex={roving.tabIndexFor(environment.title)}
+          buttonRef={roving.register(environment.title)}
+          onFocus={() => roving.hold(environment.title)}
           onEdit={onEdit}
         />
       ))}

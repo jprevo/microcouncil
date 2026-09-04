@@ -16,6 +16,7 @@ interface EnvironmentTileProps {
   readonly environment: CatalogEnvironment;
   readonly tabIndex: number;
   readonly buttonRef: Ref<HTMLButtonElement>;
+  readonly onFocus: () => void;
   readonly onEdit: (environment: CatalogEnvironment) => void;
 }
 
@@ -24,6 +25,7 @@ export function EnvironmentTile({
   environment,
   tabIndex,
   buttonRef,
+  onFocus,
   onEdit,
 }: EnvironmentTileProps) {
   const selected = useAppState().selectedEnvironment === environment.title;
@@ -36,6 +38,8 @@ export function EnvironmentTile({
       action={
         <TileEditButton
           label={format(t.environments.edit, { title: environment.title })}
+          tabIndex={tabIndex}
+          onFocus={onFocus}
           onClick={() => onEdit(environment)}
         />
       }
@@ -46,6 +50,7 @@ export function EnvironmentTile({
         selected={selected}
         tabIndex={tabIndex}
         buttonRef={buttonRef}
+        onFocus={onFocus}
         onClick={() =>
           dispatch({ type: "toggleEnvironment", title: environment.title })
         }

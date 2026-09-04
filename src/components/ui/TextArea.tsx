@@ -8,6 +8,12 @@ interface TextAreaProps {
   readonly rows: number;
   readonly modifier?: "subject";
   readonly textareaRef?: Ref<HTMLTextAreaElement>;
+  /**
+   * For the areas whose label is the card heading above them rather than a
+   * `<label>` of their own. A placeholder is not a name: it leaves the field the
+   * moment anything is typed, and half the screen readers never announce it.
+   */
+  readonly ariaLabel?: string;
 }
 
 export function TextArea({
@@ -18,6 +24,7 @@ export function TextArea({
   rows,
   modifier,
   textareaRef,
+  ariaLabel,
 }: TextAreaProps) {
   const className = [
     "field",
@@ -34,6 +41,7 @@ export function TextArea({
       className={className}
       rows={rows}
       value={value}
+      aria-label={ariaLabel}
       placeholder={placeholder}
       onChange={(event) => onChange(event.target.value)}
     />

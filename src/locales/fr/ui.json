@@ -1,5 +1,9 @@
 {
   "brand": "Micro Council",
+  "a11y": {
+    "skipToContent": "Aller au contenu",
+    "skipToPrompt": "Aller au prompt"
+  },
   "lede": "Créez un prompt à copier dans votre IA préférée pour discuter avec un panel de spécialistes.",
   "prompt": {
     "noMembers": "_Aucun membre sélectionné._",
@@ -13,6 +17,7 @@
     "language": "Langue"
   },
   "theme": {
+    "label": "Thème sombre",
     "toDark": "Passer au thème sombre",
     "toLight": "Passer au thème clair"
   },
@@ -25,6 +30,7 @@
   },
   "identity": {
     "title": "Votre nom",
+    "label": "Votre nom",
     "placeholder": "Votre nom"
   },
   "members": {
@@ -33,6 +39,12 @@
     "clearAll": "Tout effacer",
     "filterPlaceholder": "Filtrer par nom, métier, trait ou mot-clé…",
     "filterAriaLabel": "Filtrer les membres",
+    "gridLabel": "Membres disponibles",
+    "filterStatus": {
+      "zero": "Aucun membre ne correspond au filtre.",
+      "one": "{count} membre affiché.",
+      "other": "{count} membres affichés."
+    },
     "empty": "Aucun membre ne correspond à ce filtre.",
     "add": "Ajouter un membre",
     "selectedCount": { "one": "sélectionné", "other": "sélectionnés" },
@@ -112,6 +124,7 @@
   },
   "custom": {
     "title": "Instructions additionnelles",
+    "label": "Instructions additionnelles (optionnel)",
     "optional": "optionnel",
     "hint": "Sauvegardé automatiquement dans votre navigateur.",
     "example": "Exemple",
@@ -120,6 +133,7 @@
   },
   "subject": {
     "title": "Le sujet de votre demande",
+    "label": "Le sujet de votre demande (optionnel)",
     "optional": "optionnel",
     "hint": "Si vous le laissez vide, un membre vous le demandera.",
     "clear": "Effacer",
@@ -128,6 +142,7 @@
   "output": {
     "title": "Votre prompt",
     "meta": "{chars} caractères · ~{tokens} tokens",
+    "promptRegion": "Aperçu du prompt",
     "warningMissing": "Il manque {items}.",
     "missingMembers": "au moins un membre",
     "missingEnvironment": "un environnement",

@@ -20,6 +20,7 @@ export function IdentityCard() {
         value={username}
         onChange={(value) => dispatch({ type: "username", value })}
         autoComplete="given-name"
+        ariaLabel={t.identity.label}
         placeholder={t.identity.placeholder}
       />
     </Card>

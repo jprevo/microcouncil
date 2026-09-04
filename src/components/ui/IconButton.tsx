@@ -10,8 +10,8 @@ interface IconButtonProps {
   /** The label leaves the screen but is still announced: the icon carries it. */
   readonly iconOnly?: boolean;
   readonly hasPopup?: boolean;
-  /** Announces the label changing, for a button that toggles. */
-  readonly live?: boolean;
+  /** Set on a button that is a switch: whether it is currently on. */
+  readonly pressed?: boolean;
 }
 
 /** The pill used in the top bar and the footer: an icon, a label, sometimes a count. */
@@ -23,7 +23,7 @@ export function IconButton({
   count,
   iconOnly,
   hasPopup,
-  live,
+  pressed,
 }: IconButtonProps) {
   return (
     <button
@@ -33,7 +33,7 @@ export function IconButton({
       type="button"
       aria-label={ariaLabel ?? label}
       aria-haspopup={hasPopup === true ? "dialog" : undefined}
-      aria-live={live === true ? "polite" : undefined}
+      aria-pressed={pressed}
       onClick={onClick}
     >
       <span aria-hidden="true">{glyph}</span>

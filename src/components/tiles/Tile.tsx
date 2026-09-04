@@ -11,6 +11,8 @@ interface TileProps {
   readonly tabIndex?: number;
   readonly hint?: string;
   readonly buttonRef?: Ref<HTMLButtonElement>;
+  /** Tells the grid which tile the focus is on, however it got there. */
+  readonly onFocus?: () => void;
 }
 
 /** The shell every tile shares: an icon and a body. Selection shows in the frame. */
@@ -23,6 +25,7 @@ export function Tile({
   tabIndex,
   hint,
   buttonRef,
+  onFocus,
 }: TileProps) {
   return (
     <button
@@ -35,6 +38,7 @@ export function Tile({
       aria-checked={radio === true ? selected : undefined}
       aria-pressed={radio === true ? undefined : selected}
       onClick={onClick}
+      onFocus={onFocus}
     >
       <TileIcon icon={icon} />
       <div className="tile__body">{children}</div>

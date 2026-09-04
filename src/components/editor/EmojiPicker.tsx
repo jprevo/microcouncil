@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { EmptyMessage } from "../ui/EmptyMessage";
 import { TextField } from "../ui/TextField";
+import { useRovingGrid } from "../tiles/useRovingGrid";
 import { loadEmojiEntries, searchEmojis } from "../../lib/emoji";
 import type { EmojiEntry } from "../../lib/emoji";
 import { useT } from "../../locale/useT";
@@ -40,6 +41,17 @@ export function EmojiPicker({ inputId, icon, onPick }: EmojiPickerProps) {
     [entries, query],
   );
 
+  /*
+   * Eighty-four options behind a form field, each one a tab stop, put the rest of
+   * the dialog out of reach of anyone filling it in from the keyboard. One stop,
+   * walked with the arrows, and the chosen icon is where the group is entered.
+   */
+  const picked = matches.find((entry) => entry.char === icon)?.code;
+  const roving = useRovingGrid(
+    matches.map((entry) => entry.code),
+    picked,
+  );
+
   let message: string | null = null;
   if (failed) message = t.emojiPicker.loadFailed;
   else if (entries === null) message = t.emojiPicker.loading;
@@ -65,17 +77,22 @@ export function EmojiPicker({ inputId, icon, onPick }: EmojiPickerProps) {
       ) : (
         <div
           className="emoji__grid"
-          role="group"
+          role="toolbar"
+          aria-orientation="horizontal"
           aria-label={t.emojiPicker.gridLabel}
+          onKeyDown={roving.onKeyDown}
         >
           {matches.map((entry) => (
             <button
               key={entry.code}
+              ref={roving.register(entry.code)}
               className="emoji__option"
               type="button"
               title={`:${entry.code}:`}
+              tabIndex={roving.tabIndexFor(entry.code)}
               aria-label={entry.code}
               aria-pressed={entry.char === icon}
+              onFocus={() => roving.hold(entry.code)}
               onClick={() => onPick(entry.char)}
             >
               <span aria-hidden="true">{entry.char}</span>

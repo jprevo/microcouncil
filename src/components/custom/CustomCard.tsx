@@ -25,6 +25,7 @@ export function CustomCard() {
       <TextArea
         id="custom"
         rows={4}
+        ariaLabel={t.custom.label}
         value={customInstructions}
         onChange={(value) => dispatch({ type: "custom", value })}
         placeholder={t.custom.placeholder}

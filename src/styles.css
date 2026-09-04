@@ -12,7 +12,13 @@
   --border-strong: #cbd5e5;
   --text: #0a1628;
   --text-muted: #4e6180;
-  --text-faint: #7c8ca8;
+  /*
+   * The quiet register still has to be read: at 4.8:1 against the palest ground
+   * it carries (a selected tile), it clears AA on the traits, the badges, the
+   * card labels and the footer, all of which are text and none of which are
+   * decoration. A lighter grey read as 3.1:1 and failed every one of them.
+   */
+  --text-faint: #5e6c88;
   --accent: #1f5fe0;
   --accent-hover: #1a4fbf;
   --accent-soft: rgb(31 95 224 / 0.06);
@@ -46,7 +52,7 @@
   --border-strong: #24304f;
   --text: #e6ecf8;
   --text-muted: #a8bde4;
-  --text-faint: #6c7ea6;
+  --text-faint: #7a8cb4;
   --accent: #4d8cff;
   --accent-hover: #6ba0ff;
   --accent-soft: rgb(77 140 255 / 0.1);
@@ -58,6 +64,64 @@
   --shadow-sm: none;
   --shadow-md: 0 8px 20px -12px rgb(0 0 0 / 0.7);
   --shadow-lg: 0 28px 56px -28px rgb(0 0 0 / 0.85);
+}
+
+/* ---------------------------------------------------------------- a11y */
+
+/*
+ * Announced but not drawn. Not `display: none`, which would take the text out
+ * of the accessibility tree along with the layout — this keeps a one-pixel
+ * clipped box, which every screen reader still reads.
+ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+ * One ring for the whole app, drawn with `outline` rather than a shadow or a
+ * border: an outline is the one focus style Windows' high-contrast modes keep,
+ * and it never moves the element it marks. `:focus-visible` rather than
+ * `:focus`, so a mouse click on a tile does not leave a ring behind it.
+ */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/*
+ * Skip links: out of the way until they are tabbed to, which is the one moment
+ * they are worth the room. They exist because the member grid puts forty-odd
+ * tiles between the top of the page and the prompt.
+ */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 60;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-contrast);
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transform: translateY(calc(-100% - 16px));
+  transition: transform 0.15s ease;
+}
+
+/* Both sit in the same spot: only one of them is ever the focused one. */
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline-offset: 3px;
 }
 
 /* ------------------------------------------------------------------ base */
@@ -142,11 +206,17 @@ p {
   border-bottom: 1px solid var(--border);
 }
 
+/*
+ * Wrapping rather than overflowing: with the text-spacing overrides assistive
+ * users apply (WCAG 1.4.12) the two council actions no longer fit beside the
+ * title on a narrow screen, and a row that cannot wrap pushes the page sideways.
+ */
 .topbar__inner {
   max-width: 1240px;
   margin: 0 auto;
   padding: 16px clamp(16px, 4vw, 40px);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
@@ -320,7 +390,7 @@ p {
   align-items: center;
   gap: 9px;
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -347,7 +417,7 @@ p {
 
 .card--output .card__hint {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.04em;
 }
 
@@ -367,7 +437,7 @@ p {
 .pill {
   flex: none;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -411,11 +481,22 @@ p {
   border-color: var(--border-strong);
 }
 
+/*
+ * A field keeps its own focus treatment — the border going accent-coloured, with
+ * a halo behind it — because the ring would sit awkwardly around a full-width
+ * input. `:focus-visible` restores the shared ring on top of it for keyboard
+ * users, which is what survives forced-colors mode.
+ */
 .field:focus {
   outline: none;
   background: var(--surface);
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.field:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }
 
 .field--search {
@@ -473,9 +554,13 @@ p {
   border-color: transparent;
 }
 
+/*
+ * `--accent-contrast`, not white: the dark theme's green is light enough that
+ * white on it reads at 3.4:1, under the 4.5:1 this label needs.
+ */
 .button--primary.is-done {
   background: var(--success);
-  color: #ffffff;
+  color: var(--accent-contrast);
 }
 
 .button--ghost {
@@ -524,7 +609,7 @@ p {
 }
 
 .icon-button__count {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1;
   padding: 3px 7px;
@@ -621,7 +706,7 @@ p {
 /* Full description, revealed on selection: present, but understated. */
 .tile[aria-pressed="true"] .tile__desc {
   margin-top: 9px;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 1.5;
   color: var(--text-faint);
@@ -639,7 +724,7 @@ p {
 
 .trait {
   font-family: var(--mono);
-  font-size: 9.5px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.08em;
@@ -669,10 +754,11 @@ p {
   right: 7px;
   display: grid;
   place-items: center;
-  width: 24px;
-  height: 24px;
+  /* The 24 CSS px floor of WCAG 2.5.8, with a little room over it. */
+  width: 28px;
+  height: 28px;
   font: inherit;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1;
   cursor: pointer;
   border-radius: var(--radius-sm);
@@ -704,11 +790,22 @@ p {
   }
 }
 
+/* A pencil that has the focus is on screen, whatever its slot is doing. */
+.tile__edit:focus-visible {
+  opacity: 1;
+}
+
+/*
+ * The one thing under the 12px floor the rest of this stylesheet keeps: the
+ * badge is a two-word marker on a tile that already says out loud what it is,
+ * and at 12px uppercase mono it read as a heading. Contrast is unaffected — the
+ * 4.5:1 threshold applies to both sizes, and `--text-faint` clears it.
+ */
 .tile__badge {
   align-self: flex-start;
   margin-top: 7px;
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -768,7 +865,7 @@ p {
 .prompt {
   margin: 0;
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.75;
   white-space: pre-wrap;
   word-break: break-word;
@@ -781,6 +878,15 @@ p {
   border-left: 3px solid var(--accent);
   color: var(--text-muted);
   scrollbar-width: thin;
+}
+
+/*
+ * The live region stays in the document whether or not it has anything to say —
+ * a region announces changes to itself, and one that is added to the page at the
+ * moment of the change is often not read at all. Empty, it takes no room.
+ */
+.output__status:empty {
+  display: none;
 }
 
 .output__actions {
@@ -862,6 +968,13 @@ button.footer-link {
 .footer-link:hover,
 .footer-link:focus-visible {
   color: var(--text);
+}
+
+/* The colour shift alone is not an indicator; the shared ring is. */
+.footer-link:focus-visible,
+.locale-picker__select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* The language switch: a footer link that happens to be a menu, not a form
@@ -1021,7 +1134,7 @@ button.footer-link {
 
 .modal__section h3 {
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1104,7 +1217,7 @@ button.footer-link {
 
 .form-field__label {
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1238,7 +1351,7 @@ button.footer-link {
 }
 
 .save__more {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-faint);
 }
@@ -1353,5 +1466,59 @@ button.footer-link {
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * Windows' high-contrast modes replace every colour this stylesheet sets with
+ * the user's own palette. Everything the app says with colour alone therefore
+ * has to be said again with something that survives: an outline, or a border.
+ *
+ * `forced-color-adjust: none` is deliberately not used anywhere here — the whole
+ * point of the mode is that the user's colours win.
+ */
+@media (forced-colors: active) {
+  /*
+   * Selection is drawn as an accent border over a tinted ground, and both are
+   * repainted by the mode. The outline is what is left to carry it, and
+   * `Highlight` is the colour the OS reserves for exactly this.
+   */
+  .tile[aria-pressed="true"],
+  .tile[aria-checked="true"],
+  .emoji__option[aria-pressed="true"] {
+    outline: 3px solid Highlight;
+    outline-offset: -3px;
+  }
+
+  /* Same reasoning for the focus ring, which must not be confused with it. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible,
+  .field:focus-visible,
+  .footer-link:focus-visible,
+  .locale-picker__select:focus-visible,
+  .skip-link:focus-visible {
+    outline: 3px solid CanvasText;
+    outline-offset: 2px;
+  }
+
+  /*
+   * The pencil is hidden with `opacity`, which the mode does not touch, so a
+   * high-contrast user would still have to guess where it is. It stays out.
+   */
+  .tile__edit {
+    opacity: 1;
+  }
+
+  /*
+   * The warning notice is a coloured panel with a coloured left rule; both go,
+   * and a bare paragraph is left. A full border keeps it framed as a notice.
+   */
+  .notice {
+    border: 1px solid CanvasText;
+    border-left-width: 3px;
+  }
+
+  /* The prompt box loses its accent rule the same way. */
+  .prompt {
+    border: 1px solid CanvasText;
   }
 }

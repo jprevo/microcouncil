@@ -1,5 +1,9 @@
 {
   "brand": "Micro Council",
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "skipToPrompt": "Skip to prompt"
+  },
   "lede": "Create a prompt to paste into your favorite AI, and talk with a panel of specialists.",
   "prompt": {
     "noMembers": "_No member selected._",
@@ -13,6 +17,7 @@
     "language": "Language"
   },
   "theme": {
+    "label": "Dark theme",
     "toDark": "Switch to dark theme",
     "toLight": "Switch to light theme"
   },
@@ -25,6 +30,7 @@
   },
   "identity": {
     "title": "Your name",
+    "label": "Your name",
     "placeholder": "Your name"
   },
   "members": {
@@ -33,6 +39,12 @@
     "clearAll": "Clear all",
     "filterPlaceholder": "Filter by name, job, trait or keyword…",
     "filterAriaLabel": "Filter members",
+    "gridLabel": "Available members",
+    "filterStatus": {
+      "zero": "No member matches the filter.",
+      "one": "{count} member shown.",
+      "other": "{count} members shown."
+    },
     "empty": "No member matches this filter.",
     "add": "Add a member",
     "selectedCount": { "one": "selected", "other": "selected" },
@@ -112,6 +124,7 @@
   },
   "custom": {
     "title": "Additional instructions",
+    "label": "Additional instructions (optional)",
     "optional": "optional",
     "hint": "Saved automatically in your browser.",
     "example": "Example",
@@ -120,6 +133,7 @@
   },
   "subject": {
     "title": "Your topic",
+    "label": "Your topic (optional)",
     "optional": "optional",
     "hint": "If you leave it blank, a member will ask you.",
     "clear": "Clear",
@@ -128,6 +142,7 @@
   "output": {
     "title": "Your prompt",
     "meta": "{chars} characters · ~{tokens} tokens",
+    "promptRegion": "Prompt preview",
     "warningMissing": "Still missing {items}.",
     "missingMembers": "at least one member",
     "missingEnvironment": "a setting",

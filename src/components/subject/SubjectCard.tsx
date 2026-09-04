@@ -38,6 +38,7 @@ export function SubjectCard() {
         rows={3}
         modifier="subject"
         textareaRef={field}
+        ariaLabel={t.subject.label}
         value={subject}
         onChange={(value) => dispatch({ type: "subject", value })}
         placeholder={t.subject.placeholder}

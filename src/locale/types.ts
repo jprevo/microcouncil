@@ -31,6 +31,11 @@ export interface LocaleMeta {
 
 export interface UiStrings {
   readonly brand: string;
+  /** Names for the parts of the page that only assistive technology reaches. */
+  readonly a11y: {
+    readonly skipToContent: string;
+    readonly skipToPrompt: string;
+  };
   readonly lede: string;
   readonly prompt: {
     readonly noMembers: string;
@@ -45,6 +50,8 @@ export interface UiStrings {
     readonly language: string;
   };
   readonly theme: {
+    /** Stable name of the toggle; what it is, not what pressing it does. */
+    readonly label: string;
     readonly toDark: string;
     readonly toLight: string;
   };
@@ -57,6 +64,8 @@ export interface UiStrings {
   };
   readonly identity: {
     readonly title: string;
+    /** Accessible name of the field: a placeholder leaves as soon as it is typed in. */
+    readonly label: string;
     readonly placeholder: string;
   };
   readonly members: {
@@ -65,6 +74,9 @@ export interface UiStrings {
     readonly clearAll: string;
     readonly filterPlaceholder: string;
     readonly filterAriaLabel: string;
+    readonly gridLabel: string;
+    /** Spoken after the filter runs, so the result is not silent. */
+    readonly filterStatus: ZeroPluralForms;
     readonly empty: string;
     readonly add: string;
     readonly selectedCount: PluralForms;
@@ -144,6 +156,7 @@ export interface UiStrings {
   };
   readonly custom: {
     readonly title: string;
+    readonly label: string;
     readonly optional: string;
     readonly hint: string;
     readonly example: string;
@@ -152,6 +165,7 @@ export interface UiStrings {
   };
   readonly subject: {
     readonly title: string;
+    readonly label: string;
     readonly optional: string;
     readonly hint: string;
     readonly clear: string;
@@ -160,6 +174,8 @@ export interface UiStrings {
   readonly output: {
     readonly title: string;
     readonly meta: string;
+    /** Name of the scrollable preview, which is a tab stop of its own. */
+    readonly promptRegion: string;
     readonly warningMissing: string;
     readonly missingMembers: string;
     readonly missingEnvironment: string;

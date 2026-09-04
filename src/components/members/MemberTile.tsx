@@ -1,3 +1,4 @@
+import type { Ref } from "react";
 import { Tile } from "../tiles/Tile";
 import { TileDescription } from "../tiles/TileDescription";
 import { OriginBadge } from "../tiles/OriginBadge";
@@ -16,11 +17,20 @@ import type { CatalogMember } from "../../types";
 
 interface MemberTileProps {
   readonly member: CatalogMember;
+  readonly tabIndex: number;
+  readonly buttonRef: Ref<HTMLButtonElement>;
+  readonly onFocus: () => void;
   readonly onEdit: (member: CatalogMember) => void;
 }
 
 /** A companion's tile: a toggle button (multiple selection) and an edit pencil. */
-export function MemberTile({ member, onEdit }: MemberTileProps) {
+export function MemberTile({
+  member,
+  tabIndex,
+  buttonRef,
+  onFocus,
+  onEdit,
+}: MemberTileProps) {
   const selected = useIsMemberSelected(member.name);
   const { username } = useAppState();
   const dispatch = useAppDispatch();
@@ -38,6 +48,8 @@ export function MemberTile({ member, onEdit }: MemberTileProps) {
       action={
         <TileEditButton
           label={format(t.members.edit, { name: member.name })}
+          tabIndex={tabIndex}
+          onFocus={onFocus}
           onClick={() => onEdit(member)}
         />
       }
@@ -46,6 +58,9 @@ export function MemberTile({ member, onEdit }: MemberTileProps) {
         icon={member.icon}
         hint={description}
         selected={selected}
+        tabIndex={tabIndex}
+        buttonRef={buttonRef}
+        onFocus={onFocus}
         onClick={() => dispatch({ type: "toggleMember", name: member.name })}
       >
         <TileName>{member.name}</TileName>

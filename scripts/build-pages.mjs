@@ -39,6 +39,12 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+/**
+ * Mirrors `STORAGE_VERSION` in `src/storage.ts`: the inline theme script below
+ * reads the very key that module writes, and the two have to name it the same.
+ */
+const STORAGE_VERSION = "v2";
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SRC = join(ROOT, "src");
 const ENTRIES_DIR = join(SRC, "entries");
@@ -87,6 +93,39 @@ const FAVICON = readFavicon();
 
 function readJson(path) {
   return JSON.parse(readFileSync(join(ROOT, path), "utf8"));
+}
+
+/**
+ * The theme, settled before the first pixel is drawn.
+ *
+ * `data-theme` used to be written as `light` and corrected by React once the app
+ * had mounted, which meant anyone who reads on a dark screen — and anyone for
+ * whom a white flash is a migraine rather than a nuisance — got one on every
+ * load. This runs in the `<head>`, ahead of the stylesheet doing anything, so
+ * the page is only ever painted in the theme it is going to keep.
+ *
+ * It reads the same two sources, in the same order, as `src/storage.ts`: what
+ * the visitor chose last, then what their system asks for. Kept deliberately
+ * small and total — a corrupt or absent entry falls through to the media query,
+ * and a failing `localStorage` (private mode, blocked storage) falls through to
+ * the attribute already on the element.
+ */
+function themeScript(locale) {
+  const key = `microcouncil.state.${locale.code}.${STORAGE_VERSION}`;
+
+  return `<script>
+      (function () {
+        try {
+          var stored = JSON.parse(localStorage.getItem("${key}") || "null");
+          var theme = stored && stored.theme;
+          if (theme !== "light" && theme !== "dark")
+            theme = matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+          document.documentElement.dataset.theme = theme;
+        } catch (error) {}
+      })();
+    </script>`;
 }
 
 function escapeAttr(value) {
@@ -170,6 +209,7 @@ ${hreflangs}
     <meta name="twitter:description" content="${escapeAttr(meta.description)}" />
     <link rel="icon" type="image/svg+xml" href="${FAVICON}" />
     <link rel="stylesheet" href="./styles.css" />
+    ${themeScript(locale)}
   </head>
   <body>
     <div id="root"></div>

@@ -1,5 +1,6 @@
 import { Footer } from "./components/layout/Footer";
 import { Shell } from "./components/layout/Shell";
+import { SkipLinks } from "./components/layout/SkipLinks";
 import { TopBar } from "./components/layout/TopBar";
 import { ConfigColumn } from "./components/panels/ConfigColumn";
 import { OutputColumn } from "./components/panels/OutputColumn";
@@ -15,6 +16,7 @@ export function App({ bundle }: { readonly bundle: LocaleBundle }) {
       <AppStateProvider>
         <SavesProvider>
           <ToastProvider>
+            <SkipLinks />
             <TopBar />
             <Shell>
               <ConfigColumn />

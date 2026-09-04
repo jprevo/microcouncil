@@ -14,7 +14,7 @@ export function OutputCard() {
   const t = useT();
 
   return (
-    <Card labelledBy="title-output" variant="output">
+    <Card labelledBy="title-output" variant="output" id="prompt-output">
       <CardHead
         title={<CardTitle id="title-output">{t.output.title}</CardTitle>}
         hint={<OutputMeta prompt={prompt} />}
