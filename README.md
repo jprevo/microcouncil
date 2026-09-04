@@ -71,9 +71,10 @@ npm install
 
 `dist/` est un site statique ordinaire : à déposer tel quel derrière n'importe quel serveur
 de fichiers (ou sur GitHub Pages, Netlify…). Les chemins sont relatifs, donc il fonctionne
-aussi bien à la racine d'un domaine que dans un sous-répertoire — à la seule exception des
-balises de partage social, qui portent une adresse absolue faute de quoi aucun aperçu ne
-s'afficherait (voir [Partage social](#partage-social)). Rien n'est chargé depuis un tiers à
+aussi bien à la racine d'un domaine que dans un sous-répertoire — à la seule exception de ce que
+lisent les robots (balises de partage social, `canonical`, `hreflang`), qui porte une adresse
+absolue faute de quoi ni l'aperçu ni l'indexation ne tiendraient (voir
+[Partage social](#partage-social)). Rien n'est chargé depuis un tiers à
 l'exécution : polices, données et gabarit sont embarqués dans le build.
 
 ```bash
@@ -248,17 +249,23 @@ quittée n'a rien à faire dans l'historique.
 
 Les URLs sont **sans extension** : le build écrit toujours `index.html` et `<code>.html`, mais rien
 ne les référence sous ce nom. `localeHref()` et le `canonical`/`hreflang` de chaque page pointent
-sur `./` et `./<code>`, parce que l'hébergement (Cloudflare Pages) sert `fr.html` sur `/fr` et
+sur `/` et `/<code>`, parce que l'hébergement (Cloudflare Pages) sert `fr.html` sur `/fr` et
 redirige `/fr.html` vers cette même adresse — un lien vers le fichier ne ferait que dépenser une
-redirection. Elles restent relatives, donc valables depuis une racine de domaine comme depuis un
-sous-chemin. Un hébergement qui ne ferait pas cette correspondance demanderait de renommer les deux
-(`pageHref()` dans `scripts/build-pages.mjs`, `localeHref()` dans `src/locale/registry.ts`).
+redirection. Un hébergement qui ne ferait pas cette correspondance demanderait de renommer les deux
+(`pagePath()` dans `scripts/build-pages.mjs`, `localeHref()` dans `src/locale/registry.ts`).
 
-Ces `<link>` portent un attribut `vite-ignore`, que Vite honore puis retire de la sortie. Sans lui,
-tout `link[href]` est pris pour un actif : le `canonical` faisait recopier la page dans
-`dist/assets/<code>-<empreinte>.html` et pointait sur cette copie — chaque page déclarait donc une
-URL canonique qui n'était ni la sienne ni destinée à être indexée. Ce sont des adresses de pages,
-pas des références à des entrées de build.
+La navigation du site est **relative** (`localeHref()` : `./`, `./<code>`), donc valable depuis une
+racine de domaine comme depuis un sous-chemin. Le `canonical` et les `hreflang`, eux, sont
+**absolus** : ils ne sont pas lus par un navigateur mais par un robot, la spécification y attend une
+URL pleinement qualifiée, et Lighthouse refuse une adresse relative (« N'est pas une URL absolue »).
+Ils sont bâtis sur la même adresse de site que les cartes de partage — voir
+[L'adresse absolue](#ladresse-absolue) —, donc `SITE_URL` les déplace aussi.
+
+Étant absolus, ces `<link>` n'ont plus besoin de `vite-ignore` : Vite ne touche pas à un href
+`http(s)`. Tant qu'ils étaient relatifs il le leur fallait, faute de quoi tout `link[href]` est pris
+pour un actif — le `canonical` faisait recopier la page dans `dist/assets/<code>-<empreinte>.html` et
+pointait sur cette copie, chaque page déclarant donc une URL canonique qui n'était ni la sienne ni
+destinée à être indexée. Tout `<link>` relatif ajouté ici en aurait de nouveau besoin.
 
 Ajouter une langue ne demande donc de toucher à rien de tout ça : le sélecteur, la négociation et
 la redirection sortent du registre.
@@ -300,20 +307,21 @@ deux sont produites à la construction, une par langue :
 - `scripts/share.mjs` porte ce que les deux doivent savoir à l'identique : la géométrie des cartes,
   leur chemin, et l'adresse du site.
 
-### La seule adresse absolue
+### L'adresse absolue
 
-Tout le reste du projet est relatif — `base: "./"`, `canonical` et `hreflang` relatifs — pour qu'un
-même `dist/` fonctionne à la racine d'un domaine comme dans un sous-répertoire. Le partage social
-est la seule chose qui ne le peut pas : le robot qui fabrique l'aperçu a récupéré les balises hors
-contexte et ne résout rien contre la page. `og:image` et `og:url` sont donc absolues, bâties sur le
-`homepage` de `package.json` — que `SITE_URL` remplace le temps d'une prévisualisation ou d'un
-fork :
+Tout ce que le navigateur charge est relatif — `base: "./"`, liens du sélecteur de langue — pour
+qu'un même `dist/` fonctionne à la racine d'un domaine comme dans un sous-répertoire. Ce que lisent
+les robots ne le peut pas : celui qui fabrique l'aperçu a récupéré les balises hors contexte et ne
+résout rien contre la page. `og:image`, `og:url`, ainsi que le `canonical` et les `hreflang`, sont
+donc absolus, bâtis sur le `homepage` de `package.json` — que `SITE_URL` remplace le temps d'une
+prévisualisation ou d'un fork :
 
 ```bash
 SITE_URL=https://preview.example.com npm run build
 ```
 
-Une valeur fausse n'abîme que l'aperçu : rien de ce que le navigateur charge n'en dépend.
+Une valeur fausse n'abîme que l'aperçu et l'indexation : rien de ce que le navigateur charge n'en
+dépend.
 
 ### Une carte par langue, sans retouche
 

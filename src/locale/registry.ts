@@ -42,10 +42,11 @@ export const DEFAULT_LOCALE: LocaleEntry = findDefault();
  * works from a domain root and from a sub-path alike (see `vite.config.ts`).
  * `/fr` and `/app/fr` both resolve `./en` and `./` the way you would want.
  *
- * This mirrors `pageHref()` in `scripts/build-pages.mjs`, which writes the same
- * URLs into every page's `canonical` and `hreflang` links. A Node build script
- * can't import a TypeScript module, so the rule is spelled out in both places;
- * keep them in step.
+ * This mirrors `pagePath()` in `scripts/build-pages.mjs`, which names the same
+ * pages for the `canonical` and `hreflang` links — absolute there, because those
+ * are read by crawlers that resolve nothing against the page. A Node build
+ * script can't import a TypeScript module, so the rule is spelled out in both
+ * places; keep them in step.
  */
 export function localeHref(code: string): string {
   return code === DEFAULT_LOCALE.code ? "./" : `./${code}`;

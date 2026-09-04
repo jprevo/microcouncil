@@ -14,25 +14,28 @@
  * git-ignored (see `.gitignore`) rather than committed — `npm run dev` and
  * `npm run build` both regenerate it first (`predev` / `prebuild`).
  *
- * Canonical and `hreflang` links are emitted as relative paths, not absolute
- * URLs: this project deliberately has no fixed deployment domain (it works
- * equally from a domain root or a sub-path — see `vite.config.ts`), so an
- * absolute URL isn't available at build time. Most crawlers resolve relative
- * `hreflang`/`canonical` hrefs against the page they were found on, which is
- * good enough here; a deployment pinned to one domain could tighten this.
+ * Canonical and `hreflang` links are emitted as absolute URLs, built on the same
+ * site address as the share metadata (`scripts/share.mjs`). They used to be
+ * relative — this project has no fixed deployment domain, and a browser resolves
+ * `./fr` against the page perfectly well — but these two links are not read by a
+ * browser: `rel=canonical` and `hreflang` are specified to carry a fully
+ * qualified URL, and Lighthouse's SEO audits fail a relative one outright. The
+ * site's own navigation stays relative (`localeHref()` in
+ * `src/locale/registry.ts`), so only the crawler-facing hrefs are pinned to a
+ * domain, and a preview build moves them with `SITE_URL`, like the cards.
  *
- * They are also extensionless — `./fr`, not `./fr.html` — because the host maps
- * one onto the other (Cloudflare Pages serves `fr.html` at `/fr` and redirects
- * `/fr.html` there). A host that doesn't would need `pageHref()` below, and
+ * They are extensionless — `/fr`, not `/fr.html` — because the host maps one
+ * onto the other (Cloudflare Pages serves `fr.html` at `/fr` and redirects
+ * `/fr.html` there). A host that doesn't would need `pagePath()` below, and
  * `localeHref()` in `src/locale/registry.ts`, to name the files instead.
  *
- * Each of those links carries `vite-ignore`, which Vite honours and then strips
- * from the output. Without it every `link[href]` is taken for an asset: a
- * canonical pointing at `./fr.html` had Vite copy the page to
- * `dist/assets/fr-<hash>.html` and rewrite the link onto that copy, so each page
- * ended up declaring a canonical URL that was neither its own nor meant to be
- * crawled. These hrefs address pages; they are not references to build inputs,
- * and Vite has no business resolving them.
+ * Vite leaves an absolute `http(s)` href alone, so these links need nothing to
+ * protect them. While they were relative they carried `vite-ignore`: without it
+ * every `link[href]` is taken for an asset, and a canonical pointing at
+ * `./fr.html` had Vite copy the page to `dist/assets/fr-<hash>.html` and rewrite
+ * the link onto that copy, so each page ended up declaring a canonical URL that
+ * was neither its own nor meant to be crawled. Anything relative added here
+ * still needs the attribute.
  */
 
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -142,20 +145,15 @@ function htmlPath(locale) {
 }
 
 /**
- * The URL that same page is linked by, which is not its file name: the host
+ * The path that same page is linked by, which is not its file name: the host
  * serves `fr.html` at `/fr` and redirects the `.html` form onto it, so a
  * canonical pointing at the file would only redirect onto this address.
  *
- * Mirrored by `localeHref()` in `src/locale/registry.ts`, which the picker and
- * the landing redirect navigate with — the two must agree.
- */
-function pageHref(locale) {
-  return locale.default ? "./" : `./${locale.code}`;
-}
-
-/**
- * The same address again, this time rooted at the site rather than at the page:
- * what `og:url` needs, since a crawler has nothing to resolve `./fr` against.
+ * Rooted at the site rather than at the page, because everything it feeds — the
+ * canonical, the `hreflang` links, `og:url` — is read by a crawler that has
+ * nothing to resolve `./fr` against. `localeHref()` in `src/locale/registry.ts`
+ * is the in-page counterpart the picker and the landing redirect navigate with,
+ * and names the same pages relatively — the two must agree.
  */
 function pagePath(locale) {
   return locale.default ? "/" : `/${locale.code}`;
@@ -192,7 +190,7 @@ function renderHtml(page, pages) {
   const hreflangs = pages
     .map(
       (other) =>
-        `    <link rel="alternate" hreflang="${other.code}" href="${pageHref(other)}" vite-ignore />`,
+        `    <link rel="alternate" hreflang="${other.code}" href="${escapeAttr(siteUrl(pagePath(other)))}" />`,
     )
     .join("\n");
   const defaultLocale = pages.find((entry) => entry.default);
@@ -225,9 +223,9 @@ function renderHtml(page, pages) {
     />
     <title>${escapeAttr(meta.title)}</title>
     <meta name="description" content="${escapeAttr(meta.description)}" />
-    <link rel="canonical" href="${pageHref(page)}" vite-ignore />
+    <link rel="canonical" href="${escapeAttr(siteUrl(pagePath(page)))}" />
 ${hreflangs}
-    <link rel="alternate" hreflang="x-default" href="${pageHref(defaultLocale)}" vite-ignore />
+    <link rel="alternate" hreflang="x-default" href="${escapeAttr(siteUrl(pagePath(defaultLocale)))}" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="${escapeAttr(meta.title)}" />
     <meta property="og:url" content="${escapeAttr(siteUrl(pagePath(page)))}" />
