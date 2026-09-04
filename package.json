@@ -15,7 +15,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "knip": "knip",
-    "gate": "npm run format:check && npm run lint && npm run typecheck && npm run knip",
+    "gate": "node scripts/gate.mjs",
     "skill": "node scripts/build-skill.mjs",
     "emoji": "node scripts/build-emoji.mjs",
     "shuffle": "node scripts/shuffle-members.mjs"
