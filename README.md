@@ -194,3 +194,24 @@ Ajouter un compagnon ou un environnement ne demande donc qu'une entrée JSON : l
 prompt et le skill suivent (`npm run skill` pour ce dernier). Le jeton `{{username}}` est remplacé partout, y compris à l'intérieur des fiches.
 Une section `##` dont le corps se réduit à un jeton vide (« Autres instructions », « Le sujet
 de … ») est retirée du prompt final plutôt que laissée en titre orphelin.
+
+## Licence
+
+Le projet est publié sous **licence MIT** — le texte complet vit dans [`LICENSE`](LICENSE).
+Copiez-le, modifiez-le, servez-le, revendez-le : la seule obligation est de conserver l'avis de
+copyright. Le skill produit dans `skill/` porte la même licence, déclarée dans le frontmatter de
+`skill-src/SKILL.md`.
+
+Deux emprunts extérieurs voyagent avec le dépôt et gardent leur propre licence :
+
+- **Fraunces**, la police d'affichage, sous SIL Open Font License 1.1. Elle n'est pas seulement
+  référencée : le sous-ensemble latin est encodé en base64 dans `src/fonts.css`, ce qui fait du
+  dépôt un distributeur de la fonte. Le texte de la licence est donc joint —
+  [`licenses/Fraunces-OFL.txt`](licenses/Fraunces-OFL.txt) — et l'en-tête de `src/fonts.css`
+  porte l'avis de copyright sous forme de commentaire `@license`, que le minifieur préserve
+  jusque dans `dist/`.
+- **`src/data/emoji.json`**, produit par `npm run emoji` à partir de l'[emoji cheat
+  sheet](https://github.com/ikatyang/emoji-cheat-sheet) (MIT) et de l'API emoji de GitHub.
+
+Les fiches de compagnons et d'environnements, le gabarit de prompt et l'exemple d'instructions
+sont du contenu original, couvert par la même licence MIT que le code.

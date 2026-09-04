@@ -2,6 +2,7 @@
   "name": "microcouncil",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "Générateur de prompt pour un micro-conseil de compagnons.",
   "scripts": {
