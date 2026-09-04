@@ -9,7 +9,6 @@ interface TileProps {
   /** True inside a `radiogroup`: the selection is single, and tab focus roams. */
   readonly radio?: boolean;
   readonly tabIndex?: number;
-  readonly hint?: string;
   readonly buttonRef?: Ref<HTMLButtonElement>;
   /** Tells the grid which tile the focus is on, however it got there. */
   readonly onFocus?: () => void;
@@ -23,7 +22,6 @@ export function Tile({
   children,
   radio,
   tabIndex,
-  hint,
   buttonRef,
   onFocus,
 }: TileProps) {
@@ -32,7 +30,6 @@ export function Tile({
       ref={buttonRef}
       className="tile"
       type="button"
-      title={hint}
       tabIndex={tabIndex}
       role={radio === true ? "radio" : undefined}
       aria-checked={radio === true ? selected : undefined}

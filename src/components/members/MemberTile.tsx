@@ -56,7 +56,6 @@ export function MemberTile({
     >
       <Tile
         icon={member.icon}
-        hint={description}
         selected={selected}
         tabIndex={tabIndex}
         buttonRef={buttonRef}
