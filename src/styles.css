@@ -33,6 +33,8 @@
   --radius-sm: 3px;
   --radius: 3px;
   --radius-lg: 5px;
+  /* Topbar, page and footer share one gutter-to-gutter width. */
+  --shell-max: 2048px;
   --font:
     "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
@@ -212,7 +214,7 @@ p {
  * title on a narrow screen, and a row that cannot wrap pushes the page sideways.
  */
 .topbar__inner {
-  max-width: 1240px;
+  max-width: var(--shell-max);
   margin: 0 auto;
   padding: 16px clamp(16px, 4vw, 40px);
   display: flex;
@@ -236,7 +238,7 @@ p {
 
 /* ---------------------------------------------------------------- layout */
 .shell {
-  max-width: 1240px;
+  max-width: var(--shell-max);
   margin: 0 auto;
   padding: clamp(20px, 3vw, 36px) clamp(16px, 4vw, 40px) 40px;
 }
@@ -266,8 +268,8 @@ p {
 
 @media (min-width: 1060px) {
   /*
-   * The sidebar stops at 420px so the member column keeps the three tiles per row
-   * the design is drawn around: any wider and the grid drops to two.
+   * The sidebar stops at 420px: the prompt is a preview, not the reading surface,
+   * and the width freed up goes to the member grid, which fills it a tile at a time.
    */
   .columns {
     grid-template-columns: minmax(0, 1fr) minmax(360px, 420px);
@@ -632,6 +634,19 @@ p {
   grid-template-columns: repeat(auto-fill, minmax(212px, 1fr));
 }
 
+/*
+ * Past this point the column is wide enough that the narrow tile starts spawning
+ * a fourth per row and the traits wrap to a thread; the roomier track holds the
+ * count down instead. The threshold is where both tracks still lay out three
+ * tiles, so the switch changes their width and nothing else.
+ */
+@media (min-width: 1440px) {
+  .grid--members,
+  .grid--environments {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
 .tile {
   position: relative;
   display: flex;
@@ -924,7 +939,7 @@ p {
 
 /* ---------------------------------------------------------------- footer */
 .footer {
-  max-width: 1240px;
+  max-width: var(--shell-max);
   margin: 0 auto;
   padding: 24px clamp(16px, 4vw, 40px) 56px;
   border-top: 1px solid var(--border);
