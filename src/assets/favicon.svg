@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Micro Council">
+  <!--
+    The favicon: the same round table, but on its own dark blue tile rather than
+    on the page — a tab icon has no background of its own, and the mark has to
+    hold up against light and dark browser chrome alike. Hence the one palette
+    for both, the site's dark one.
+
+    Drawn on the 24 grid like the other marks, then scaled and centred on the 32
+    grid. The strokes and the seats are a touch heavier than in `logo-light.svg`:
+    at 16 px, the size this is actually seen at, the thinner ones silt up.
+
+    `scripts/build-pages.mjs` inlines this file into every page's `<link
+    rel="icon">` as a data URI, so it costs no extra request. Edit it here.
+  -->
+  <rect width="32" height="32" rx="7" fill="#0f1830" />
+  <g transform="translate(16 16) scale(1.06) translate(-12 -12.175)">
+    <circle cx="12" cy="12" r="4.9" fill="none" stroke="#e6ecf8" stroke-width="2" />
+    <circle cx="12" cy="2.9" r="1.85" fill="#e6ecf8" />
+    <circle cx="19.88" cy="7.45" r="1.85" fill="#e6ecf8" />
+    <circle cx="19.88" cy="16.55" r="1.85" fill="#e6ecf8" />
+    <circle cx="4.12" cy="16.55" r="1.85" fill="#e6ecf8" />
+    <circle cx="4.12" cy="7.45" r="1.85" fill="#e6ecf8" />
+    <circle cx="12" cy="21.1" r="2.2" fill="#4d8cff" />
+  </g>
+</svg>

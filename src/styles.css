@@ -93,15 +93,43 @@ p {
 /*
  * The site title carries the whole brand now that no display serif does: set in
  * the UI face, but capitalised, heavy and tightly tracked so it reads as a mark
- * rather than as a heading.
+ * rather than as a heading — with the round table sat to its left.
  */
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: clamp(20px, 2.4vw, 24px);
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.035em;
   text-transform: uppercase;
   color: var(--text);
+}
+
+/*
+ * Sized in `em` so the mark follows the title through its `clamp()` rather than
+ * drifting away from it, and reserved with `flex: none` so a slow first paint
+ * cannot shift the words sideways.
+ */
+.brand__mark {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+  display: block;
+}
+
+/* Only the mark of the theme in force is drawn; both are always loaded. */
+.brand__mark--dark {
+  display: none;
+}
+
+[data-theme="dark"] .brand__mark--light {
+  display: none;
+}
+
+[data-theme="dark"] .brand__mark--dark {
+  display: block;
 }
 
 /* ---------------------------------------------------------------- topbar */

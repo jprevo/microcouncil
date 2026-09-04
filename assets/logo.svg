@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256" role="img" aria-label="Micro Council">
+  <title>Micro Council</title>
+  <!--
+    The round table seen from above: five seats taken, and the sixth — in the
+    accent blue, at the near side — left for whoever is reading.
+
+    This is the repository's mark, meant for the README, the social card and
+    anywhere else the project is shown from outside the site. It carries its own
+    dark blue tile rather than a transparent background, because a mark on a
+    README has to hold up on a light and a dark page alike and cannot know which
+    one it is on: an SVG loaded through `<img>` is not told the surrounding
+    theme, and Chrome does not even honour the reader's system preference
+    inside one. So the mark brings its own ground.
+
+    The site's own header uses the untiled versions in `src/assets/`, which do
+    know the theme they are in, because the stylesheet swaps between them.
+  -->
+  <rect width="64" height="64" rx="14" fill="#0f1830" />
+  <g transform="translate(32 32) scale(2.2) translate(-12 -12.175)">
+    <circle cx="12" cy="12" r="4.9" fill="none" stroke="#e6ecf8" stroke-width="1.7" />
+    <circle cx="12" cy="2.9" r="1.75" fill="#e6ecf8" />
+    <circle cx="19.88" cy="7.45" r="1.75" fill="#e6ecf8" />
+    <circle cx="19.88" cy="16.55" r="1.75" fill="#e6ecf8" />
+    <circle cx="4.12" cy="16.55" r="1.75" fill="#e6ecf8" />
+    <circle cx="4.12" cy="7.45" r="1.75" fill="#e6ecf8" />
+    <circle cx="12" cy="21.1" r="2.1" fill="#4d8cff" />
+  </g>
+</svg>

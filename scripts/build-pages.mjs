@@ -43,8 +43,47 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SRC = join(ROOT, "src");
 const ENTRIES_DIR = join(SRC, "entries");
 
-const FAVICON =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%92%AC%3C/text%3E%3C/svg%3E";
+/**
+ * Scanned rather than matched with `/<!--[\s\S]*?-->/`: that pattern backtracks
+ * super-linearly on a file whose last comment is never closed, and `indexOf`
+ * has no such cliff.
+ */
+function stripXmlComments(text) {
+  let kept = "";
+  let from = 0;
+
+  for (;;) {
+    const opened = text.indexOf("<!--", from);
+    if (opened === -1) return kept + text.slice(from);
+
+    kept += text.slice(from, opened);
+    const closed = text.indexOf("-->", opened);
+    if (closed === -1) return kept;
+
+    from = closed + 3;
+  }
+}
+
+/**
+ * The favicon, inlined from `src/assets/favicon.svg` as a data URI: it is on the
+ * page before the first request goes out, and it survives being served from a
+ * sub-path, which a relative href would not do on every host.
+ *
+ * Comments and indentation are dropped before encoding — the drawing is the
+ * payload, and the file's prose has no business travelling in every page.
+ */
+function readFavicon() {
+  const svg = stripXmlComments(
+    readFileSync(join(SRC, "assets/favicon.svg"), "utf8"),
+  )
+    .replace(/\s+/g, " ")
+    .replace(/> </g, "><")
+    .trim();
+
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
+const FAVICON = readFavicon();
 
 function readJson(path) {
   return JSON.parse(readFileSync(join(ROOT, path), "utf8"));
@@ -129,7 +168,7 @@ ${hreflangs}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="${escapeAttr(meta.title)}" />
     <meta name="twitter:description" content="${escapeAttr(meta.description)}" />
-    <link rel="icon" href="${FAVICON}" />
+    <link rel="icon" type="image/svg+xml" href="${FAVICON}" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>

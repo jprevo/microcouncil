@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-label="Micro Council">
+  <!--
+    The mark in the light theme's ink, with the near seat — the one left for the
+    reader — in the accent blue. The colours are literal rather than
+    `currentColor`: this file is loaded as an image, and an image inherits
+    nothing from the page. `logo-dark.svg` is the same drawing in the dark
+    palette, and the stylesheet swaps between the two on `[data-theme]`.
+
+    (Mind the XML: a comment may not contain two hyphens in a row, so the CSS
+    custom properties these colours come from cannot be named here.)
+  -->
+  <circle cx="12" cy="12" r="4.9" fill="none" stroke="#0a1628" stroke-width="1.7" />
+  <circle cx="12" cy="2.9" r="1.75" fill="#0a1628" />
+  <circle cx="19.88" cy="7.45" r="1.75" fill="#0a1628" />
+  <circle cx="19.88" cy="16.55" r="1.75" fill="#0a1628" />
+  <circle cx="4.12" cy="16.55" r="1.75" fill="#0a1628" />
+  <circle cx="4.12" cy="7.45" r="1.75" fill="#0a1628" />
+  <circle cx="12" cy="21.1" r="2.1" fill="#1f5fe0" />
+</svg>
