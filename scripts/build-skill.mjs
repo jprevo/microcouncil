@@ -1,6 +1,6 @@
 /**
  * Regenerates ./skill/ — the self-contained agent skill published at
- * `jprevo/microcouncil/skill` — from the single sources of truth in src/ and docs/.
+ * `jprevo/microcouncil/skill` — from the single sources of truth in src/.
  *
  *   npm run skill
  *
@@ -160,13 +160,10 @@ function build() {
       "assets/environments.json",
       `${JSON.stringify(environments, null, 2)}\n`,
     ),
-    writeFile(
-      "assets/prompt.md",
-      `${readText("docs/data/prompt.md").trim()}\n`,
-    ),
+    writeFile("assets/prompt.md", `${readText("src/data/prompt.md").trim()}\n`),
     writeFile(
       "assets/custom-example.md",
-      `${readText("docs/data/custom.md").trim()}\n`,
+      `${readText("src/data/custom.md").trim()}\n`,
     ),
   ];
 

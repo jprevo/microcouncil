@@ -74,7 +74,7 @@ function dropSection(template: string, placeholder: string): string {
   return lines.join("\n");
 }
 
-/** Builds the final prompt from the docs/data/prompt.md template. */
+/** Builds the final prompt from the src/data/prompt.md template. */
 export function buildPrompt(input: PromptInput): string {
   const username = resolveUsername(input.username);
   const custom = input.customInstructions.trim();

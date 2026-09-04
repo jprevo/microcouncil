@@ -2,7 +2,10 @@
 build
 coverage
 dist
-docs
 /skill
 .idea
 .claude
+
+# The prompt template and the example instructions are content, not code:
+# reflowing them would change the generated prompt.
+src/data/*.md

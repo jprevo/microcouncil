@@ -6,10 +6,6 @@ export default defineConfig({
   // Relative paths: dist/ is served from a domain root and from a sub-path alike.
   base: "./",
   plugins: [react()],
-  server: {
-    // The prompt template and the example instructions live in docs/data.
-    fs: { allow: [".."] },
-  },
   build: {
     outDir: "../dist",
     emptyOutDir: true,

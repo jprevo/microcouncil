@@ -5,7 +5,7 @@ ou n'importe quel autre assistant.
 
 L'interface permet de choisir son nom, les membres du conseil, un environnement, des
 instructions additionnelles optionnelles et le sujet de la demande (optionnel lui aussi). Le
-prompt est reconstruit en direct à partir du gabarit `docs/data/prompt.md`, puis copié en un clic.
+prompt est reconstruit en direct à partir du gabarit `src/data/prompt.md`, puis copié en un clic.
 
 Les membres **et les environnements** se créent et se modifient depuis l'interface, de la même
 façon : le bouton en bas de la liste ouvre une fiche vierge, le crayon d'une carte ouvre la fiche
@@ -182,9 +182,9 @@ Tout le contenu éditorial vit hors du code :
 - `src/data/emoji.json` — la table `shortcode -> caractère` du sélecteur d'icônes, **produite** par
   `npm run emoji` à partir de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet)
   (l'ordre et les shortcodes) et de l'API emoji de GitHub (les caractères eux-mêmes) ;
-- `docs/data/prompt.md` — le gabarit du prompt, avec les jetons `{{username}}`, `{{membres}}`,
+- `src/data/prompt.md` — le gabarit du prompt, avec les jetons `{{username}}`, `{{membres}}`,
   `{{environment}}`, `{{custom}}` et `{{subject}}` ;
-- `docs/data/custom.md` — l'exemple d'instructions additionnelles, inséré à la demande via le
+- `src/data/custom.md` — l'exemple d'instructions additionnelles, inséré à la demande via le
   bouton « Exemple » (aucune instruction n'est pré-remplie par défaut).
 
 - `skill-src/` — le contenu rédigé du skill agent (`SKILL.md`, `scripts/microcouncil.py`,
