@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 import { ImportDialog } from "./ImportDialog";
-import { IconButton } from "../ui/IconButton";
 import { Modal } from "../ui/Modal";
 import type { Backup } from "../../backup/format";
 import { readBackupFile } from "../../backup/readBackupFile";
@@ -37,13 +36,15 @@ export function ImportButton() {
 
   return (
     <>
-      <IconButton
-        glyph="📥"
-        label={t.backup.import.button}
-        ariaLabel={t.backup.import.buttonAria}
-        hasPopup
+      <button
+        type="button"
+        className="footer-link"
+        aria-label={t.backup.import.buttonAria}
+        aria-haspopup="dialog"
         onClick={() => input.current?.click()}
-      />
+      >
+        {t.backup.import.button}
+      </button>
       <input
         ref={input}
         type="file"

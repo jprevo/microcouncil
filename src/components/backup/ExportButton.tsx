@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ExportDialog } from "./ExportDialog";
-import { IconButton } from "../ui/IconButton";
 import { Modal } from "../ui/Modal";
 import { useT } from "../../locale/useT";
 
@@ -11,13 +10,15 @@ export function ExportButton() {
 
   return (
     <>
-      <IconButton
-        glyph="📤"
-        label={t.backup.export.button}
-        ariaLabel={t.backup.export.buttonAria}
-        hasPopup
+      <button
+        type="button"
+        className="footer-link"
+        aria-label={t.backup.export.buttonAria}
+        aria-haspopup="dialog"
         onClick={() => setOpen(true)}
-      />
+      >
+        {t.backup.export.button}
+      </button>
       {/* Mounted only once open, so the counts it announces are the current ones. */}
       <Modal open={open} labelledBy="export-title" onClose={close}>
         {open ? <ExportDialog onClose={close} /> : null}

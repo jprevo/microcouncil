@@ -1,4 +1,5 @@
-import { BackupActions } from "../backup/BackupActions";
+import { ExportButton } from "../backup/ExportButton";
+import { ImportButton } from "../backup/ImportButton";
 import { SkillHelp } from "../skill/SkillHelp";
 import { useT } from "../../locale/useT";
 
@@ -10,7 +11,6 @@ export function Footer() {
     <footer className="footer">
       <div className="footer__actions">
         <SkillHelp />
-        <BackupActions />
       </div>
       <p>
         {before}
@@ -24,6 +24,11 @@ export function Footer() {
         </a>
         {after}
       </p>
+      <div className="footer__links">
+        <ExportButton />
+        <span aria-hidden="true">·</span>
+        <ImportButton />
+      </div>
       <p>{t.footer.privacy}</p>
     </footer>
   );
