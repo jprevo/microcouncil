@@ -18,13 +18,18 @@ interface EmojiPickerProps {
 export function EmojiPicker({ inputId, icon, onPick }: EmojiPickerProps) {
   const [query, setQuery] = useState("");
   const [entries, setEntries] = useState<readonly EmojiEntry[] | null>(null);
+  const [failed, setFailed] = useState(false);
   const t = useT();
 
   useEffect(() => {
     let active = true;
-    void loadEmojiEntries().then((loaded) => {
-      if (active) setEntries(loaded);
-    });
+    loadEmojiEntries()
+      .then((loaded) => {
+        if (active) setEntries(loaded);
+      })
+      .catch(() => {
+        if (active) setFailed(true);
+      });
     return () => {
       active = false;
     };
@@ -36,7 +41,8 @@ export function EmojiPicker({ inputId, icon, onPick }: EmojiPickerProps) {
   );
 
   let message: string | null = null;
-  if (entries === null) message = t.emojiPicker.loading;
+  if (failed) message = t.emojiPicker.loadFailed;
+  else if (entries === null) message = t.emojiPicker.loading;
   else if (matches.length === 0) message = t.emojiPicker.empty;
 
   return (

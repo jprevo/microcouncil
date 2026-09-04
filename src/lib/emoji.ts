@@ -13,12 +13,22 @@ export interface EmojiEntry {
  */
 let entries: Promise<readonly EmojiEntry[]> | null = null;
 
+/**
+ * A failed chunk load (offline, or a redeploy invalidating this session's content
+ * hashes) must not cache the rejection forever: the next call — the next time the
+ * picker opens — gets a fresh `import()` instead of a permanently broken picker.
+ */
 export function loadEmojiEntries(): Promise<readonly EmojiEntry[]> {
-  entries ??= import("../catalog/emoji.json").then((module) =>
-    Object.entries(module.default as Record<string, string>).map(
-      ([code, char]) => ({ code, char }),
-    ),
-  );
+  entries ??= import("../catalog/emoji.json")
+    .then((module) =>
+      Object.entries(module.default as Record<string, string>).map(
+        ([code, char]) => ({ code, char }),
+      ),
+    )
+    .catch((error: unknown) => {
+      entries = null;
+      throw error;
+    });
   return entries;
 }
 

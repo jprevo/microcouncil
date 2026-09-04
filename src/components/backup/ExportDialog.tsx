@@ -2,6 +2,7 @@ import { ConfirmDialog } from "../ui/ConfirmDialog";
 import { summarize } from "../../backup/summary";
 import { useExportBackup } from "../../backup/useExportBackup";
 import { format, pluralizeZero } from "../../locale/i18n";
+import { useLocale } from "../../locale/useLocale";
 import { useT } from "../../locale/useT";
 import { useSaves } from "../../saves/useSaves";
 import { useAppState } from "../../state/hooks";
@@ -12,6 +13,7 @@ export function ExportDialog({ onClose }: { readonly onClose: () => void }) {
   const { saves } = useSaves();
   const exportBackup = useExportBackup();
   const { cards, saves: savedCount } = summarize(state, saves);
+  const { numberLocale } = useLocale().bundle.meta;
   const t = useT();
 
   const confirm = (): void => {
@@ -19,14 +21,13 @@ export function ExportDialog({ onClose }: { readonly onClose: () => void }) {
     onClose();
   };
 
-  const cardsLine = format(pluralizeZero(cards, t.backup.export.cardsLine), {
-    count: cards,
-  });
+  const cardsLine = format(
+    pluralizeZero(cards, t.backup.export.cardsLine, numberLocale),
+    { count: cards },
+  );
   const savesLine = format(
-    pluralizeZero(savedCount, t.backup.export.savesLine),
-    {
-      count: savedCount,
-    },
+    pluralizeZero(savedCount, t.backup.export.savesLine, numberLocale),
+    { count: savedCount },
   );
 
   return (

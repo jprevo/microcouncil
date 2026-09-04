@@ -30,7 +30,7 @@ export type LibraryTarget =
 export interface Library<T> {
   /** Entries created by the user, in creation order. */
   readonly custom: readonly T[];
-  /** Rewritten built-ins, keyed by the name of the built-in they replace. */
+  /** Rewritten built-ins, keyed by the stable `id` of the built-in they replace. */
   readonly overrides: Readonly<Record<string, T>>;
 }
 

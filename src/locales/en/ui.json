@@ -96,7 +96,8 @@
     "searchPlaceholder": "Search: brain, rocket, chart…",
     "empty": "No icon for this search.",
     "gridLabel": "Suggested icons",
-    "loading": "Loading icons…"
+    "loading": "Loading icons…",
+    "loadFailed": "Icons couldn't be loaded. Close and reopen this picker to try again."
   },
   "editor": {
     "close": "Close",

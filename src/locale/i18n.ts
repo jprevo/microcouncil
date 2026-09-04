@@ -10,13 +10,30 @@ export function format(
   );
 }
 
-/** CLDR-lite: `one` at exactly 1, `other` otherwise. Enough for the locales shipped today. */
-export function pluralize(count: number, forms: PluralForms): string {
-  return count === 1 ? forms.one : forms.other;
+/**
+ * `one` vs `other`, decided by `Intl.PluralRules` rather than a hardcoded "1 is
+ * singular" rule: English only calls 1 singular, but French calls both 0 and 1
+ * singular ("0 fiche", "1 fiche", "2 fiches"), and other locales have further
+ * categories (`few`, `many`, `two`) this app doesn't ship copy for yet. Rules
+ * outside `{one, other}` collapse onto `other`, which is the safe default across
+ * CLDR locales.
+ */
+export function pluralize(
+  count: number,
+  forms: PluralForms,
+  numberLocale: string,
+): string {
+  return new Intl.PluralRules(numberLocale).select(count) === "one"
+    ? forms.one
+    : forms.other;
 }
 
-/** The same, with a dedicated phrasing for zero instead of falling through to `other`. */
-export function pluralizeZero(count: number, forms: ZeroPluralForms): string {
+/** The same, with a dedicated phrasing for zero instead of falling through to the rule. */
+export function pluralizeZero(
+  count: number,
+  forms: ZeroPluralForms,
+  numberLocale: string,
+): string {
   if (count === 0) return forms.zero;
-  return pluralize(count, forms);
+  return pluralize(count, forms, numberLocale);
 }

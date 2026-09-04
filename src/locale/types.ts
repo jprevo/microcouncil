@@ -128,6 +128,7 @@ export interface UiStrings {
     readonly empty: string;
     readonly gridLabel: string;
     readonly loading: string;
+    readonly loadFailed: string;
   };
   readonly editor: {
     readonly close: string;

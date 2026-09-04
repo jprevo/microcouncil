@@ -96,7 +96,8 @@
     "searchPlaceholder": "Chercher : brain, rocket, chart…",
     "empty": "Aucune icône pour cette recherche.",
     "gridLabel": "Icônes proposées",
-    "loading": "Chargement des icônes…"
+    "loading": "Chargement des icônes…",
+    "loadFailed": "Les icônes n'ont pas pu être chargées. Fermez puis rouvrez ce sélecteur pour réessayer."
   },
   "editor": {
     "close": "Fermer",

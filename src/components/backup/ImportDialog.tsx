@@ -52,9 +52,17 @@ export function ImportDialog({ backup, onClose }: ImportDialogProps) {
           <li>
             {format(t.backup.import.cardsSavesLine, {
               cards,
-              cardsWord: pluralize(cards, t.backup.cardsWord),
+              cardsWord: pluralize(
+                cards,
+                t.backup.cardsWord,
+                bundle.meta.numberLocale,
+              ),
               saves,
-              savesWord: pluralize(saves, t.backup.savesWord),
+              savesWord: pluralize(
+                saves,
+                t.backup.savesWord,
+                bundle.meta.numberLocale,
+              ),
             })}
           </li>
           <li>{t.backup.import.settingsLine}</li>

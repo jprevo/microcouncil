@@ -27,7 +27,7 @@ export function SaveRow({ save, onLoaded }: SaveRowProps) {
   const hidden = icons.length - shown.length;
   const count = save.members.length;
   const meta = [
-    `${count} ${pluralize(count, t.saves.membersCount)}`,
+    `${count} ${pluralize(count, t.saves.membersCount, numberLocale)}`,
     save.environment?.item.title ?? null,
     formatDate(save.savedAt, numberLocale),
   ].filter((part): part is string => part !== null);
