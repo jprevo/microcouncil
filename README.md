@@ -14,8 +14,8 @@ page HTML par langue avec ses propres balises `<title>`, `description` et Open G
 
 Les membres **et les environnements** se créent et se modifient depuis l'interface, de la même
 façon : le bouton en bas de la liste ouvre une fiche vierge, le crayon d'une carte ouvre la fiche
-correspondante. L'icône se cherche par shortcode (`brain`, `rocket`…) dans la table de
-l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet). Une fiche livrée avec le
+correspondante. L'icône se cherche par son nom Unicode (`brain`, `rocket`…) dans la table
+[`emoji-test.txt`](https://unicode.org/Public/emoji/latest/emoji-test.txt) du standard. Une fiche livrée avec le
 site peut être réécrite comme n'importe quelle autre ; elle gagne alors un bouton « Revenir à
 l'original », tandis qu'une fiche créée peut être supprimée.
 
@@ -65,7 +65,7 @@ npm install
 | `npm run build`     | **Produit `dist/`** : régénère les pages, typecheck strict, puis build de production (une entrée Rollup par langue, HTML/CSS/JS avec empreinte).                                                               |
 | `npm run preview`   | Sert `dist/` en local, pour vérifier le build de production avant livraison.                                                                                                                                   |
 | `npm run skill`     | **Régénère `skill/`** : le skill agent (français), à jour des compagnons, des environnements et du gabarit.                                                                                                    |
-| `npm run emoji`     | **Régénère `src/catalog/emoji.json`** : la table `shortcode -> caractère` du sélecteur d'icônes, partagée par toutes les langues.                                                                              |
+| `npm run emoji`     | **Régénère `src/catalog/emoji.json`** : la table `nom -> caractère` du sélecteur d'icônes, partagée par toutes les langues.                                                                                    |
 | `npm run shuffle`   | Mélange l'ordre de `src/catalog/members.json` — le même ordre pour toutes les langues, puisque le texte suit l'`id`.                                                                                           |
 
 `dist/` est un site statique ordinaire : à déposer tel quel derrière n'importe quel serveur
@@ -259,8 +259,8 @@ la redirection sortent du registre.
 
 Chaque page ne charge donc que le JavaScript de sa propre langue : Rollup découpe un chunk par
 langue plus un chunk commun (React, composants, logique), et rien n'oblige une page anglaise à
-télécharger la moindre chaîne française. La table d'emoji (~45 Ko, un seul jeu de shortcodes
-anglais partagé par toutes les langues — ce sont des raccourcis techniques, pas du texte à
+télécharger la moindre chaîne française. La table d'emoji (~55 Ko, un seul jeu de noms
+anglais partagé par toutes les langues — ce sont les noms Unicode officiels, pas du texte à
 traduire) suit le même principe à l'échelle de la page : `import()` dynamique dans
 `src/lib/emoji.ts`, chargée seulement à l'ouverture du sélecteur d'icônes.
 
@@ -287,9 +287,11 @@ copie) et le traduit (`src/locales/<code>/`, une copie par langue — voir
 - `environments.json` — les décors ; `id` et `icon` dans `src/catalog/`, le reste (`title`,
   `summary`, `description`) dans `src/locales/<code>/`. Le `summary` est la phrase affichée sur la
   fiche : il n'apparaît jamais dans le prompt ;
-- `src/catalog/emoji.json` — la table `shortcode -> caractère` du sélecteur d'icônes, **produite**
-  par `npm run emoji` à partir de l'[emoji cheat sheet](https://github.com/ikatyang/emoji-cheat-sheet)
-  (l'ordre et les shortcodes) et de l'API emoji de GitHub (les caractères eux-mêmes) ;
+- `src/catalog/emoji.json` — la table `nom -> caractère` du sélecteur d'icônes, **produite**
+  par `npm run emoji` à partir d'[`emoji-test.txt`](https://unicode.org/Public/emoji/latest/emoji-test.txt),
+  le fichier qu'Unicode publie à chaque version pour dire quels emoji un clavier doit proposer et
+  dans quel ordre. Chaque caractère y est écrit _entièrement qualifié_ — sélecteur de variante et
+  jointures compris ; les teintes de peau, elles, sont écartées ;
 - `src/locales/<code>/prompt.md` — le gabarit du prompt, avec les jetons `{{username}}`,
   `{{members}}`, `{{environment}}`, `{{custom}}` et `{{subject}}` — des jetons de code, jamais
   traduits, identiques dans chaque langue ;
@@ -326,8 +328,9 @@ Trois emprunts extérieurs voyagent avec le dépôt et gardent leur propre licen
   et [`licenses/JetBrainsMono-OFL.txt`](licenses/JetBrainsMono-OFL.txt) — et l'en-tête de
   `src/fonts.css` porte les avis de copyright sous forme de commentaires `@license`, que le
   minifieur préserve jusque dans `dist/`.
-- **`src/catalog/emoji.json`**, produit par `npm run emoji` à partir de l'[emoji cheat
-  sheet](https://github.com/ikatyang/emoji-cheat-sheet) (MIT) et de l'API emoji de GitHub.
+- **`src/catalog/emoji.json`**, produit par `npm run emoji` à partir d'[`emoji-test.txt`](https://unicode.org/Public/emoji/latest/emoji-test.txt) :
+  noms et points de code sont ceux du standard, publiés par Unicode® sous [licence
+  Unicode](https://www.unicode.org/license.txt).
 
 Les fiches de compagnons et d'environnements, le gabarit de prompt et l'exemple d'instructions
 sont du contenu original, couvert par la même licence MIT que le code.

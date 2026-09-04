@@ -15,7 +15,7 @@ interface EmojiPickerProps {
   readonly onPick: (icon: string) => void;
 }
 
-/** Shortcode search over the emoji cheat sheet table, loaded lazily on first open. */
+/** Name search over the Unicode emoji table, loaded lazily on first open. */
 export function EmojiPicker({ inputId, icon, onPick }: EmojiPickerProps) {
   const [query, setQuery] = useState("");
   const [entries, setEntries] = useState<readonly EmojiEntry[] | null>(null);

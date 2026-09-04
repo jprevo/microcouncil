@@ -6,10 +6,11 @@ export interface EmojiEntry {
 }
 
 /**
- * Shortcode -> character, generated from the emoji cheat sheet by `npm run emoji`.
- * Shortcodes are English by convention (GitHub's own emoji API), shared by every
- * language rather than duplicated per locale, and loaded on demand — only once the
- * picker actually opens — so its ~45 KB never rides along with the rest of a page.
+ * Name -> character, generated from the Unicode emoji table by `npm run emoji`.
+ * Names are the English ones the standard gives (`grinning_face_with_big_eyes`),
+ * shared by every language rather than duplicated per locale, and loaded on demand —
+ * only once the picker actually opens — so its ~55 KB never rides along with the
+ * rest of a page.
  */
 let entries: Promise<readonly EmojiEntry[]> | null = null;
 
@@ -39,7 +40,7 @@ function normalizeQuery(query: string): string {
     .replace(/^_|_$/gu, "");
 }
 
-/** Best matches first: the exact shortcode, then prefixes, then anything containing it. */
+/** Best matches first: the exact name, then prefixes, then anything containing it. */
 export function searchEmojis(
   entries: readonly EmojiEntry[],
   query: string,

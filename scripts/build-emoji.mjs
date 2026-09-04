@@ -1,18 +1,20 @@
 /**
- * Regenerates src/catalog/emoji.json — the shortcode -> character table used by the emoji
+ * Regenerates src/catalog/emoji.json — the name -> character table used by the emoji
  * picker when creating or editing a council member.
  *
  *   npm run emoji
  *
- * Two sources, both public and both refreshed upstream automatically:
+ * One source: `emoji-test.txt`, the file Unicode itself publishes to say which emoji a
+ * keyboard should offer and in which order. Every new version of the standard reissues
+ * it under `latest/`, so the table follows the standard rather than a snapshot of it.
  *
- *   - ikatyang/emoji-cheat-sheet gives the curated shortcode list (and its aliases),
- *     but its README only *renders* the pictograms, it never spells them out;
- *   - the GitHub emoji API gives, for each shortcode, an image URL whose file name is
- *     the Unicode code point sequence — which is the character itself.
+ * Its virtue here is that it spells each character out *fully qualified* — variation
+ * selectors and zero-width joiners included. A source that only names code points, as
+ * GitHub's emoji API did, loses exactly those: ❤ comes out as a monochrome letter and
+ * 👨‍👩‍👧‍👦 as four separate people.
  *
- * Shortcodes without a Unicode mapping (GitHub's own :octocat:, :shipit:… served as
- * bitmaps) are dropped: this application can only display real characters.
+ * There are no shortcodes in it, so the searchable key is the Unicode name turned into
+ * one: `grinning face with big eyes` -> `grinning_face_with_big_eyes`.
  */
 
 import { writeFileSync } from "node:fs";
@@ -22,12 +24,31 @@ import { fileURLToPath } from "node:url";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const TARGET = join(ROOT, "src", "catalog", "emoji.json");
 
-const CHEAT_SHEET_URL =
-  "https://raw.githubusercontent.com/ikatyang/emoji-cheat-sheet/master/README.md";
-const GITHUB_EMOJI_API = "https://api.github.com/emojis";
+const EMOJI_TEST_URL = "https://unicode.org/Public/emoji/latest/emoji-test.txt";
 
-/** Section of the cheat sheet holding bitmap-only shortcodes: nothing to import there. */
-const CUSTOM_SECTION = "## GitHub Custom Emoji";
+/**
+ * `1F44B ; fully-qualified # 👋 E0.6 waving hand` — code points, status, then a comment
+ * holding the character, the version that introduced it, and its name. Cut on the two
+ * separators rather than matched in one go: the fields are read apart below.
+ */
+const ENTRY = /^([^;]+);([^#]+)#(.+)$/;
+
+/** `👋 E0.6 waving hand`: the character, the version that brought it, then the name. */
+const COMMENT = /^(\S+) E\d+(?:\.\d+)? (.+)$/;
+
+/**
+ * The two statuses that make up the set keyboards are expected to offer: whole emoji,
+ * plus the handful of pieces that stand on their own (skin tones, hair). The other two
+ * — `minimally-qualified` and `unqualified` — are the same emoji stripped of the very
+ * selectors this table exists to keep, and are skipped.
+ */
+const OFFERED = new Set(["fully-qualified", "component"]);
+
+/** Skin tones multiply every person by five without adding an icon worth picking. */
+const SKIN_TONE = /[\u{1F3FB}-\u{1F3FF}]/u;
+
+/** Names are ASCII but for these two, which would otherwise slug down to nothing. */
+const SPELLED_OUT = { "#": " hash ", "*": " asterisk " };
 
 async function fetchText(url) {
   const response = await fetch(url, {
@@ -41,54 +62,67 @@ async function fetchText(url) {
 }
 
 /**
- * Shortcodes in cheat-sheet order. Every table row quotes its shortcodes as inline
- * code, one per alias, so a single pattern over the tables collects them all.
+ * `flag: Åland Islands` -> `flag_aland_islands`, the shape `searchEmojis` matches
+ * queries against — and the shape `normalizeQuery` folds a typed query into, accents
+ * and punctuation alike.
  */
-function parseShortcodes(readme) {
-  const codes = [];
-  for (const line of readme.split("\n")) {
-    if (line.startsWith(CUSTOM_SECTION)) break;
-    if (!line.startsWith("|")) continue;
-    for (const [, code] of line.matchAll(/`:([a-z0-9_+-]+):`/g))
-      codes.push(code);
+function shortcodeFromName(name) {
+  return name
+    .replace(/[#*]/g, (symbol) => SPELLED_OUT[symbol])
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9+]+/g, "_")
+    .replace(/^_|_$/g, "");
+}
+
+/**
+ * Data rows in file order — which is chart order, smileys first, and so the order the
+ * picker offers them in. Comments carry the group and subgroup headings; nothing here
+ * needs them.
+ */
+function offeredEmoji(file) {
+  const emoji = [];
+  for (const line of file.split("\n")) {
+    if (line.startsWith("#") || line.trim() === "") continue;
+
+    const row = ENTRY.exec(line);
+    if (row === null) throw new Error(`unreadable row: ${line}`);
+    const [, points, status, comment] = row;
+    if (!OFFERED.has(status.trim())) continue;
+
+    const described = COMMENT.exec(comment.trim());
+    if (described === null) throw new Error(`unreadable comment: ${comment}`);
+    const [, character, name] = described;
+    if (SKIN_TONE.test(character)) continue;
+
+    emoji.push({ points: points.trim(), character, name });
   }
-  return codes;
+  return emoji;
 }
 
-/** `.../unicode/1f1eb-1f1f7.png?v8` -> 🇫🇷, or null for a bitmap-only emoji. */
-function characterFromUrl(url) {
-  const match = /\/unicode\/([0-9a-f-]+)\.png/.exec(url);
-  if (match === null) return null;
-  const points = match[1].split("-").map((point) => Number.parseInt(point, 16));
-  return String.fromCodePoint(...points);
+/** The character must be exactly what the code point column announces, joiners included. */
+function assertCharacter({ points, character, name }) {
+  const expected = String.fromCodePoint(
+    ...points.split(" ").map((point) => Number.parseInt(point, 16)),
+  );
+  if (character !== expected)
+    throw new Error(`${name}: ${points} does not spell ${character}`);
 }
-
-const [readme, apiBody] = await Promise.all([
-  fetchText(CHEAT_SHEET_URL),
-  fetchText(GITHUB_EMOJI_API),
-]);
-const urls = JSON.parse(apiBody);
 
 const table = {};
-let missing = 0;
-for (const code of parseShortcodes(readme)) {
-  if (code in table) continue;
-  const url = urls[code];
-  const character = typeof url === "string" ? characterFromUrl(url) : null;
-  if (character === null) {
-    missing += 1;
-    continue;
-  }
-  table[code] = character;
+for (const entry of offeredEmoji(await fetchText(EMOJI_TEST_URL))) {
+  assertCharacter(entry);
+  const code = shortcodeFromName(entry.name);
+  if (code in table) throw new Error(`two emoji answer to :${code}:`);
+  table[code] = entry.character;
 }
 
 const count = Object.keys(table).length;
-if (count < 1000)
+if (count < 1500)
   throw new Error(
     `only ${count} emoji parsed: the upstream format probably changed`,
   );
 
-writeFileSync(TARGET, `${JSON.stringify(table, null, 0)}\n`, "utf8");
-console.log(
-  `\n  ✅  src/catalog/emoji.json — ${count} shortcodes (${missing} without a Unicode character).\n`,
-);
+writeFileSync(TARGET, `${JSON.stringify(table, null, 2)}\n`, "utf8");
+console.log(`\n  ✅  src/catalog/emoji.json — ${count} emoji.\n`);
