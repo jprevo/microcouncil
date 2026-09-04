@@ -25,9 +25,10 @@
   "author": "Jonathan Prévost <microcouncil.nemesis515@passmail.net>",
   "scripts": {
     "pages": "node scripts/build-pages.mjs",
-    "predev": "npm run pages",
+    "og": "node scripts/build-og.mjs",
+    "predev": "npm run pages && npm run og",
     "dev": "vite",
-    "prebuild": "npm run pages",
+    "prebuild": "npm run pages && npm run og",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@napi-rs/canvas": "^1.0.8",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",

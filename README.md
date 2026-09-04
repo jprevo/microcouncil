@@ -55,14 +55,15 @@ npm install
 
 | Commande            | Effet                                                                                                                                                                                                          |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`       | Serveur de développement Vite (régénère d'abord les pages, voir `npm run pages`).                                                                                                                              |
+| `npm run dev`       | Serveur de développement Vite (régénère d'abord les pages et les cartes de partage, voir `npm run pages` et `npm run og`).                                                                                     |
 | `npm run pages`     | **Régénère `src/*.html` et `src/entries/*.tsx`** : une page et un point d'entrée par langue de `src/locales/registry.json`. Sortie générée, non commitée — voir [Internationalisation](#internationalisation). |
+| `npm run og`        | **Régénère `src/public/og/*.png`** : une carte de partage social par langue, recopiée dans `dist/og/` par Vite. Sortie générée, non commitée — voir [Partage social](#partage-social).                         |
 | `npm run typecheck` | Vérification TypeScript stricte, sans émission.                                                                                                                                                                |
 | `npm run gate`      | **Le gate** : `format:check`, `lint`, `typecheck`, `knip` à la suite. Doit passer avant toute fusion — la CI le rejoue sur `main` et sur chaque PR.                                                            |
 | `npm run lint`      | ESLint (TypeScript typé, React Hooks, SonarJS). `npm run lint:fix` corrige ce qui est corrigible.                                                                                                              |
 | `npm run format`    | Prettier sur tout le dépôt. `npm run format:check` se contente de vérifier.                                                                                                                                    |
 | `npm run knip`      | Fichiers, exports et dépendances jamais utilisés.                                                                                                                                                              |
-| `npm run build`     | **Produit `dist/`** : régénère les pages, typecheck strict, puis build de production (une entrée Rollup par langue, HTML/CSS/JS avec empreinte).                                                               |
+| `npm run build`     | **Produit `dist/`** : régénère les pages et les cartes de partage, typecheck strict, puis build de production (une entrée Rollup par langue, HTML/CSS/JS avec empreinte).                                      |
 | `npm run preview`   | Sert `dist/` en local, pour vérifier le build de production avant livraison.                                                                                                                                   |
 | `npm run skill`     | **Régénère `skill/`** : le skill agent (français), à jour des compagnons, des environnements et du gabarit.                                                                                                    |
 | `npm run emoji`     | **Régénère `src/catalog/emoji.json`** : la table `nom -> caractère` du sélecteur d'icônes, partagée par toutes les langues.                                                                                    |
@@ -70,8 +71,10 @@ npm install
 
 `dist/` est un site statique ordinaire : à déposer tel quel derrière n'importe quel serveur
 de fichiers (ou sur GitHub Pages, Netlify…). Les chemins sont relatifs, donc il fonctionne
-aussi bien à la racine d'un domaine que dans un sous-répertoire. Rien n'est chargé depuis un
-tiers à l'exécution : polices, données et gabarit sont embarqués dans le build.
+aussi bien à la racine d'un domaine que dans un sous-répertoire — à la seule exception des
+balises de partage social, qui portent une adresse absolue faute de quoi aucun aperçu ne
+s'afficherait (voir [Partage social](#partage-social)). Rien n'est chargé depuis un tiers à
+l'exécution : polices, données et gabarit sont embarqués dans le build.
 
 ```bash
 npm run build
@@ -196,7 +199,8 @@ contenu des autres :
 - `src/locales/registry.json` liste les langues (`code`, `label`, `dir`, `default`). L'anglais
   (`en`) est la langue par défaut, servie à la racine (`/`) ; le français (`fr`) est servi sur
   `/fr`. Ajouter une langue est une entrée dans ce fichier plus un nouveau dossier
-  `src/locales/<code>/` ;
+  `src/locales/<code>/` — et, si elle ne s'écrit pas en alphabet latin, une fonte dans
+  `assets/fonts/` pour sa carte de partage (voir [Partage social](#partage-social)) ;
 - `src/catalog/` porte ce qui est **structurel et partagé par toutes les langues** : `id` stable et
   `icon` pour chaque membre et environnement (`members.json`, `environments.json`), dans l'ordre
   d'affichage, et la table d'icônes du sélecteur (`emoji.json`, chargée à la demande — voir
@@ -210,7 +214,9 @@ contenu des autres :
   et le texte de la langue par `id` ;
 - `scripts/build-pages.mjs` (`npm run pages`, rejoué par `predev`/`prebuild`/`pregate`) régénère,
   pour chaque langue du registre, une page HTML (balises `<html lang dir>`, `title`, `description`,
-  Open Graph, `hreflang` croisés vers chaque autre langue plus `x-default`) et un point d'entrée
+  Open Graph et Twitter — dont la carte de partage de la langue, voir
+  [Partage social](#partage-social) —, `hreflang` croisés vers chaque autre langue plus
+  `x-default`) et un point d'entrée
   `src/entries/<code>.tsx` qui importe _uniquement_ le bundle de sa langue. Ces fichiers sont
   générés — jamais commités (voir `.gitignore`) — et `vite.config.ts` lit le même registre pour
   fournir une entrée Rollup par langue à `npm run build`.
@@ -274,6 +280,62 @@ importé, mais ne bloque pas l'opération.
 Le skill agent (`skill/`, voir plus bas) reste **en français** pour l'instant, indépendamment de la
 langue du site : `npm run skill` lit toujours `src/locales/fr/`.
 
+## Partage social
+
+Un lien collé dans Slack, Discord, WhatsApp, Mastodon, Bluesky, LinkedIn ou X n'affiche pas la
+page : il affiche ce que les balises de son en-tête en disent, et l'image qu'elles désignent. Les
+deux sont produites à la construction, une par langue :
+
+- `scripts/build-og.mjs` (`npm run og`, rejoué par `predev`/`prebuild`) **dessine les cartes** :
+  un PNG 1200 × 630 par langue dans `src/public/og/<code>.png`, que Vite recopie tel quel dans
+  `dist/og/`. Fond sombre — la palette de `[data-theme="dark"]`, parce qu'une carte se voit une
+  fois, en vignette, dans le fil de quelqu'un d'autre, et que le fond sombre est ce qui en fait une
+  forme plutôt qu'un rectangle blanc de plus —, la marque, le titre du site, le lede et l'adresse
+  en pied. Le logo n'y est pas redessiné : les cercles sont relus dans `src/assets/logo-dark.svg`,
+  donc la carte ne peut pas diverger du site ;
+- `scripts/build-pages.mjs` **écrit les balises** qui pointent dessus : `og:*` (dont `og:image`
+  avec ses dimensions et son texte alternatif, `og:url`, `og:locale` et les `og:locale:alternate`
+  des autres langues), `twitter:card` en `summary_large_image`, et les deux `theme-color`
+  clair/sombre ;
+- `scripts/share.mjs` porte ce que les deux doivent savoir à l'identique : la géométrie des cartes,
+  leur chemin, et l'adresse du site.
+
+### La seule adresse absolue
+
+Tout le reste du projet est relatif — `base: "./"`, `canonical` et `hreflang` relatifs — pour qu'un
+même `dist/` fonctionne à la racine d'un domaine comme dans un sous-répertoire. Le partage social
+est la seule chose qui ne le peut pas : le robot qui fabrique l'aperçu a récupéré les balises hors
+contexte et ne résout rien contre la page. `og:image` et `og:url` sont donc absolues, bâties sur le
+`homepage` de `package.json` — que `SITE_URL` remplace le temps d'une prévisualisation ou d'un
+fork :
+
+```bash
+SITE_URL=https://preview.example.com npm run build
+```
+
+Une valeur fausse n'abîme que l'aperçu : rien de ce que le navigateur charge n'en dépend.
+
+### Une carte par langue, sans retouche
+
+Un lede fait deux lignes dans une langue et cinq dans la suivante ; une carte dont le texte est
+placé à la main n'est juste que dans la langue pour laquelle on l'a réglée. Rien n'y est donc
+positionné : le lede est **ajusté** — replié à la plus grande taille d'une échelle qui tienne
+encore dans la boîte, en lignes _et_ en pixels, puis centré dans ce que le bloc-marque et le pied
+lui laissent. Un lede court respire, un lede long descend d'un cran au lieu de déborder.
+
+Les coupures passent par `Intl.Segmenter`, qui connaît les frontières de mots des langues qui
+n'écrivent pas d'espaces (japonais, chinois, thaï) ; la ponctuation qui ne peut ni ouvrir ni fermer
+une ligne est recollée à sa voisine avant le repli : un « français ne termine pas une ligne, un 。
+japonais n'en commence pas. Une langue déclarée `dir: "rtl"` dans le registre retourne toute la
+carte — bloc-marque, texte, filigrane et filet d'accent.
+
+Reste ce qu'aucun calcul n'invente : les glyphes. Archivo ne couvre que le latin, et une langue
+écrite dans un autre système a besoin de sa propre fonte. Déposer un `.ttf`/`.otf` dans
+`assets/fonts/` suffit — il rejoint la pile de repli sans rien changer au script. À défaut, **la
+construction s'arrête** en nommant les caractères manquants plutôt que de livrer une carte pleine
+de tofu : `build-og.mjs` lit la table `cmap` des fontes pour le savoir, parce que Skia, lui,
+dessine des carrés sans se plaindre.
+
 ## Sources de données
 
 Tout le contenu éditorial vit hors du code, réparti entre le structurel (`src/catalog/`, une seule
@@ -327,7 +389,10 @@ Trois emprunts extérieurs voyagent avec le dépôt et gardent leur propre licen
   fontes. Les textes des licences sont donc joints — [`licenses/Archivo-OFL.txt`](licenses/Archivo-OFL.txt)
   et [`licenses/JetBrainsMono-OFL.txt`](licenses/JetBrainsMono-OFL.txt) — et l'en-tête de
   `src/fonts.css` porte les avis de copyright sous forme de commentaires `@license`, que le
-  minifieur préserve jusque dans `dist/`.
+  minifieur préserve jusque dans `dist/`. Deux instances statiques d'Archivo (400 et 800) vivent en
+  outre dans `assets/fonts/`, sous la même licence : elles ne servent qu'à dessiner les cartes de
+  partage (voir [Partage social](#partage-social)) et ne partent jamais vers le navigateur, qui
+  reçoit les fichiers variables de `src/fonts.css` et eux seuls.
 - **`src/catalog/emoji.json`**, produit par `npm run emoji` à partir d'[`emoji-test.txt`](https://unicode.org/Public/emoji/latest/emoji-test.txt) :
   noms et points de code sont ceux du standard, publiés par Unicode® sous [licence
   Unicode](https://www.unicode.org/license.txt).

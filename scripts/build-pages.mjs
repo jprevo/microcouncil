@@ -38,6 +38,7 @@
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { CARD_HEIGHT, CARD_WIDTH, cardPath, siteUrl } from "./share.mjs";
 
 /**
  * Mirrors `STORAGE_VERSION` in `src/storage.ts`: the inline theme script below
@@ -152,6 +153,14 @@ function pageHref(locale) {
   return locale.default ? "./" : `./${locale.code}`;
 }
 
+/**
+ * The same address again, this time rooted at the site rather than at the page:
+ * what `og:url` needs, since a crawler has nothing to resolve `./fr` against.
+ */
+function pagePath(locale) {
+  return locale.default ? "/" : `/${locale.code}`;
+}
+
 function entryPath(code) {
   return `entries/${code}.tsx`;
 }
@@ -178,17 +187,36 @@ if (!redirectToPreferredLocale(bundle.meta.code)) {
 `;
 }
 
-function renderHtml(locale, registry, meta) {
-  const hreflangs = registry
+function renderHtml(page, pages) {
+  const { meta, ui } = page;
+  const hreflangs = pages
     .map(
       (other) =>
         `    <link rel="alternate" hreflang="${other.code}" href="${pageHref(other)}" vite-ignore />`,
     )
     .join("\n");
-  const defaultLocale = registry.find((entry) => entry.default);
+  const defaultLocale = pages.find((entry) => entry.default);
+
+  // The languages this one is not, named the way Open Graph names them, so a
+  // reader who lands on the card knows the page exists in theirs too.
+  const alternateLocales = pages
+    .filter((other) => other.code !== page.code)
+    .map(
+      (other) =>
+        `    <meta property="og:locale:alternate" content="${other.meta.ogLocale}" />`,
+    )
+    .join("\n");
+
+  // The one place absolute URLs are unavoidable. Everything a browser loads
+  // stays relative, but a share card is assembled by a crawler that fetched the
+  // page out of context and resolves nothing against it: a relative `og:image`
+  // is the difference between a card with a picture and a bare grey box.
+  // `scripts/site.mjs` explains where the address comes from.
+  const card = siteUrl(cardPath(page.code));
+  const cardAlt = `${meta.title} — ${ui.lede}`;
 
   return `<!doctype html>
-<html lang="${locale.code}" dir="${locale.dir}" data-theme="light">
+<html lang="${page.code}" dir="${page.dir}" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -197,23 +225,35 @@ function renderHtml(locale, registry, meta) {
     />
     <title>${escapeAttr(meta.title)}</title>
     <meta name="description" content="${escapeAttr(meta.description)}" />
-    <link rel="canonical" href="${pageHref(locale)}" vite-ignore />
+    <link rel="canonical" href="${pageHref(page)}" vite-ignore />
 ${hreflangs}
     <link rel="alternate" hreflang="x-default" href="${pageHref(defaultLocale)}" vite-ignore />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="${escapeAttr(meta.title)}" />
+    <meta property="og:url" content="${escapeAttr(siteUrl(pagePath(page)))}" />
     <meta property="og:title" content="${escapeAttr(meta.title)}" />
     <meta property="og:description" content="${escapeAttr(meta.description)}" />
     <meta property="og:locale" content="${meta.ogLocale}" />
-    <meta name="twitter:card" content="summary" />
+${alternateLocales}
+    <meta property="og:image" content="${escapeAttr(card)}" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="${CARD_WIDTH}" />
+    <meta property="og:image:height" content="${CARD_HEIGHT}" />
+    <meta property="og:image:alt" content="${escapeAttr(cardAlt)}" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeAttr(meta.title)}" />
     <meta name="twitter:description" content="${escapeAttr(meta.description)}" />
+    <meta name="twitter:image" content="${escapeAttr(card)}" />
+    <meta name="twitter:image:alt" content="${escapeAttr(cardAlt)}" />
+    <meta name="theme-color" content="#f2f5fa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#060b18" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="${FAVICON}" />
     <link rel="stylesheet" href="./styles.css" />
-    ${themeScript(locale)}
+    ${themeScript(page)}
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="./${entryPath(locale.code)}"></script>
+    <script type="module" src="./${entryPath(page.code)}"></script>
   </body>
 </html>
 `;
@@ -229,15 +269,20 @@ if (registry.filter((locale) => locale.default).length !== 1) {
 rmSync(ENTRIES_DIR, { recursive: true, force: true });
 mkdirSync(ENTRIES_DIR, { recursive: true });
 
-for (const locale of registry) {
-  const meta = readJson(`src/locales/${locale.code}/meta.json`);
-  writeFileSync(join(SRC, entryPath(locale.code)), renderEntry(locale));
-  writeFileSync(
-    join(SRC, htmlPath(locale)),
-    renderHtml(locale, registry, meta),
-  );
+// Every language's text, read before the first page is written: a page names
+// the others in its `hreflang` and its `og:locale:alternate`, so none of them
+// can be rendered from its own bundle alone.
+const pages = registry.map((locale) => ({
+  ...locale,
+  meta: readJson(`src/locales/${locale.code}/meta.json`),
+  ui: readJson(`src/locales/${locale.code}/ui.json`),
+}));
+
+for (const page of pages) {
+  writeFileSync(join(SRC, entryPath(page.code)), renderEntry(page));
+  writeFileSync(join(SRC, htmlPath(page)), renderHtml(page, pages));
 }
 
 console.log(
-  `Generated ${registry.length} page(s): ${registry.map(htmlPath).join(", ")}`,
+  `Generated ${pages.length} page(s): ${pages.map(htmlPath).join(", ")}`,
 );
