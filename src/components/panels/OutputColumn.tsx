@@ -1,10 +1,11 @@
+import { IdentityCard } from "../identity/IdentityCard";
 import { OutputCard } from "../output/OutputCard";
-import { SubjectCard } from "../subject/SubjectCard";
 
+/** Who is asking, what about, and the prompt that comes out of it. */
 export function OutputColumn() {
   return (
     <aside className="output">
-      <SubjectCard />
+      <IdentityCard />
       <OutputCard />
     </aside>
   );

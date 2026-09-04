@@ -12,9 +12,9 @@ export function IdentityCard() {
 
   return (
     <Card labelledBy="title-identity">
-      <CardHead>
-        <CardTitle id="title-identity">{t.identity.title}</CardTitle>
-      </CardHead>
+      <CardHead
+        title={<CardTitle id="title-identity">{t.identity.title}</CardTitle>}
+      />
       <TextField
         id="username"
         value={username}

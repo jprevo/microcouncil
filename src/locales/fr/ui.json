@@ -37,7 +37,7 @@
     "add": "Ajouter un membre",
     "selectedCount": { "one": "sélectionné", "other": "sélectionnés" },
     "edit": "Modifier {name}",
-    "editorCreateTitle": "✨ Nouveau membre",
+    "editorCreateTitle": "Nouveau membre",
     "toastCreated": "{name} rejoint le conseil",
     "toastUpdated": "{name} est à jour",
     "fields": {
@@ -69,7 +69,7 @@
     "clear": "Effacer",
     "add": "Ajouter un environnement",
     "edit": "Modifier {title}",
-    "editorCreateTitle": "✨ Nouvel environnement",
+    "editorCreateTitle": "Nouvel environnement",
     "toastCreated": "{title} rejoint les décors",
     "toastUpdated": "{title} est à jour",
     "fields": {
@@ -112,7 +112,8 @@
   },
   "custom": {
     "title": "Instructions additionnelles",
-    "hint": "Optionnel — sauvegardé automatiquement dans votre navigateur.",
+    "optional": "optionnel",
+    "hint": "Sauvegardé automatiquement dans votre navigateur.",
     "example": "Exemple",
     "clear": "Effacer",
     "placeholder": "Par exemple : contraintes de format, mémoire à utiliser, sujets à éviter…"

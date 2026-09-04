@@ -1,5 +1,4 @@
 import type { ReactNode, Ref } from "react";
-import { TileCheck } from "./TileCheck";
 import { TileIcon } from "./TileIcon";
 
 interface TileProps {
@@ -14,7 +13,7 @@ interface TileProps {
   readonly buttonRef?: Ref<HTMLButtonElement>;
 }
 
-/** The shell every tile shares: icon, body, check mark. */
+/** The shell every tile shares: an icon and a body. Selection shows in the frame. */
 export function Tile({
   icon,
   selected,
@@ -39,7 +38,6 @@ export function Tile({
     >
       <TileIcon icon={icon} />
       <div className="tile__body">{children}</div>
-      <TileCheck />
     </button>
   );
 }

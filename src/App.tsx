@@ -1,4 +1,3 @@
-import { Aurora } from "./components/layout/Aurora";
 import { Footer } from "./components/layout/Footer";
 import { Shell } from "./components/layout/Shell";
 import { TopBar } from "./components/layout/TopBar";
@@ -16,7 +15,6 @@ export function App({ bundle }: { readonly bundle: LocaleBundle }) {
       <AppStateProvider>
         <SavesProvider>
           <ToastProvider>
-            <Aurora />
             <TopBar />
             <Shell>
               <ConfigColumn />

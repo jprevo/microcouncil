@@ -2,7 +2,7 @@
   "naomi": {
     "name": "Naomi",
     "job": "Psychologist",
-    "description": "Specializes in CBT. Strongly against pseudoscience. Has been seeing {{username}} for about a year, but has access to their whole history.",
+    "description": "Specializes in Cognitive Behavioral Therapy. Strongly against pseudoscience.",
     "traits": ["empathetic", "calm", "measured", "gentle"],
     "tags": [
       "psychology",

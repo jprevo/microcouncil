@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { Card } from "../ui/Card";
 import { CardHead } from "../ui/CardHead";
-import { CardHint } from "../ui/CardHint";
 import { CardTitle } from "../ui/CardTitle";
 import { Button } from "../ui/Button";
 import { Pill } from "../ui/Pill";
@@ -23,17 +22,17 @@ export function SubjectCard() {
   return (
     <Card labelledBy="title-subject">
       <CardHead
+        title={
+          <CardTitle id="title-subject">
+            {t.subject.title} <Pill tone="soft">{t.subject.optional}</Pill>
+          </CardTitle>
+        }
         actions={
           <Button variant="quiet" onClick={clear}>
             {t.subject.clear}
           </Button>
         }
-      >
-        <CardTitle id="title-subject">
-          {t.subject.title} <Pill tone="soft">{t.subject.optional}</Pill>
-        </CardTitle>
-        <CardHint>{t.subject.hint}</CardHint>
-      </CardHead>
+      />
       <TextArea
         id="subject"
         rows={3}

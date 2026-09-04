@@ -37,7 +37,7 @@
     "add": "Add a member",
     "selectedCount": { "one": "selected", "other": "selected" },
     "edit": "Edit {name}",
-    "editorCreateTitle": "✨ New member",
+    "editorCreateTitle": "New member",
     "toastCreated": "{name} joins the council",
     "toastUpdated": "{name} is up to date",
     "fields": {
@@ -69,7 +69,7 @@
     "clear": "Clear",
     "add": "Add a setting",
     "edit": "Edit {title}",
-    "editorCreateTitle": "✨ New setting",
+    "editorCreateTitle": "New setting",
     "toastCreated": "{title} joins the settings",
     "toastUpdated": "{title} is up to date",
     "fields": {
@@ -112,7 +112,8 @@
   },
   "custom": {
     "title": "Additional instructions",
-    "hint": "Optional — saved automatically in your browser.",
+    "optional": "optional",
+    "hint": "Saved automatically in your browser.",
     "example": "Example",
     "clear": "Clear",
     "placeholder": "For example: format constraints, memory to use, topics to avoid…"

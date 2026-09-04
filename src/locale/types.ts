@@ -144,6 +144,7 @@ export interface UiStrings {
   };
   readonly custom: {
     readonly title: string;
+    readonly optional: string;
     readonly hint: string;
     readonly example: string;
     readonly clear: string;

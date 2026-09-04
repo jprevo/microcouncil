@@ -317,14 +317,15 @@ Copiez-le, modifiez-le, servez-le, revendez-le : la seule obligation est de cons
 copyright. Le skill produit dans `skill/` porte la même licence, déclarée dans le frontmatter de
 `skill-src/SKILL.md`.
 
-Deux emprunts extérieurs voyagent avec le dépôt et gardent leur propre licence :
+Trois emprunts extérieurs voyagent avec le dépôt et gardent leur propre licence :
 
-- **Fraunces**, la police d'affichage, sous SIL Open Font License 1.1. Elle n'est pas seulement
-  référencée : le sous-ensemble latin est encodé en base64 dans `src/fonts.css`, ce qui fait du
-  dépôt un distributeur de la fonte. Le texte de la licence est donc joint —
-  [`licenses/Fraunces-OFL.txt`](licenses/Fraunces-OFL.txt) — et l'en-tête de `src/fonts.css`
-  porte l'avis de copyright sous forme de commentaire `@license`, que le minifieur préserve
-  jusque dans `dist/`.
+- **Archivo** (l'interface) et **JetBrains Mono** (les libellés et le prompt), sous SIL Open Font
+  License 1.1. Elles ne sont pas seulement référencées : leurs sous-ensembles latins, en fichiers
+  variables, sont encodés en base64 dans `src/fonts.css`, ce qui fait du dépôt un distributeur des
+  fontes. Les textes des licences sont donc joints — [`licenses/Archivo-OFL.txt`](licenses/Archivo-OFL.txt)
+  et [`licenses/JetBrainsMono-OFL.txt`](licenses/JetBrainsMono-OFL.txt) — et l'en-tête de
+  `src/fonts.css` porte les avis de copyright sous forme de commentaires `@license`, que le
+  minifieur préserve jusque dans `dist/`.
 - **`src/catalog/emoji.json`**, produit par `npm run emoji` à partir de l'[emoji cheat
   sheet](https://github.com/ikatyang/emoji-cheat-sheet) (MIT) et de l'API emoji de GitHub.
 

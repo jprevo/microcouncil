@@ -1,8 +1,8 @@
 import { CustomActions } from "./CustomActions";
 import { Card } from "../ui/Card";
 import { CardHead } from "../ui/CardHead";
-import { CardHint } from "../ui/CardHint";
 import { CardTitle } from "../ui/CardTitle";
+import { Pill } from "../ui/Pill";
 import { TextArea } from "../ui/TextArea";
 import { useT } from "../../locale/useT";
 import { useAppDispatch, useAppState } from "../../state/hooks";
@@ -14,10 +14,14 @@ export function CustomCard() {
 
   return (
     <Card labelledBy="title-custom">
-      <CardHead actions={<CustomActions />}>
-        <CardTitle id="title-custom">{t.custom.title}</CardTitle>
-        <CardHint>{t.custom.hint}</CardHint>
-      </CardHead>
+      <CardHead
+        title={
+          <CardTitle id="title-custom">
+            {t.custom.title} <Pill tone="soft">{t.custom.optional}</Pill>
+          </CardTitle>
+        }
+        actions={<CustomActions />}
+      />
       <TextArea
         id="custom"
         rows={4}

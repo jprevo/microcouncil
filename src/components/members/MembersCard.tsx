@@ -30,12 +30,15 @@ export function MembersCard() {
 
   return (
     <Card labelledBy="title-members">
-      <CardHead actions={<MembersActions />}>
-        <CardTitle id="title-members">
-          {t.members.title} <MembersCount />
-        </CardTitle>
-        <CardHint>{t.members.hint}</CardHint>
-      </CardHead>
+      <CardHead
+        title={
+          <CardTitle id="title-members">
+            {t.members.title} <MembersCount />
+          </CardTitle>
+        }
+        hint={<CardHint>{t.members.hint}</CardHint>}
+        actions={<MembersActions />}
+      />
       <MembersFilter query={query} onChange={setQuery} />
       <MembersGrid members={visible} onEdit={editor.edit} />
       <AddEntryButton label={t.members.add} onClick={editor.create} />

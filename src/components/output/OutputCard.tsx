@@ -15,10 +15,10 @@ export function OutputCard() {
 
   return (
     <Card labelledBy="title-output" variant="output">
-      <CardHead>
-        <CardTitle id="title-output">{t.output.title}</CardTitle>
-        <OutputMeta prompt={prompt} />
-      </CardHead>
+      <CardHead
+        title={<CardTitle id="title-output">{t.output.title}</CardTitle>}
+        hint={<OutputMeta prompt={prompt} />}
+      />
       <OutputWarning />
       <PromptBox prompt={prompt} />
       <OutputActions prompt={prompt} />

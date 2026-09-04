@@ -3,66 +3,61 @@
 /* ---------------------------------------------------------------- tokens */
 :root {
   color-scheme: light;
-  --bg: #f5f3ef;
-  --bg-tint-a: #6152f0;
-  --bg-tint-b: #f0a04b;
+  --bg: #f2f5fa;
   --surface: #ffffff;
-  --surface-soft: #faf9f7;
-  --surface-sunken: #f2f0ec;
-  --border: #e4e0d9;
-  --border-strong: #d3cec4;
-  --text: #1d1b26;
-  --text-muted: #6b6779;
-  --text-faint: #928d9f;
-  --accent: #5b4bec;
-  --accent-hover: #4b3ad9;
-  --accent-soft: #ece9ff;
+  --surface-soft: #f7f9fc;
+  --surface-sunken: #f1f4fa;
+  --tile: #ffffff;
+  --border: #dfe5ef;
+  --border-strong: #cbd5e5;
+  --text: #0a1628;
+  --text-muted: #4e6180;
+  --text-faint: #7c8ca8;
+  --accent: #1f5fe0;
+  --accent-hover: #1a4fbf;
+  --accent-soft: rgb(31 95 224 / 0.06);
   --accent-contrast: #ffffff;
   --success: #12805c;
-  --warning-bg: #fdf3e3;
-  --warning-border: #eccfa0;
+  --warning-bg: #fff6e5;
+  --warning-border: #e3c68b;
   --warning-text: #8a5a12;
-  --shadow-sm: 0 1px 2px rgb(29 27 38 / 0.06), 0 1px 3px rgb(29 27 38 / 0.05);
-  --shadow-md:
-    0 6px 16px -6px rgb(29 27 38 / 0.14), 0 2px 6px -2px rgb(29 27 38 / 0.08);
-  --shadow-lg: 0 24px 48px -24px rgb(29 27 38 / 0.28);
-  --radius-sm: 10px;
-  --radius: 14px;
-  --radius-lg: 20px;
+  --shadow-sm: none;
+  --shadow-md: 0 6px 18px -12px rgb(10 22 40 / 0.25);
+  --shadow-lg: 0 24px 48px -24px rgb(10 22 40 / 0.3);
+  --radius-sm: 3px;
+  --radius: 3px;
+  --radius-lg: 5px;
   --font:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-  --font-display:
-    "Fraunces", Iowan Old Style, Palatino, Georgia, "Times New Roman", serif;
   --mono:
-    ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas,
+    "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas,
     monospace;
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0d0e15;
-  --bg-tint-a: #6d5cff;
-  --bg-tint-b: #d97a3a;
-  --surface: #161826;
-  --surface-soft: #1b1d2e;
-  --surface-sunken: #11121d;
-  --border: #272a3f;
-  --border-strong: #363a55;
-  --text: #ecebf5;
-  --text-muted: #a3a1b8;
-  --text-faint: #74728c;
-  --accent: #8779ff;
-  --accent-hover: #9b90ff;
-  --accent-soft: #221f3d;
-  --accent-contrast: #10101c;
+  --bg: #060b18;
+  --surface: #0c1428;
+  --surface-soft: #08101f;
+  --surface-sunken: #050a15;
+  --tile: #0f1830;
+  --border: #1b2440;
+  --border-strong: #24304f;
+  --text: #e6ecf8;
+  --text-muted: #a8bde4;
+  --text-faint: #6c7ea6;
+  --accent: #4d8cff;
+  --accent-hover: #6ba0ff;
+  --accent-soft: rgb(77 140 255 / 0.1);
+  --accent-contrast: #05101f;
   --success: #2f9c76;
-  --warning-bg: #2c2213;
-  --warning-border: #55411f;
+  --warning-bg: #241b0c;
+  --warning-border: #c98b2e;
   --warning-text: #e6bd7c;
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
-  --shadow-md: 0 8px 20px -8px rgb(0 0 0 / 0.6);
-  --shadow-lg: 0 28px 56px -28px rgb(0 0 0 / 0.8);
+  --shadow-sm: none;
+  --shadow-md: 0 8px 20px -12px rgb(0 0 0 / 0.7);
+  --shadow-lg: 0 28px 56px -28px rgb(0 0 0 / 0.85);
 }
 
 /* ------------------------------------------------------------------ base */
@@ -95,62 +90,18 @@ p {
   margin: 0;
 }
 
+/*
+ * The site title carries the whole brand now that no display serif does: set in
+ * the UI face, but capitalised, heavy and tightly tracked so it reads as a mark
+ * rather than as a heading.
+ */
 .brand {
-  font-family: var(--font-display);
-  font-size: clamp(24px, 3.4vw, 34px);
-  font-weight: 600;
+  font-size: clamp(20px, 2.4vw, 24px);
+  font-weight: 800;
   line-height: 1.1;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
   color: var(--text);
-  font-optical-sizing: auto;
-}
-
-code {
-  font-family: var(--mono);
-  font-size: 0.86em;
-  padding: 0.1em 0.35em;
-  border-radius: 5px;
-  background: var(--surface-sunken);
-  color: var(--text-muted);
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.aurora {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.aurora::before,
-.aurora::after {
-  content: "";
-  position: absolute;
-  width: 46vw;
-  height: 46vw;
-  min-width: 320px;
-  min-height: 320px;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.2;
-}
-
-.aurora::before {
-  top: -14vw;
-  left: -8vw;
-  background: var(--bg-tint-a);
-}
-
-.aurora::after {
-  top: 30vh;
-  right: -14vw;
-  background: var(--bg-tint-b);
-  opacity: 0.14;
 }
 
 /* ---------------------------------------------------------------- topbar */
@@ -166,7 +117,7 @@ code {
 .topbar__inner {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 12px clamp(16px, 4vw, 40px);
+  padding: 16px clamp(16px, 4vw, 40px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -181,7 +132,7 @@ code {
 
 .topbar__divider {
   width: 1px;
-  height: 20px;
+  height: 22px;
   background: var(--border);
 }
 
@@ -194,58 +145,99 @@ code {
 
 .lede {
   margin-bottom: clamp(20px, 2.6vw, 30px);
-  font-size: clamp(15.5px, 1.7vw, 17.5px);
-  line-height: 1.5;
-  letter-spacing: -0.005em;
+  font-size: clamp(17px, 1.9vw, 20px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
   color: var(--text-muted);
   text-wrap: balance;
 }
 
 .columns {
   display: grid;
-  gap: clamp(16px, 2vw, 24px);
+  gap: clamp(16px, 2vw, 20px);
   align-items: start;
 }
 
 .output {
-  display: grid;
-  gap: clamp(16px, 2vw, 22px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 18px);
   min-width: 0;
 }
 
 @media (min-width: 1060px) {
+  /*
+   * The sidebar stops at 420px so the member column keeps the three tiles per row
+   * the design is drawn around: any wider and the grid drops to two.
+   */
   .columns {
-    grid-template-columns: minmax(0, 1fr) minmax(380px, 460px);
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 420px);
   }
 
   /*
-   * The column fits the viewport: the preview shrinks and scrolls inside itself, so
-   * the copy button stays reachable without scrolling the whole page.
+   * The column follows the viewport rather than the page. The preview keeps its
+   * cap instead of stretching to whatever room is left, so the copy button sits
+   * just under it and stays on screen; on a short window the preview gives way
+   * further still, down to a hundred pixels, before the column itself scrolls.
    */
   .output {
     position: sticky;
     top: 86px;
     max-height: calc(100vh - 110px);
     max-height: calc(100dvh - 110px);
-    grid-template-rows: auto minmax(0, 1fr);
     overflow: auto;
   }
 
-  .card--output {
+  .output > .card {
+    flex: none;
+  }
+
+  /* Specific enough to beat the rule above: this is the card that gives way. */
+  .output > .card--output {
+    flex: 0 1 auto;
     min-height: 0;
   }
 
   .card--output .prompt {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-height: 100px;
-    max-height: none;
   }
 }
 
 .config {
   display: grid;
-  gap: clamp(16px, 2vw, 22px);
+  gap: clamp(16px, 2vw, 18px);
   min-width: 0;
+}
+
+/*
+ * Stacked, the two columns have to interleave rather than follow one another:
+ * the name is asked for first because everything downstream interpolates it, and
+ * the prompt comes last. Flattening both wrappers puts all six cards in the same
+ * flow, where `order` can sequence them regardless of the column they sit in.
+ */
+@media (max-width: 1059px) {
+  .config,
+  .output {
+    display: contents;
+  }
+
+  .config > .card {
+    order: 2;
+  }
+
+  .output > .card {
+    order: 3;
+  }
+
+  .output > .card:first-child {
+    order: 1;
+  }
+
+  .card--output {
+    order: 4;
+  }
 }
 
 /* ----------------------------------------------------------------- cards */
@@ -253,7 +245,7 @@ code {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: clamp(16px, 2.4vw, 24px);
+  padding: clamp(16px, 2.4vw, 22px);
   box-shadow: var(--shadow-sm);
 }
 
@@ -265,11 +257,6 @@ code {
 }
 
 .card__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
   margin-bottom: 14px;
 }
 
@@ -277,55 +264,100 @@ code {
   margin-bottom: 0;
 }
 
-.card__head > div:first-child {
+/*
+ * The heading, whatever it carries beside it, then a rule that runs across the
+ * empty space to the actions: the label reads as an index tab rather than as a
+ * title, and the row is closed on both ends.
+ */
+.card__head-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   min-width: 0;
 }
 
+.card__rule {
+  flex: 1 1 auto;
+  min-width: 12px;
+  height: 1px;
+  background: var(--border);
+}
+
 /*
- * Section headings: a small all-caps label with wide tracking, in the UI sans.
- * The display serif stays reserved for the site title, where its size earns it.
+ * Section headings: a small all-caps label with wide tracking, in the mono face
+ * — the same voice as the traits and the prompt, one size down.
  */
 .card h2 {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  font-size: 12px;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: 10.5px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+  color: var(--text-faint);
+}
+
+/*
+ * The output is the point of the page, so its heading drops the label voice and
+ * speaks at full size, with the count reading as a meter beneath it.
+ */
+.card--output h2 {
+  font-family: var(--font);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: none;
   color: var(--text);
 }
 
+.card--output .card__rule {
+  display: none;
+}
+
+.card--output .card__hint {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
 .card__hint {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 12.5px;
   color: var(--text-muted);
 }
 
 .card__actions {
+  flex: none;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
 }
 
 .pill {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 2px 9px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  flex: none;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: 1px solid transparent;
 }
 
+/* An aside rather than a count: outlined, and left in the quiet register. */
 .pill--soft {
-  background: var(--surface-sunken);
-  color: var(--text-muted);
-  border-color: var(--border);
-  font-weight: 550;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  background: none;
+  color: var(--text-faint);
+  border-color: var(--border-strong);
 }
 
 /* -------------------------------------------------------------- controls */
@@ -377,11 +409,11 @@ code {
   gap: 7px;
   font: inherit;
   font-size: 13.5px;
-  font-weight: 550;
+  font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
   padding: 8px 14px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
@@ -402,10 +434,10 @@ code {
 }
 
 .button--primary {
+  font-weight: 700;
   background: var(--accent);
   border-color: transparent;
   color: var(--accent-contrast);
-  box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--accent) 80%, transparent);
 }
 
 .button--primary:hover {
@@ -440,11 +472,11 @@ code {
   align-items: center;
   gap: 8px;
   font: inherit;
-  font-size: 13px;
-  font-weight: 550;
+  font-size: 12.5px;
+  font-weight: 600;
   cursor: pointer;
   padding: 7px 13px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
@@ -468,15 +500,15 @@ code {
   font-weight: 600;
   line-height: 1;
   padding: 3px 7px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-contrast);
 }
 
 /* ----------------------------------------------------------------- tiles */
 .grid {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .grid--members {
@@ -490,122 +522,101 @@ code {
 .tile {
   position: relative;
   display: flex;
-  gap: 11px;
+  gap: 13px;
   text-align: left;
   font: inherit;
   cursor: pointer;
-  padding: 12px 13px;
+  padding: 14px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  background: var(--surface-soft);
+  background: var(--tile);
   color: var(--text);
   transition:
-    transform 0.14s ease,
     border-color 0.14s ease,
-    background 0.14s ease,
-    box-shadow 0.14s ease;
+    background 0.14s ease;
 }
 
 .tile:hover {
-  transform: translateY(-1px);
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-sm);
+  background: color-mix(in srgb, var(--tile) 96%, var(--text));
 }
 
 .tile[aria-pressed="true"],
 .tile[aria-checked="true"] {
   border-color: var(--accent);
   background: var(--accent-soft);
-  box-shadow: 0 0 0 1px var(--accent) inset;
 }
 
 .tile__icon {
   flex: none;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  font-size: 19px;
-  border-radius: 11px;
-  background: var(--surface);
+  width: 46px;
+  height: 46px;
+  font-size: 23px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--tile) 94%, var(--text));
   border: 1px solid var(--border);
 }
 
 .tile[aria-pressed="true"] .tile__icon,
 .tile[aria-checked="true"] .tile__icon {
+  background: var(--accent-soft);
   border-color: color-mix(in srgb, var(--accent) 32%, transparent);
 }
 
 .tile__body {
+  flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
   padding-right: 14px;
 }
 
 .tile__name {
-  font-weight: 620;
-  font-size: 14px;
-  letter-spacing: -0.01em;
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--text);
 }
 
-.tile__job {
-  font-size: 12.5px;
-  color: var(--text-muted);
-}
-
+.tile__job,
 .tile__desc {
-  font-size: 12.5px;
+  margin-top: 3px;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.3;
   color: var(--text-muted);
 }
 
 /* Full description, revealed on selection: present, but understated. */
 .tile[aria-pressed="true"] .tile__desc {
-  margin-top: 4px;
-  padding-top: 5px;
-  border-top: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  margin-top: 9px;
   font-size: 11.5px;
+  font-weight: 400;
   line-height: 1.5;
   color: var(--text-faint);
 }
 
+/* The traits are filed below a rule: an index of the entry, not part of its prose. */
 .tile__traits {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 3px;
+  gap: 4px 10px;
+  margin-top: 11px;
+  padding-top: 9px;
+  border-top: 1px solid var(--border);
 }
 
 .trait {
-  font-size: 11px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 500;
   line-height: 1.5;
-  padding: 1px 7px;
-  border-radius: 999px;
-  color: var(--text-muted);
-  background: var(--surface-sunken);
-  border: 1px solid var(--border);
-}
-
-.tile__check {
-  position: absolute;
-  top: 9px;
-  right: 10px;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--accent);
-  opacity: 0;
-  transform: scale(0.6);
-  transition:
-    opacity 0.14s ease,
-    transform 0.14s ease;
-}
-
-.tile[aria-pressed="true"] .tile__check,
-.tile[aria-checked="true"] .tile__check {
-  opacity: 1;
-  transform: scale(1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
 }
 
 .tile.is-hidden {
@@ -624,15 +635,6 @@ code {
   min-width: 0;
 }
 
-/* The pencil takes the corner, so the body and the check mark step aside. */
-.tile-slot .tile__body {
-  padding-right: 34px;
-}
-
-.tile-slot .tile__check {
-  right: 32px;
-}
-
 .tile__edit {
   position: absolute;
   top: 7px;
@@ -645,7 +647,7 @@ code {
   font-size: 12px;
   line-height: 1;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
   background: transparent;
   color: var(--text-faint);
@@ -676,15 +678,17 @@ code {
 
 .tile__badge {
   align-self: flex-start;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  margin-top: 7px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0 6px;
-  border-radius: 999px;
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
   color: var(--text-faint);
-  background: var(--surface-sunken);
-  border: 1px solid var(--border);
+  background: none;
+  border: 1px solid var(--border-strong);
 }
 
 .add-entry {
@@ -696,8 +700,8 @@ code {
   margin-top: 10px;
   padding: 11px 14px;
   font: inherit;
-  font-size: 13.5px;
-  font-weight: 550;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   color: var(--text-muted);
   background: transparent;
@@ -725,26 +729,28 @@ code {
 /* ---------------------------------------------------------------- output */
 .notice {
   font-size: 13px;
-  padding: 9px 13px;
+  padding: 10px 13px;
   border-radius: var(--radius-sm);
   background: var(--warning-bg);
-  border: 1px solid var(--warning-border);
+  border: 0;
+  border-left: 3px solid var(--warning-border);
   color: var(--warning-text);
 }
 
 .prompt {
   margin: 0;
   font-family: var(--mono);
-  font-size: 12.5px;
-  line-height: 1.65;
+  font-size: 11.5px;
+  line-height: 1.75;
   white-space: pre-wrap;
   word-break: break-word;
   overflow-y: auto;
-  max-height: min(52vh, 560px);
+  max-height: min(28vh, 320px);
   padding: 16px;
   border-radius: var(--radius);
   background: var(--surface-sunken);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
   color: var(--text-muted);
   scrollbar-width: thin;
 }
@@ -756,7 +762,8 @@ code {
 
 .output__actions > .button {
   justify-content: center;
-  padding-block: 10px;
+  font-size: 14.5px;
+  padding-block: 13px;
 }
 
 /* Downloading stays available, but quiet, below the main actions. */
@@ -903,12 +910,12 @@ button.footer-link {
 
 /* `text-transform` reset: a dialog can live inside a card. */
 .modal__head h2 {
-  font-family: var(--font-display);
-  font-size: 19px;
-  font-weight: 600;
+  font-family: var(--font);
+  font-size: 18px;
+  font-weight: 700;
   text-transform: none;
-  letter-spacing: -0.012em;
-  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+  color: var(--text);
 }
 
 .modal__close {
@@ -921,7 +928,7 @@ button.footer-link {
   height: 30px;
   display: grid;
   place-items: center;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text-muted);
@@ -985,7 +992,8 @@ button.footer-link {
 }
 
 .modal__section h3 {
-  font-size: 11.5px;
+  font-family: var(--mono);
+  font-size: 10.5px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1046,7 +1054,7 @@ button.footer-link {
   height: 28px;
   display: grid;
   place-items: center;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface);
   transition:
@@ -1067,7 +1075,8 @@ button.footer-link {
 }
 
 .form-field__label {
-  font-size: 11.5px;
+  font-family: var(--mono);
+  font-size: 10.5px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1099,7 +1108,7 @@ button.footer-link {
   width: 46px;
   height: 46px;
   font-size: 23px;
-  border-radius: 13px;
+  border-radius: var(--radius-sm);
   background: var(--surface-soft);
   border: 1px solid var(--border);
 }
@@ -1130,7 +1139,7 @@ button.footer-link {
   font-size: 19px;
   line-height: 1;
   cursor: pointer;
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
   background: transparent;
   transition:
@@ -1258,9 +1267,9 @@ button.footer-link {
   transform: translate(-50%, 16px);
   z-index: 40;
   font-size: 13.5px;
-  font-weight: 550;
+  font-weight: 600;
   padding: 10px 18px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--text);
   color: var(--bg);
   box-shadow: var(--shadow-lg);
@@ -1277,9 +1286,23 @@ button.footer-link {
 }
 
 @media (max-width: 560px) {
-  .card__head {
-    flex-direction: column;
-    align-items: stretch;
+  /* No room for a rule between them: the label and the actions take a line each. */
+  .card__head-line {
+    flex-wrap: wrap;
+  }
+
+  .card__rule {
+    display: none;
+  }
+
+  .card h2 {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+
+  /* On its own line, the action still belongs to the right edge of the card. */
+  .card__actions {
+    margin-left: auto;
   }
 
   .grid--members,
@@ -1302,9 +1325,5 @@ button.footer-link {
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
-  }
-
-  .tile:hover {
-    transform: none;
   }
 }

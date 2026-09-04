@@ -5,7 +5,6 @@ import { AddEntryButton } from "../editor/AddEntryButton";
 import { useEditorModal } from "../editor/useEditorModal";
 import { Card } from "../ui/Card";
 import { CardHead } from "../ui/CardHead";
-import { CardHint } from "../ui/CardHint";
 import { CardTitle } from "../ui/CardTitle";
 import { Modal } from "../ui/Modal";
 import { useT } from "../../locale/useT";
@@ -20,10 +19,10 @@ export function EnvironmentsCard() {
 
   return (
     <Card labelledBy={TITLE_ID}>
-      <CardHead actions={<EnvironmentsActions />}>
-        <CardTitle id={TITLE_ID}>{t.environments.title}</CardTitle>
-        <CardHint>{t.environments.hint}</CardHint>
-      </CardHead>
+      <CardHead
+        title={<CardTitle id={TITLE_ID}>{t.environments.title}</CardTitle>}
+        actions={<EnvironmentsActions />}
+      />
       <EnvironmentsGrid labelledBy={TITLE_ID} onEdit={editor.edit} />
       <AddEntryButton label={t.environments.add} onClick={editor.create} />
 
