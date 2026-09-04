@@ -53,21 +53,22 @@ le reste.
 npm install
 ```
 
-| Commande            | Effet                                                                                                                                                                                                          |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`       | Serveur de développement Vite (régénère d'abord les pages et les cartes de partage, voir `npm run pages` et `npm run og`).                                                                                     |
-| `npm run pages`     | **Régénère `src/*.html` et `src/entries/*.tsx`** : une page et un point d'entrée par langue de `src/locales/registry.json`. Sortie générée, non commitée — voir [Internationalisation](#internationalisation). |
-| `npm run og`        | **Régénère `src/public/og/*.png`** : une carte de partage social par langue, recopiée dans `dist/og/` par Vite. Sortie générée, non commitée — voir [Partage social](#partage-social).                         |
-| `npm run typecheck` | Vérification TypeScript stricte, sans émission.                                                                                                                                                                |
-| `npm run gate`      | **Le gate** : `format:check`, `lint`, `typecheck`, `knip` à la suite. Doit passer avant toute fusion — la CI le rejoue sur `main` et sur chaque PR.                                                            |
-| `npm run lint`      | ESLint (TypeScript typé, React Hooks, SonarJS). `npm run lint:fix` corrige ce qui est corrigible.                                                                                                              |
-| `npm run format`    | Prettier sur tout le dépôt. `npm run format:check` se contente de vérifier.                                                                                                                                    |
-| `npm run knip`      | Fichiers, exports et dépendances jamais utilisés.                                                                                                                                                              |
-| `npm run build`     | **Produit `dist/`** : régénère les pages et les cartes de partage, typecheck strict, puis build de production (une entrée Rollup par langue, HTML/CSS/JS avec empreinte).                                      |
-| `npm run preview`   | Sert `dist/` en local, pour vérifier le build de production avant livraison.                                                                                                                                   |
-| `npm run skill`     | **Régénère `skill/`** : le skill agent (français), à jour des compagnons, des environnements et du gabarit.                                                                                                    |
-| `npm run emoji`     | **Régénère `src/catalog/emoji.json`** : la table `nom -> caractère` du sélecteur d'icônes, partagée par toutes les langues.                                                                                    |
-| `npm run shuffle`   | Mélange l'ordre de `src/catalog/members.json` — le même ordre pour toutes les langues, puisque le texte suit l'`id`.                                                                                           |
+| Commande            | Effet                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`       | Serveur de développement Vite (régénère d'abord les pages et les cartes de partage, voir `npm run pages` et `npm run og`).                                                                                                                                                                                                                                             |
+| `npm run pages`     | **Régénère `src/*.html`, `src/entries/*.tsx`, `src/public/robots.txt` et `src/public/sitemap.xml`** : une page et un point d'entrée par langue de `src/locales/registry.json`, plus les deux fichiers que lisent les robots. Sortie générée, non commitée — voir [Internationalisation](#internationalisation) et [Indexation et pré-rendu](#indexation-et-pré-rendu). |
+| `npm run og`        | **Régénère `src/public/og/*.png`** : une carte de partage social par langue, recopiée dans `dist/og/` par Vite. Sortie générée, non commitée — voir [Partage social](#partage-social).                                                                                                                                                                                 |
+| `npm run typecheck` | Vérification TypeScript stricte, sans émission.                                                                                                                                                                                                                                                                                                                        |
+| `npm run gate`      | **Le gate** : `format:check`, `lint`, `typecheck`, `knip` à la suite. Doit passer avant toute fusion — la CI le rejoue sur `main` et sur chaque PR.                                                                                                                                                                                                                    |
+| `npm run lint`      | ESLint (TypeScript typé, React Hooks, SonarJS). `npm run lint:fix` corrige ce qui est corrigible.                                                                                                                                                                                                                                                                      |
+| `npm run format`    | Prettier sur tout le dépôt. `npm run format:check` se contente de vérifier.                                                                                                                                                                                                                                                                                            |
+| `npm run knip`      | Fichiers, exports et dépendances jamais utilisés.                                                                                                                                                                                                                                                                                                                      |
+| `npm run build`     | **Produit `dist/`** : régénère les pages et les cartes de partage, typecheck strict, build de production (une entrée Rollup par langue, HTML/CSS/JS avec empreinte), puis pré-rendu (`postbuild`).                                                                                                                                                                     |
+| `npm run prerender` | **Remplit le balisage des pages de `dist/`** : le site dit ce qu'il est sans exécuter de JavaScript. Lancé par `npm run build` — voir [Indexation et pré-rendu](#indexation-et-pré-rendu).                                                                                                                                                                             |
+| `npm run preview`   | Sert `dist/` en local, pour vérifier le build de production avant livraison.                                                                                                                                                                                                                                                                                           |
+| `npm run skill`     | **Régénère `skill/`** : le skill agent (français), à jour des compagnons, des environnements et du gabarit.                                                                                                                                                                                                                                                            |
+| `npm run emoji`     | **Régénère `src/catalog/emoji.json`** : la table `nom -> caractère` du sélecteur d'icônes, partagée par toutes les langues.                                                                                                                                                                                                                                            |
+| `npm run shuffle`   | Mélange l'ordre de `src/catalog/members.json` — le même ordre pour toutes les langues, puisque le texte suit l'`id`.                                                                                                                                                                                                                                                   |
 
 `dist/` est un site statique ordinaire : à déposer tel quel derrière n'importe quel serveur
 de fichiers (ou sur GitHub Pages, Netlify…). Les chemins sont relatifs, donc il fonctionne
@@ -218,9 +219,13 @@ contenu des autres :
   Open Graph et Twitter — dont la carte de partage de la langue, voir
   [Partage social](#partage-social) —, `hreflang` croisés vers chaque autre langue plus
   `x-default`) et un point d'entrée
-  `src/entries/<code>.tsx` qui importe _uniquement_ le bundle de sa langue. Ces fichiers sont
+  `src/entries/<code>.tsx` qui importe _uniquement_ le bundle de sa langue. Il écrit au passage
+  `robots.txt` et un `sitemap.xml` qui liste chaque langue et ses alternatives (voir
+  [Indexation et pré-rendu](#indexation-et-pré-rendu)). Ces fichiers sont
   générés — jamais commités (voir `.gitignore`) — et `vite.config.ts` lit le même registre pour
-  fournir une entrée Rollup par langue à `npm run build`.
+  fournir une entrée Rollup par langue à `npm run build` ;
+- `scripts/pages.mjs` porte ce que ce script, le pré-rendu et le sitemap doivent nommer pareil :
+  la lecture du registre, le nom du fichier d'une langue et l'adresse par laquelle on la lie ;
 - `src/locale/registry.ts` relit ce même `registry.json` **côté navigateur** : c'est la seule liste
   des langues que connaît l'application (le sélecteur, la négociation, la redirection), et la seule
   donnée d'autres langues qu'une page embarque — un code, un libellé et une direction chacune.
@@ -343,6 +348,66 @@ Reste ce qu'aucun calcul n'invente : les glyphes. Archivo ne couvre que le latin
 construction s'arrête** en nommant les caractères manquants plutôt que de livrer une carte pleine
 de tofu : `build-og.mjs` lit la table `cmap` des fontes pour le savoir, parce que Skia, lui,
 dessine des carrés sans se plaindre.
+
+## Indexation et pré-rendu
+
+Une page de ce site part comme `<div id="root"></div>` et ne devient un document qu'une fois React
+exécuté. Googlebot exécute le JavaScript et finit par la voir ; les robots qui lisent pour le
+compte d'un assistant — GPTBot, ClaudeBot, PerplexityBot et les autres — ne l'exécutent pas. Ils
+récupèrent le HTML, y lisent le texte qu'ils y trouvent, et passent à la suite en quelques
+secondes. Tout ce que ce site dit vraiment — l'accroche, les compagnons avec leur métier et leurs
+traits, les environnements, le gabarit du prompt — leur parvenait sous la forme d'un div vide.
+
+`scripts/prerender.mjs` (`npm run prerender`, rejoué par `postbuild`) écrit donc ce balisage dans
+les fichiers de `dist/`, une fois le build terminé. Rien n'y est chargé et rien n'y est
+asynchrone : le document est une fonction pure du bundle d'une langue, ce qui est exactement la
+forme qu'un rendu statique sait prendre. Le script démarre un serveur Vite en mode _middleware_ —
+qui n'ouvre aucun port — et s'en sert comme d'un chargeur de modules : `ssrLoadModule` compile le
+TSX, les catalogues JSON et le markdown `?raw` avec la configuration du projet, si bien que le
+pré-rendu exécute les modules mêmes qu'exécutera le navigateur. Pas de second build à configurer,
+pas de second jeu de règles de résolution à tenir en phase.
+
+Cela ne tient que parce que rien, dans l'arbre, ne touche au DOM pendant le rendu :
+`src/lib/json.ts` et `src/storage.ts` atteignent le stockage par `globalThis.localStorage?.`, le
+thème est appliqué dans un effet, et `<dialog>` se rend côté serveur comme n'importe quel élément.
+Du code ajouté ici qui lirait `document` ou `window` pendant un rendu casserait ce script — c'est
+volontaire, il vaut mieux l'apprendre au build qu'en production.
+
+### Pré-rendu pour les robots, pas hydratation
+
+Les points d'entrée appellent toujours `createRoot`, qui **efface ce balisage** et remonte
+l'application de zéro. `hydrateRoot` serait plus rapide, et n'est délibérément pas retenu.
+
+La raison est `loadState()` dans `src/state/AppStateProvider.tsx`, lue pendant le premier rendu.
+Au pré-rendu elle ne trouve pas de `localStorage` et renvoie les valeurs par défaut ; dans le
+navigateur elle renvoie le nom du visiteur, son conseil et ses fiches. Hydrater l'un sur l'autre
+est précisément la divergence dont React se plaint, et la contourner voudrait dire déplacer l'état
+stocké dans un effet — un rendu de plus et un éclair d'application vide pour tous ceux qui
+reviennent — pour gagner une peinture que cette page, entièrement interactive, ne dépense nulle
+part ailleurs.
+
+L'échange est donc assumé : le robot reçoit le document, le visiteur retrouve l'application qu'il
+avait. Si la première peinture devenait un enjeu, `hydrateRoot` plus une restauration différée est
+la suite, et `scripts/prerender.mjs` n'aurait pas à changer.
+
+Une conséquence à connaître : le balisage pré-rendu est celui de l'application **au repos**. La
+description d'un membre ne s'affichant que lorsqu'il est sélectionné, elle n'est pas dans le HTML —
+les noms, les métiers et les traits y sont, pas les deux phrases qui les décrivent.
+
+### robots.txt et sitemap.xml
+
+`scripts/build-pages.mjs` les écrit dans `src/public/`, que Vite recopie tel quel à la racine de
+`dist/`, à côté des cartes de partage — générés et git-ignorés comme le reste. Ils sont générés
+plutôt qu'écrits à la main parce qu'ils nomment les langues : ajouter une ligne au registre doit
+suffire, sans quoi la page ajoutée reste non listée jusqu'à ce que quelqu'un s'en souvienne.
+
+Le sitemap déclare une entrée par page, chacune nommant toutes les langues où cette page existe —
+les `xhtml:link` que demande le protocole, le même jeu que les `hreflang` des pages elles-mêmes.
+Il ne porte pas de `<lastmod>` : rien dans ce build ne sait quand le contenu d'une page a changé
+pour la dernière fois, et une date prise à l'horloge du build annoncerait toutes les pages
+modifiées à chaque déploiement — un signal qu'un robot apprend à ignorer, ce qui est pire que ne
+pas l'envoyer. Comme les balises de partage, les adresses qu'ils portent sont absolues et suivent
+`SITE_URL` (voir [L'adresse absolue](#ladresse-absolue)).
 
 ## Sources de données
 

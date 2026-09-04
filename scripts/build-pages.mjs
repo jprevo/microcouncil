@@ -1,6 +1,8 @@
 /**
- * Regenerates the per-language entry points this app is built from — one HTML
- * file and one bootstrap module per locale in `src/locales/registry.json`:
+ * Regenerates everything derived from the list of languages that a build needs
+ * before Vite runs: one HTML file and one bootstrap module per locale in
+ * `src/locales/registry.json`, plus the two files a crawler reads before the
+ * pages themselves — `robots.txt` and `sitemap.xml`.
  *
  *   npm run pages
  *
@@ -26,8 +28,9 @@
  *
  * They are extensionless — `/fr`, not `/fr.html` — because the host maps one
  * onto the other (Cloudflare Pages serves `fr.html` at `/fr` and redirects
- * `/fr.html` there). A host that doesn't would need `pagePath()` below, and
- * `localeHref()` in `src/locale/registry.ts`, to name the files instead.
+ * `/fr.html` there). A host that doesn't would need `pagePath()` in
+ * `scripts/pages.mjs`, and `localeHref()` in `src/locale/registry.ts`, to name
+ * the files instead.
  *
  * Vite leaves an absolute `http(s)` href alone, so these links need nothing to
  * protect them. While they were relative they carried `vite-ignore`: without it
@@ -41,6 +44,7 @@
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { htmlPath, pagePath, readRegistry } from "./pages.mjs";
 import { CARD_HEIGHT, CARD_WIDTH, cardPath, siteUrl } from "./share.mjs";
 
 /**
@@ -52,6 +56,14 @@ const STORAGE_VERSION = "v2";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SRC = join(ROOT, "src");
 const ENTRIES_DIR = join(SRC, "entries");
+
+/**
+ * Vite's public directory: what lands in `dist/` untouched, and therefore the
+ * only place a file served from the site root can be written to. The share
+ * cards are drawn into `og/` under it by `scripts/build-og.mjs`, which clears
+ * that subdirectory alone — the two scripts write side by side, in either order.
+ */
+const PUBLIC_DIR = join(SRC, "public");
 
 /**
  * Scanned rather than matched with `/<!--[\s\S]*?-->/`: that pattern backtracks
@@ -137,26 +149,6 @@ function escapeAttr(value) {
     .replaceAll("&", "&amp;")
     .replaceAll('"', "&quot;")
     .replaceAll("<", "&lt;");
-}
-
-/** The file written for a language — what Vite takes as a Rollup entry. */
-function htmlPath(locale) {
-  return locale.default ? "index.html" : `${locale.code}.html`;
-}
-
-/**
- * The path that same page is linked by, which is not its file name: the host
- * serves `fr.html` at `/fr` and redirects the `.html` form onto it, so a
- * canonical pointing at the file would only redirect onto this address.
- *
- * Rooted at the site rather than at the page, because everything it feeds — the
- * canonical, the `hreflang` links, `og:url` — is read by a crawler that has
- * nothing to resolve `./fr` against. `localeHref()` in `src/locale/registry.ts`
- * is the in-page counterpart the picker and the landing redirect navigate with,
- * and names the same pages relatively — the two must agree.
- */
-function pagePath(locale) {
-  return locale.default ? "/" : `/${locale.code}`;
 }
 
 function entryPath(code) {
@@ -257,12 +249,75 @@ ${alternateLocales}
 `;
 }
 
-const registry = readJson("src/locales/registry.json");
-if (registry.filter((locale) => locale.default).length !== 1) {
-  throw new Error(
-    "src/locales/registry.json must have exactly one default locale.",
-  );
+/* --------------------------------------------------------- crawler-facing files */
+
+/**
+ * `robots.txt`. Generated rather than kept as a fixture for the same reason as
+ * everything else here: it names the sitemap, whose address is the deployment's,
+ * so `SITE_URL` has to move it along with the share metadata.
+ */
+function renderRobots() {
+  return `# Every crawler is welcome, the ones reading on behalf of an assistant
+# included: this is a public tool, and its pages carry their content in the HTML
+# itself — see scripts/prerender.mjs — rather than only after a JavaScript run.
+User-agent: *
+Allow: /
+
+Sitemap: ${siteUrl("/sitemap.xml")}
+`;
 }
+
+/**
+ * A multilingual sitemap: one entry per page, each naming every language that
+ * page exists in — the `xhtml:link` alternates the protocol asks for, the same
+ * set the pages themselves declare as `hreflang` links. A crawler that reaches
+ * one language then learns of the others without having to guess an address.
+ *
+ * This is the file that makes a new language discoverable, which is why it is
+ * built from the registry rather than written by hand: adding a line there has
+ * to be enough, or the pages it adds sit unlisted until someone remembers.
+ *
+ * `escapeAttr` does for XML what it does for HTML: `&`, `"` and `<` are the
+ * three characters that would break either one, and neither `>` nor `'` needs
+ * escaping inside an attribute delimited by double quotes.
+ *
+ * No `<lastmod>`: nothing in this build knows when a page's content last
+ * changed, and a date taken from the build clock would claim every page was
+ * modified on every deploy — a signal a crawler learns to ignore, which is worse
+ * than not sending one.
+ */
+function renderSitemap(pages) {
+  const defaultLocale = pages.find((entry) => entry.default);
+
+  const entries = pages
+    .map((page) => {
+      const alternates = [...pages, { ...defaultLocale, code: "x-default" }]
+        .map(
+          (other) =>
+            `    <xhtml:link rel="alternate" hreflang="${other.code}" href="${escapeAttr(siteUrl(pagePath(other)))}" />`,
+        )
+        .join("\n");
+
+      return `  <url>
+    <loc>${escapeAttr(siteUrl(pagePath(page)))}</loc>
+${alternates}
+  </url>`;
+    })
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
+${entries}
+</urlset>
+`;
+}
+
+/* ------------------------------------------------------------------- main */
+
+const registry = readRegistry();
 
 rmSync(ENTRIES_DIR, { recursive: true, force: true });
 mkdirSync(ENTRIES_DIR, { recursive: true });
@@ -281,6 +336,11 @@ for (const page of pages) {
   writeFileSync(join(SRC, htmlPath(page)), renderHtml(page, pages));
 }
 
+mkdirSync(PUBLIC_DIR, { recursive: true });
+writeFileSync(join(PUBLIC_DIR, "robots.txt"), renderRobots());
+writeFileSync(join(PUBLIC_DIR, "sitemap.xml"), renderSitemap(pages));
+
 console.log(
   `Generated ${pages.length} page(s): ${pages.map(htmlPath).join(", ")}`,
 );
+console.log("Generated robots.txt and sitemap.xml.");

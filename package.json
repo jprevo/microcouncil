@@ -30,6 +30,8 @@
     "dev": "vite",
     "prebuild": "npm run pages && npm run og",
     "build": "tsc --noEmit && vite build",
+    "postbuild": "npm run prerender",
+    "prerender": "node scripts/prerender.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
