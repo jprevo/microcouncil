@@ -33,6 +33,10 @@ export function TextField({
       value={value}
       autoComplete={autoComplete}
       aria-label={ariaLabel}
+      data-1p-ignore="true"
+      data-lpignore="true"
+      data-protonpass-ignore="true"
+      data-bwignore="1"
       spellCheck={false}
       placeholder={placeholder}
       data-autofocus={autoFocus === true ? "" : undefined}
