@@ -66,6 +66,8 @@ export interface UiStrings {
     readonly title: string;
     /** Accessible name of the field: a placeholder leaves as soon as it is typed in. */
     readonly label: string;
+    /** Pill next to the title: nothing breaks when the field is left empty. */
+    readonly optional: string;
     readonly placeholder: string;
   };
   readonly members: {
@@ -179,7 +181,6 @@ export interface UiStrings {
     readonly warningMissing: string;
     readonly missingMembers: string;
     readonly missingEnvironment: string;
-    readonly missingUsername: string;
     readonly note: string;
     readonly copy: string;
     readonly copied: string;

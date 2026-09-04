@@ -30,7 +30,8 @@
   },
   "identity": {
     "title": "Votre nom",
-    "label": "Votre nom",
+    "label": "Votre nom (optionnel)",
+    "optional": "optionnel",
     "placeholder": "Votre nom"
   },
   "members": {
@@ -146,7 +147,6 @@
     "warningMissing": "Il manque {items}.",
     "missingMembers": "au moins un membre",
     "missingEnvironment": "un environnement",
-    "missingUsername": "votre nom",
     "note": "Collez-le tel quel dans Claude, ChatGPT, Gemini ou tout autre assistant.",
     "copy": "Copier le prompt",
     "copied": "Copié !",
