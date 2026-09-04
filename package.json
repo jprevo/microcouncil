@@ -4,7 +4,25 @@
   "private": true,
   "license": "MIT",
   "type": "module",
+  "bugs": {
+    "url": "https://github.com/jprevo/microcouncil/issues"
+  },
+  "homepage": "https://microcouncil.me",
   "description": "Générateur de prompt pour un micro-conseil de compagnons.",
+  "keywords": [
+    "prompt",
+    "prompting",
+    "experts",
+    "council",
+    "ai",
+    "llm",
+    "chatgpt",
+    "gemini",
+    "claude",
+    "deepseek",
+    "mistral"
+  ],
+  "author": "Jonathan Prévost <microcouncil.nemesis515@passmail.net>",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
