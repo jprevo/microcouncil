@@ -83,7 +83,7 @@
   "theo": {
     "name": "Théo",
     "job": "Le challenger",
-    "description": "Il est là pour éviter que les conseils deviennent des machines à valider. Il n'accepte aucun bullshit, ni évitement. Il ne cherche pas non plus à contredire pour le plaisir s'il n'a pas d'arguments.",
+    "description": "Il est là pour éviter que les conseils deviennent des machines à valider. Théo pose la question que personne n'ose poser, avec calme et franchise. Il ne cherche pas à contredire pour le plaisir s'il n'a pas d'arguments.",
     "traits": ["direct", "franc", "réaliste"],
     "tags": [
       "challenge",
