@@ -1,11 +1,11 @@
 /**
- * Runs the four quality checks of the gate concurrently instead of one after the
+ * Runs the quality checks of the gate concurrently instead of one after the
  * other:
  *
  *   npm run gate
  *
  * They are independent — each only reads the sources — so the wall clock is that of
- * the slowest one (ESLint) rather than the sum of all four.
+ * the slowest one rather than the sum of all checks.
  *
  * Their outputs would interleave into noise if they shared the terminal, so each
  * one is buffered and replayed in declaration order once every check has settled.
@@ -26,6 +26,7 @@ const CHECKS = [
   { name: "lint", command: "eslint ." },
   { name: "typecheck", command: "tsc --noEmit" },
   { name: "knip", command: "knip" },
+  { name: "test", command: "vitest run" },
 ];
 
 function run({ name, command }) {

@@ -13,7 +13,9 @@ export interface CopyControl {
 /** Copies `text`, flags the button for a moment, then announces `message` in a toast. */
 export function useCopyAction(text: string, message: string): CopyControl {
   const [copied, setCopied] = useState(false);
-  const timer = useRef(0);
+  const timer = useRef<ReturnType<typeof globalThis.setTimeout> | undefined>(
+    undefined,
+  );
   const toast = useToast();
   const t = useT();
 

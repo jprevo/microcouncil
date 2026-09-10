@@ -39,7 +39,7 @@ Issues and pull requests are welcome. For larger changes, open an issue first to
 discuss the scope. Keep documentation, code comments, and pull requests in English.
 
 ```bash
-npm run gate   # Formatting, lint, TypeScript, and unused-code checks
+npm run gate   # Formatting, lint, TypeScript, unused-code checks, and tests
 npm run build  # Production build and HTML prerendering
 ```
 

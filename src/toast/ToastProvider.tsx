@@ -8,7 +8,9 @@ const VISIBLE_MS = 2200;
 export function ToastProvider({ children }: { readonly children: ReactNode }) {
   const [message, setMessage] = useState("");
   const [visible, setVisible] = useState(false);
-  const timer = useRef(0);
+  const timer = useRef<ReturnType<typeof globalThis.setTimeout> | undefined>(
+    undefined,
+  );
 
   const show = useCallback((text: string) => {
     setMessage(text);
