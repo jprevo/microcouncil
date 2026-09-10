@@ -1,0 +1,9 @@
+{
+  "title": "Micro Council",
+  "description": "Forma tu consejo, elige un escenario y genera un prompt listo para pegar en Claude, ChatGPT o Gemini.",
+  "ogLocale": "es_ES",
+  "numberLocale": "es-ES",
+  "usernameFallback": "la persona usuaria",
+  "youWord": "ti",
+  "charsPerToken": 3.6
+}

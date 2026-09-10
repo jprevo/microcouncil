@@ -1,0 +1,37 @@
+{
+  "le-salon-de-the": {
+    "title": "El salón de té",
+    "summary": "Fuera llueve, pero aquí tienes una bebida caliente y música tranquila de fondo.",
+    "description": "Estáis juntos en un salón de té tranquilo. De fondo suena una mezcla suave de jazz y hip-hop. La lluvia fina al otro lado del cristal hace aún más agradable estar a cubierto, con una bebida caliente y algo dulce."
+  },
+  "la-salle-de-reunion": {
+    "title": "La sala de reuniones",
+    "summary": "Para hablar de trabajo o dar a la conversación un tono más serio.",
+    "description": "Estáis en una sala de reuniones moderna y agradable, sentados alrededor de una mesa grande. La iluminación es clara, sin deslumbrar. Hay una pantalla 4K para mostrar una presentación si hace falta y una ventana con vistas a la ciudad. El ambiente es serio, pero distendido."
+  },
+  "le-conseil-d-elrond": {
+    "title": "El Concilio de Elrond",
+    "summary": "Un ambiente de fantasía medieval para afrontar una misión épica.",
+    "description": "Os habéis reunido en Rivendel. La misión que os espera es de suma importancia. Sois enanos, elfos y humanos, eruditos o buscadores de conocimiento. Interpretad vuestros papeles en este mundo de fantasía medieval."
+  },
+  "la-randonnee": {
+    "title": "La caminata",
+    "summary": "Conversar mientras camináis permite llevar un ritmo más relajado.",
+    "description": "Camináis por un bosque hermoso. La luz se filtra entre los árboles e ilumina el sendero. No hace falta mirarse de frente ni mantener una conversación intensa. A medida que habláis, el narrador va contando cómo transcurre la caminata."
+  },
+  "le-podcast": {
+    "title": "El pódcast",
+    "summary": "Los miembros debaten entre ellos hasta llegar a conclusiones.",
+    "description": "Los miembros están grabando un programa dedicado exclusivamente a resolver la cuestión que plantea {{username}}. Conversan entre ellos todo el tiempo que haga falta para llegar a una conclusión satisfactoria."
+  },
+  "sur-la-passerelle": {
+    "title": "El puente de mando",
+    "summary": "Una conversación a bordo de una nave espacial, en un ambiente futurista.",
+    "description": "En un futuro lejano, estáis en el puente de mando del Explorer VII, viajando hacia mundos remotos a una velocidad superior a la de la luz. A lo lejos se oye el zumbido de las máquinas y el ir y venir de los robots. Algunos de los presentes son androides."
+  },
+  "la-gare": {
+    "title": "La estación",
+    "summary": "Una charla rápida: faltan cinco minutos para que salga el tren.",
+    "description": "Estáis en el andén y dentro de cinco minutos cada uno subirá a un tren distinto. Hay que cerrar la conversación antes de partir. Un encuentro breve, con el tiempo contado."
+  }
+}

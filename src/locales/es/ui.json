@@ -1,0 +1,253 @@
+{
+  "brand": "Micro Council",
+  "a11y": {
+    "skipToContent": "Ir al contenido",
+    "skipToPrompt": "Ir al prompt"
+  },
+  "lede": "Crea un prompt para conversar con un grupo de especialistas en tu IA favorita.",
+  "prompt": {
+    "noMembers": "_No has seleccionado ningún miembro._",
+    "noEnvironment": "_No has seleccionado ningún escenario._",
+    "personalityLabel": "Personalidad: "
+  },
+  "footer": {
+    "license": "© 2026 Micro Council · Proyecto de código abierto disponible en {github}",
+    "githubLinkText": "GitHub",
+    "privacy": "No usamos cookies. Tus ajustes se quedan en tu navegador.",
+    "language": "Idioma"
+  },
+  "theme": {
+    "label": "Tema oscuro",
+    "toDark": "Cambiar al tema oscuro",
+    "toLight": "Cambiar al tema claro"
+  },
+  "topbar": {
+    "save": "Guardar",
+    "saveAria": "Guardar este consejo",
+    "load": "Cargar",
+    "loadAria": "Cargar un consejo guardado",
+    "loadAriaWithCount": "Cargar un consejo guardado ({count})"
+  },
+  "identity": {
+    "title": "Tu nombre",
+    "label": "Tu nombre (opcional)",
+    "optional": "opcional",
+    "placeholder": "Tu nombre"
+  },
+  "members": {
+    "title": "Los miembros del consejo",
+    "hint": "Lo ideal es elegir entre 3 y 7 miembros.",
+    "clearAll": "Quitar selección",
+    "filterPlaceholder": "Filtrar por nombre, profesión, rasgo o palabra clave…",
+    "filterAriaLabel": "Filtrar miembros",
+    "gridLabel": "Miembros disponibles",
+    "filterStatus": {
+      "zero": "Ningún miembro coincide con el filtro.",
+      "one": "Se muestra {count} miembro.",
+      "other": "Se muestran {count} miembros."
+    },
+    "empty": "Ningún miembro coincide con este filtro.",
+    "add": "Añadir un miembro",
+    "selectedCount": { "one": "seleccionado", "other": "seleccionados" },
+    "edit": "Editar a {name}",
+    "editorCreateTitle": "Nuevo miembro",
+    "toastCreated": "{name} se une al consejo",
+    "toastUpdated": "Se ha actualizado a {name}",
+    "fields": {
+      "name": "Nombre",
+      "namePlaceholder": "Ana",
+      "job": "Profesión",
+      "jobPlaceholder": "Ingeniera de software",
+      "description": "Descripción",
+      "descriptionHint": "Escribe {{username}} donde quieras que aparezca tu nombre.",
+      "descriptionPlaceholder": "Qué aporta este miembro al consejo y cómo se dirige a {{username}}.",
+      "traits": "Rasgos",
+      "traitsHint": "Sepáralos con comas.",
+      "traitsPlaceholder": "curiosa, rigurosa, directa",
+      "tags": "Etiquetas",
+      "tagsHint": "Palabras clave para las búsquedas, separadas por comas. No se incluyen en el prompt.",
+      "tagsPlaceholder": "algoritmos, código, deuda técnica"
+    },
+    "validation": {
+      "nameRequired": "Introduce un nombre.",
+      "nameTaken": "Ya hay otro miembro con ese nombre.",
+      "iconRequired": "Elige un icono.",
+      "jobRequired": "Introduce una profesión.",
+      "descriptionRequired": "Añade una descripción."
+    }
+  },
+  "environments": {
+    "title": "El escenario",
+    "hint": "El lugar donde transcurre la conversación.",
+    "clear": "Quitar selección",
+    "add": "Añadir un escenario",
+    "edit": "Editar {title}",
+    "editorCreateTitle": "Nuevo escenario",
+    "toastCreated": "Se ha añadido el escenario «{title}»",
+    "toastUpdated": "Se ha actualizado «{title}»",
+    "fields": {
+      "title": "Título",
+      "titlePlaceholder": "El refugio de montaña",
+      "summary": "Resumen",
+      "summaryHint": "Una frase que aparece en la ficha. No se incluye en el prompt.",
+      "summaryPlaceholder": "Describe en una frase cómo influye este escenario en la conversación.",
+      "description": "Descripción",
+      "descriptionHint": "La descripción del lugar que se incluirá en el prompt. Escribe {{username}} donde quieras que aparezca tu nombre.",
+      "descriptionPlaceholder": "Estáis reunidos junto a la estufa de un refugio mientras cae la noche sobre el valle."
+    },
+    "validation": {
+      "titleRequired": "Introduce un título.",
+      "titleTaken": "Ya hay otro escenario con ese título.",
+      "iconRequired": "Elige un icono.",
+      "summaryRequired": "Añade un resumen.",
+      "descriptionRequired": "Añade una descripción."
+    }
+  },
+  "icon": { "label": "Icono" },
+  "emojiPicker": {
+    "searchPlaceholder": "Buscar en inglés: brain, rocket, chart…",
+    "empty": "No hay iconos para esta búsqueda.",
+    "gridLabel": "Iconos disponibles",
+    "loading": "Cargando iconos…",
+    "loadFailed": "No se han podido cargar los iconos. Cierra el selector y vuelve a abrirlo para intentarlo de nuevo."
+  },
+  "editor": {
+    "close": "Cerrar",
+    "deleteConfirm": "¿Eliminar {label} definitivamente?",
+    "deleted": "Se ha eliminado {label} del catálogo",
+    "restore": "Restaurar el original",
+    "restored": "Se ha restaurado la versión original",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "save": "Guardar"
+  },
+  "custom": {
+    "title": "Instrucciones adicionales",
+    "label": "Instrucciones adicionales (opcional)",
+    "optional": "opcional",
+    "hint": "Se guardan automáticamente en tu navegador.",
+    "example": "Ejemplo",
+    "clear": "Borrar",
+    "placeholder": "Por ejemplo: formato de las respuestas, recuerdos que consultar, temas que evitar…"
+  },
+  "subject": {
+    "title": "De qué quieres hablar",
+    "label": "De qué quieres hablar (opcional)",
+    "optional": "opcional",
+    "hint": "Si lo dejas en blanco, un miembro te lo preguntará.",
+    "clear": "Borrar",
+    "placeholder": "Por ejemplo: tengo que elegir entre dos ofertas de trabajo y no consigo decidirme."
+  },
+  "output": {
+    "title": "Tu prompt",
+    "meta": "{chars} caracteres · ~{tokens} tokens",
+    "promptRegion": "Vista previa del prompt",
+    "warningMissing": "Te falta seleccionar {items}.",
+    "missingMembers": "al menos un miembro",
+    "missingEnvironment": "un escenario",
+    "note": "Pégalo tal cual en Claude, ChatGPT, Gemini o cualquier otro asistente.",
+    "copy": "Copiar el prompt",
+    "copied": "¡Copiado!",
+    "copiedToast": "Prompt copiado al portapapeles",
+    "download": "Descargar",
+    "downloadedToast": "Prompt descargado"
+  },
+  "saves": {
+    "title": "📂 Tus consejos guardados",
+    "empty": "Todavía no has guardado ningún consejo. Usa el botón «Guardar», a la izquierda, para guardar el actual.",
+    "membersCount": { "one": "miembro", "other": "miembros" },
+    "deleteAria": "Eliminar {name}",
+    "deleteConfirm": "¿Eliminar «{name}» definitivamente?",
+    "loadedToast": "Se ha cargado «{name}»",
+    "deletedToast": "Se ha eliminado «{name}»",
+    "dialogTitle": "💾 Guardar este consejo",
+    "nameLabel": "Nombre del consejo",
+    "nameHint": "Tu nombre, las fichas de los miembros, el escenario, las instrucciones y el tema se guardan en este navegador. Las fichas se conservan completas: al cargar el consejo, se recuperarán tal como están ahora, aunque después las hayas editado o eliminado.",
+    "namePlaceholder": "Consejo de producto",
+    "nameRequired": "Ponle un nombre para encontrarlo después.",
+    "replaceConfirm": "¿Reemplazar el consejo guardado «{name}»?",
+    "maxReached": "Has alcanzado el límite de {max} consejos guardados. Se reemplazará el más antiguo.",
+    "savedToast": "Se ha guardado «{name}». Lo encontrarás en Cargar",
+    "suggestedNamePrefix": "Consejo del {date}"
+  },
+  "backup": {
+    "cardsWord": {
+      "one": "ficha de miembro o escenario",
+      "other": "fichas de miembros o escenarios"
+    },
+    "savesWord": { "one": "consejo guardado", "other": "consejos guardados" },
+    "export": {
+      "button": "Exportar",
+      "buttonAria": "Exportar todos mis datos en formato JSON",
+      "title": "📤 Exportar tus datos",
+      "confirmLabel": "Descargar el archivo",
+      "intro": "Micro Council guarda todos tus datos en el navegador. Si borras su almacenamiento o cambias de dispositivo o de navegador, los perderás. Al exportarlos, tendrás una copia completa en un único archivo que podrás conservar e importar más adelante.",
+      "sectionTitle": "Qué incluye el archivo",
+      "settingsLine": "Tu nombre, tus instrucciones, el tema actual y tu selección.",
+      "cardsLine": {
+        "zero": "Las fichas que crees o edites. Por ahora no hay ninguna.",
+        "one": "{count} ficha de miembro o escenario creada o editada.",
+        "other": "{count} fichas de miembros o escenarios creadas o editadas."
+      },
+      "savesLine": {
+        "zero": "Tus consejos guardados. Por ahora no hay ninguno.",
+        "one": "{count} consejo guardado, con todas sus fichas.",
+        "other": "{count} consejos guardados, con todas sus fichas."
+      },
+      "downloadedToast": "Se han descargado tus datos"
+    },
+    "import": {
+      "button": "Importar",
+      "buttonAria": "Importar datos de un archivo JSON",
+      "title": "📥 Importar datos",
+      "confirmLabel": "Reemplazar mis datos",
+      "intro": "Hemos podido leer el archivo. Este es su contenido. Tus datos no cambiarán hasta que pulses el botón de abajo.",
+      "sectionTitle": "El archivo",
+      "exportedAtUnknown": "No se ha podido leer la fecha de exportación.",
+      "exportedAt": "Exportado el {date}, con la versión {version} del formato.",
+      "cardsSavesLine": "{cards} {cardsWord} y {saves} {savesWord}.",
+      "settingsLine": "El nombre, las instrucciones, el tema, la selección y el tema visual que tenías en ese momento.",
+      "warningTitle": "Se reemplazarán todos los datos de Micro Council en este navegador",
+      "warning": ": tu nombre, tus ajustes, tus fichas y tus consejos guardados se sustituirán por los del archivo. Esta acción no se puede deshacer. Si quieres conservar tus datos actuales, expórtalos antes de continuar.",
+      "restoredToast": "Se han restaurado tus datos",
+      "localeMismatch": "Este archivo se exportó desde la versión en {locale} de Micro Council."
+    },
+    "errors": {
+      "unreadableJson": "El archivo no contiene un JSON válido.",
+      "notABackup": "Este archivo no es una copia de seguridad de Micro Council.",
+      "noVersion": "El archivo no tiene número de versión.",
+      "versionTooNew": "El archivo usa una versión más reciente del formato (versión {version}).",
+      "versionUnsupported": "La versión {version} de este archivo ya no es compatible.",
+      "noState": "El archivo no contiene ajustes.",
+      "noSaves": "El archivo no contiene una lista de consejos guardados.",
+      "fileUnreadable": "No se ha podido leer el archivo."
+    }
+  },
+  "skill": {
+    "button": "Instalar el skill",
+    "title": "🧩 El skill de Micro Council",
+    "intro": "El mismo consejo, directamente en tu agente: reúne a los miembros, prepara el prompt e interpreta la escena, sin que tengas que copiar y pegar.",
+    "overviewTitle": "Cómo funciona",
+    "overviewBullet1": "Pides un consejo y el agente te ofrece tres opciones: crearlo paso a paso, cargar uno guardado o dejar que elija los miembros según el tema que quieras tratar.",
+    "overviewBullet2": "Un pequeño script local utiliza el mismo catálogo de miembros y escenarios que esta web y genera exactamente el mismo prompt.",
+    "overviewBullet3": "Cada consejo se guarda en tu equipo con sus miembros, su escenario y tus instrucciones, pero nunca con el tema de la conversación. Después basta con pedirlo por su nombre, por ejemplo «reúne al consejo ABC para hablar de…», para recuperarlo tal como estaba.",
+    "hermesTitle": "Hermes",
+    "hermesChatIntro": "En un chat:",
+    "installCommand": "Instala el skill jprevo/microcouncil/skill",
+    "hermesCliIntro": "O desde la línea de comandos:",
+    "hermesCliCommand": "hermes skills install jprevo/microcouncil/skill --force",
+    "claudeCodeTitle": "Claude Code",
+    "claudeCodeChatIntro": "En un chat nuevo:",
+    "claudeInstallCommand": "Instala el skill https://github.com/jprevo/microcouncil/tree/main/skill",
+    "claudeCodeInvokeIntro": "Después, para reunir al consejo:",
+    "claudeCodeCommand": "/microcouncil Me gustaría hablar de la próxima serie que voy a ver",
+    "note": "Hermes, Claude Code y agentskills.io comparten el formato `SKILL.md`: puedes copiar la carpeta `skill/` del repositorio tal cual a cualquier otro entorno compatible."
+  },
+  "tiles": { "added": "añadido", "modified": "modificado" },
+  "misc": {
+    "copyFailed": "No se ha podido copiar. Selecciona el texto manualmente.",
+    "commandCopiedToast": "Comando copiado al portapapeles",
+    "commandCopiedAria": "Comando copiado",
+    "commandCopyAria": "Copiar el comando"
+  }
+}
