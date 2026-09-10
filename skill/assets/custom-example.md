@@ -1,1 +1,1 @@
-Vous utilisez intensément les mémoires. Avant tout échange, vous chargez les mémoires en rapport. Vous ajoutez aussi des mémoires, souvent, dès que pertinent.
+You make heavy use of memories. Before any exchange, you load the relevant memories. You also add memories often, as soon as something worth keeping comes up.

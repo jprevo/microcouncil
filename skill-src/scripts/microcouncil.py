@@ -23,9 +23,9 @@ SKILL_DIR = Path(__file__).resolve().parent.parent
 ASSETS_DIR = SKILL_DIR / "assets"
 
 SCHEMA_VERSION = 1
-USERNAME_FALLBACK = "l'utilisateur"
-# BPE tokenisers split French around 3.6 characters per token - indicative only.
-CHARS_PER_TOKEN = 3.6
+USERNAME_FALLBACK = "the user"
+# Rough character-based token estimate; actual counts depend on the model.
+CHARS_PER_TOKEN = 4
 
 
 # --------------------------------------------------------------------------- io
@@ -37,7 +37,7 @@ def die(message: str) -> NoReturn:
 
 
 def use_utf8() -> None:
-    """French text and emoji must survive a legacy Windows console codepage.
+    """Unicode text and emoji must survive a legacy Windows console codepage.
 
     `newline` is pinned too: without it Windows turns every `\\n` into `\\r\\n`, and the
     prompt would no longer be byte-for-byte the one the web app produces.
@@ -81,7 +81,7 @@ def read_json(path: Path, label: str) -> Any:
 
 
 def slugify(value: str) -> str:
-    """`Le salon de the` -> `le-salon-de-the`. Must match the repository builder."""
+    """`Tech council` -> `tech-council`. Must match the repository builder."""
     decomposed = unicodedata.normalize("NFD", value)
     stripped = "".join(char for char in decomposed if not unicodedata.combining(char))
     return re.sub(r"[^a-z0-9]+", "-", stripped.lower()).strip("-")
@@ -197,7 +197,7 @@ def render_member(member: dict) -> str:
     ]
     traits = member.get("traits") or []
     if traits:
-        lines.append("Personnalité : " + ", ".join(traits))
+        lines.append("Personality: " + ", ".join(traits))
     return "\n".join(lines)
 
 
@@ -250,10 +250,10 @@ def build_prompt(
     rendered_members = (
         "\n\n".join(render_member(member) for member in members)
         if members
-        else "_Aucun membre sélectionné._"
+        else "_No member selected._"
     )
     rendered_environment = (
-        "_Aucun environnement sélectionné._"
+        "_No setting selected._"
         if environment is None
         else render_environment(environment)
     )

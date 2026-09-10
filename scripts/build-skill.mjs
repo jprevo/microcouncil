@@ -25,10 +25,10 @@ const SOURCE = join(ROOT, "skill-src");
 const TARGET = join(ROOT, "skill");
 
 /**
- * The skill ships French only (its own catalogue and prompt, independent of the
+ * The skill ships English only (its own catalogue and prompt, independent of the
  * site's other languages) — this is the locale its content is read from.
  */
-const SKILL_LOCALE = "fr";
+const SKILL_LOCALE = "en";
 
 function readJson(path) {
   return JSON.parse(readFileSync(join(ROOT, path), "utf8"));

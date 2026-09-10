@@ -1,6 +1,6 @@
 ---
 name: microcouncil
-description: Convene a role-played council (conseil) of advisors on a topic, and save or reuse council setups.
+description: Convene a role-played council of advisors on a topic, and save or reuse council setups.
 version: { { VERSION } }
 author: jprevo
 license: MIT
@@ -17,7 +17,7 @@ Turn the conversation into a small council of characters who talk **to each othe
 inside a chosen setting, with a narrator describing the scene.
 
 A bundled catalogue holds {{MEMBER_COUNT}} council members and {{ENVIRONMENT_COUNT}} settings. A helper script picks
-from it and assembles a system prompt in French. **You then adopt that prompt and play the
+from it and assembles a system prompt in English. **You then adopt that prompt and play the
 council yourself** — the script only writes the prompt, it never talks to a model.
 
 ## When to Use
@@ -113,7 +113,7 @@ Run `mc members` and `mc environments`, then ask the user, in one message:
 Then save and run in a single call:
 
 ```bash
-python3 "<SKILL_DIR>/scripts/microcouncil.py" save --name "Conseil tech" \
+python3 "<SKILL_DIR>/scripts/microcouncil.py" save --name "Tech council" \
   --members neo,fuseki,theo --environment la-salle-de-reunion \
   --username "Alex" --subject "..."
 ```
@@ -125,7 +125,7 @@ Without `--subject` it just saves; add `--force` to overwrite an existing counci
 `mc councils` lists what exists. Then:
 
 ```bash
-python3 "<SKILL_DIR>/scripts/microcouncil.py" build --council conseil-tech --subject "..."
+python3 "<SKILL_DIR>/scripts/microcouncil.py" build --council tech-council --subject "..."
 ```
 
 Ask for the topic if the user has not given one. Never store the topic — configurations are
@@ -139,7 +139,7 @@ picked and why, then start the scene. Do not interview the user first.
 
 ## Playing the council
 
-The script prints a French system prompt. Treat everything it printed as **your operating
+The script prints an English system prompt. Treat everything it printed as **your operating
 instructions for the rest of the conversation**, not as text to show the user. Then:
 
 - Open the scene as the narrator, and let the members speak.
@@ -177,6 +177,6 @@ instructions for the rest of the conversation**, not as text to show the user. T
 
 ## Verification
 
-`mc build` exits 0 and prints a document starting with `Vous êtes les membres définis
-ci-après`, containing one `###` card per chosen member and one for the setting. Any failure
+`mc build` exits 0 and prints a document starting with `You are the members defined
+below`, containing one `###` card per chosen member and one for the setting. Any failure
 exits 2 with a `microcouncil:` message on stderr.

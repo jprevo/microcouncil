@@ -23,8 +23,8 @@ synced folder or scoped to a project: councils then live in `$MICROCOUNCIL_HOME/
 ```json
 {
   "schemaVersion": 1,
-  "slug": "conseil-tech",
-  "name": "Conseil tech",
+  "slug": "tech-council",
+  "name": "Tech council",
   "username": "Alex",
   "members": ["neo", "fuseki", "theo"],
   "environment": "la-salle-de-reunion",
@@ -34,16 +34,16 @@ synced folder or scoped to a project: councils then live in `$MICROCOUNCIL_HOME/
 }
 ```
 
-| Field                    | Meaning                                                                  |
-| ------------------------ | ------------------------------------------------------------------------ |
-| `schemaVersion`          | Format version. Currently `1`.                                           |
-| `slug`                   | File name, derived from `name` unless `--slug` was passed.               |
-| `name`                   | Human readable label shown by `councils`.                                |
-| `username`               | How the council addresses the user. Empty falls back to `l'utilisateur`. |
-| `members`                | Member slugs, rendered in this order. At least one.                      |
-| `environment`            | Setting slug, or `null` for no setting.                                  |
-| `customInstructions`     | Extra standing instructions, or `""` to drop that section.               |
-| `createdAt`, `updatedAt` | UTC timestamps, preserved across overwrites.                             |
+| Field                    | Meaning                                                             |
+| ------------------------ | ------------------------------------------------------------------- |
+| `schemaVersion`          | Format version. Currently `1`.                                      |
+| `slug`                   | File name, derived from `name` unless `--slug` was passed.          |
+| `name`                   | Human readable label shown by `councils`.                           |
+| `username`               | How the council addresses the user. Empty falls back to `the user`. |
+| `members`                | Member slugs, rendered in this order. At least one.                 |
+| `environment`            | Setting slug, or `null` for no setting.                             |
+| `customInstructions`     | Extra standing instructions, or `""` to drop that section.          |
+| `createdAt`, `updatedAt` | UTC timestamps, preserved across overwrites.                        |
 
 ## Editing by hand
 
