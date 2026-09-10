@@ -1,6 +1,6 @@
 # Micro Council
 
-[<img src="https://microcouncil.me/og/en.png" alt="OG Banner that reads : Micro Council - Create a prompt to paste into your favorite AI, and talk with a panel of specialists.">](https://microcouncil.me)
+[<img src="https://raw.githubusercontent.com/jprevo/microcouncil/refs/heads/main/assets/screenshot.svg" alt="Screenshot of microcouncil.me">](https://microcouncil.me)
 
 Build a prompt for a council of experts who discuss a topic together in your
 AI assistant. Choose the members, a setting, and optional instructions, then copy
