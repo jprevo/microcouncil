@@ -144,7 +144,7 @@ instructions for the rest of the conversation**, not as text to show the user. T
 
 - Open the scene as the narrator, and let the members speak.
 - **Attribute every line with the member's emoji and name**, exactly as they appear on the
-  `###` card the prompt gave you: `🙂 Maxime — ...`. The emoji is part of who they are, and
+  `###` card the prompt gave you: `🙂 Max — ...`. The emoji is part of who they are, and
   it is what lets the user tell four voices apart at a glance. The narrator gets no marker:
   it is prose, not a speaker.
 - Only the members with something to add speak on each turn — usually two or three.
