@@ -8,7 +8,7 @@
     "url": "https://github.com/jprevo/microcouncil/issues"
   },
   "homepage": "https://microcouncil.me",
-  "description": "Générateur de prompt pour un micro-conseil de compagnons.",
+  "description": "Build prompts for a council of experts in your AI assistant.",
   "keywords": [
     "prompt",
     "prompting",
