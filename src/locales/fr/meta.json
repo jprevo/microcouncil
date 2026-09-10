@@ -1,6 +1,6 @@
 {
   "title": "Micro Council",
-  "description": "Composez votre conseil, choisissez un environnement, et générez un prompt prêt à coller dans Claude, ChatGPT ou Gemini.",
+  "description": "Composez votre conseil, choisissez sa dynamique, et générez un prompt prêt à coller dans Claude, ChatGPT ou Gemini.",
   "ogLocale": "fr_FR",
   "numberLocale": "fr-FR",
   "usernameFallback": "l'utilisateur",

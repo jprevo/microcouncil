@@ -148,6 +148,29 @@ describe("saved council restoration", () => {
     );
   });
 
+  it("recreates a saved built-in after its id leaves the shipped catalog", () => {
+    const retiredEnvironment = {
+      ...environment,
+      title: "Retired setting",
+    };
+    const council: CouncilSave = {
+      ...savedCouncil,
+      environment: {
+        target: { kind: "builtin", id: "retired-setting" },
+        item: retiredEnvironment,
+        edited: false,
+      },
+    };
+
+    const restored = reducer(initialState(), {
+      type: "loadCouncil",
+      council,
+    });
+
+    expect(restored.selectedEnvironment).toBe(retiredEnvironment.title);
+    expect(restored.environmentLibrary.custom).toEqual([retiredEnvironment]);
+  });
+
   it("preserves conflicting entries and selects the restored entry under a free name", () => {
     const occupied = {
       ...member,

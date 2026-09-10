@@ -7,7 +7,7 @@
   "lede": "Créez un prompt à copier dans votre IA préférée pour discuter avec un panel de spécialistes.",
   "prompt": {
     "noMembers": "_Aucun membre sélectionné._",
-    "noEnvironment": "_Aucun environnement sélectionné._",
+    "noEnvironment": "_Aucune dynamique sélectionnée._",
     "personalityLabel": "Personnalité : "
   },
   "footer": {
@@ -77,27 +77,27 @@
     }
   },
   "environments": {
-    "title": "L'environnement",
-    "hint": "Le décor dans lequel se tient la discussion.",
+    "title": "La dynamique du conseil",
+    "hint": "La manière dont les membres réfléchissent, parlent et échangent.",
     "clear": "Effacer",
-    "add": "Ajouter un environnement",
+    "add": "Ajouter une dynamique",
     "edit": "Modifier {title}",
-    "editorCreateTitle": "Nouvel environnement",
-    "toastCreated": "{title} rejoint les décors",
+    "editorCreateTitle": "Nouvelle dynamique",
+    "toastCreated": "{title} rejoint les dynamiques",
     "toastUpdated": "{title} est à jour",
     "fields": {
       "title": "Titre",
-      "titlePlaceholder": "Le refuge de montagne",
+      "titlePlaceholder": "Le débat socratique",
       "summary": "Résumé",
       "summaryHint": "Une phrase, affichée sur la fiche. Absente du prompt.",
-      "summaryPlaceholder": "Ce que ce décor change à la discussion, en une phrase.",
+      "summaryPlaceholder": "Ce que cette dynamique change aux échanges, en une phrase.",
       "description": "Description",
-      "descriptionHint": "Le décor tel qu'il est posé dans le prompt. Écrivez {{username}} là où votre nom doit apparaître.",
-      "descriptionPlaceholder": "Vous êtes réunis autour du poêle d'un refuge, la nuit tombe sur la vallée."
+      "descriptionHint": "Les façons de réfléchir, de se comporter et de s'exprimer ajoutées au prompt. Écrivez {{username}} là où votre nom doit apparaître.",
+      "descriptionPlaceholder": "Posez des questions brèves qui testent les idées avant d'avancer une conclusion."
     },
     "validation": {
       "titleRequired": "Le titre est obligatoire.",
-      "titleTaken": "Ce titre est déjà pris par un autre environnement.",
+      "titleTaken": "Ce titre est déjà pris par une autre dynamique.",
       "iconRequired": "Choisissez une icône.",
       "summaryRequired": "Le résumé est obligatoire.",
       "descriptionRequired": "La description est obligatoire."
@@ -146,7 +146,7 @@
     "promptRegion": "Aperçu du prompt",
     "warningMissing": "Il manque {items}.",
     "missingMembers": "au moins un membre",
-    "missingEnvironment": "un environnement",
+    "missingEnvironment": "une dynamique de discussion",
     "note": "Collez-le tel quel dans Claude, ChatGPT, Gemini ou tout autre assistant.",
     "copy": "Copier le prompt",
     "copied": "Copié !",
@@ -164,7 +164,7 @@
     "deletedToast": "« {name} » est supprimé",
     "dialogTitle": "💾 Enregistrer ce conseil",
     "nameLabel": "Nom de la sauvegarde",
-    "nameHint": "Votre nom, les fiches des membres, l'environnement, vos instructions et le sujet sont rangés dans ce navigateur. Les fiches partent entières : recharger ce conseil les rétablit telles qu'elles sont maintenant, même si vous les modifiez ou les supprimez d'ici là.",
+    "nameHint": "Votre nom, les fiches des membres, la dynamique, vos instructions et le sujet sont rangés dans ce navigateur. Les fiches partent entières : recharger ce conseil les rétablit telles qu'elles sont maintenant, même si vous les modifiez ou les supprimez d'ici là.",
     "namePlaceholder": "Conseil produit",
     "nameRequired": "Donnez un nom à cette sauvegarde pour la retrouver.",
     "replaceConfirm": "Remplacer la sauvegarde « {name} » ?",
@@ -174,8 +174,8 @@
   },
   "backup": {
     "cardsWord": {
-      "one": "fiche de membre ou d'environnement",
-      "other": "fiches de membre ou d'environnement"
+      "one": "fiche de membre ou de dynamique",
+      "other": "fiches de membre ou de dynamique"
     },
     "savesWord": {
       "one": "conseil enregistré",
@@ -191,8 +191,8 @@
       "settingsLine": "Votre nom, vos instructions, le sujet en cours, la sélection.",
       "cardsLine": {
         "zero": "Les fiches que vous créerez ou modifierez — aucune pour l'instant.",
-        "one": "{count} fiche de membre ou d'environnement créée ou modifiée.",
-        "other": "{count} fiches de membre ou d'environnement créées ou modifiées."
+        "one": "{count} fiche de membre ou de dynamique créée ou modifiée.",
+        "other": "{count} fiches de membre ou de dynamique créées ou modifiées."
       },
       "savesLine": {
         "zero": "Vos conseils enregistrés — aucun pour l'instant.",
