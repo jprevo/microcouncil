@@ -1,0 +1,256 @@
+{
+  "brand": "Micro Council",
+  "a11y": {
+    "skipToContent": "Zum Inhalt springen",
+    "skipToPrompt": "Zum Prompt springen"
+  },
+  "lede": "Erstelle einen Prompt für deine Lieblings-KI und tausche dich mit einer Runde von Fachleuten aus.",
+  "prompt": {
+    "noMembers": "_Keine Mitglieder ausgewählt._",
+    "noEnvironment": "_Kein Schauplatz ausgewählt._",
+    "personalityLabel": "Persönlichkeit: "
+  },
+  "footer": {
+    "license": "© 2026 Micro Council · Open-Source-Projekt auf {github}",
+    "githubLinkText": "GitHub",
+    "privacy": "Diese Website verwendet keine Cookies. Deine Einstellungen bleiben in deinem Browser.",
+    "language": "Sprache"
+  },
+  "theme": {
+    "label": "Dunkles Design",
+    "toDark": "Zum dunklen Design wechseln",
+    "toLight": "Zum hellen Design wechseln"
+  },
+  "topbar": {
+    "save": "Speichern",
+    "saveAria": "Diese Beraterrunde speichern",
+    "load": "Laden",
+    "loadAria": "Eine gespeicherte Beraterrunde laden",
+    "loadAriaWithCount": "Eine gespeicherte Beraterrunde laden ({count})"
+  },
+  "identity": {
+    "title": "Dein Name",
+    "label": "Dein Name (optional)",
+    "optional": "optional",
+    "placeholder": "Dein Name"
+  },
+  "members": {
+    "title": "Deine Beraterrunde",
+    "hint": "Am besten mit 3 bis 7 Mitgliedern.",
+    "clearAll": "Auswahl aufheben",
+    "filterPlaceholder": "Nach Name, Beruf, Eigenschaft oder Stichwort filtern…",
+    "filterAriaLabel": "Mitglieder filtern",
+    "gridLabel": "Verfügbare Mitglieder",
+    "filterStatus": {
+      "zero": "Keine Mitglieder passen zu diesem Filter.",
+      "one": "{count} Mitglied angezeigt.",
+      "other": "{count} Mitglieder angezeigt."
+    },
+    "empty": "Keine Mitglieder passen zu diesem Filter.",
+    "add": "Mitglied hinzufügen",
+    "selectedCount": { "one": "ausgewählt", "other": "ausgewählt" },
+    "edit": "{name} bearbeiten",
+    "editorCreateTitle": "Neues Mitglied",
+    "toastCreated": "{name} ist jetzt Teil der Runde",
+    "toastUpdated": "{name} wurde aktualisiert",
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Hannah",
+      "job": "Beruf",
+      "jobPlaceholder": "Softwareentwicklerin",
+      "description": "Beschreibung",
+      "descriptionHint": "Schreibe {{username}} an die Stellen, an denen dein Name erscheinen soll.",
+      "descriptionPlaceholder": "Was dieses Mitglied zur Runde beiträgt und wie es mit {{username}} spricht.",
+      "traits": "Eigenschaften",
+      "traitsHint": "Mit Kommas trennen.",
+      "traitsPlaceholder": "neugierig, gewissenhaft, direkt",
+      "tags": "Stichwörter",
+      "tagsHint": "Suchbegriffe, mit Kommas getrennt. Sie erscheinen nicht im Prompt.",
+      "tagsPlaceholder": "Algorithmen, Code, technische Schulden"
+    },
+    "validation": {
+      "nameRequired": "Bitte gib einen Namen ein.",
+      "nameTaken": "Ein anderes Mitglied heißt bereits so.",
+      "iconRequired": "Bitte wähle ein Symbol aus.",
+      "jobRequired": "Bitte gib einen Beruf ein.",
+      "descriptionRequired": "Bitte gib eine Beschreibung ein."
+    }
+  },
+  "environments": {
+    "title": "Der Schauplatz",
+    "hint": "Die Umgebung, in der euer Gespräch stattfindet.",
+    "clear": "Auswahl aufheben",
+    "add": "Schauplatz hinzufügen",
+    "edit": "{title} bearbeiten",
+    "editorCreateTitle": "Neuer Schauplatz",
+    "toastCreated": "{title} wurde zu den Schauplätzen hinzugefügt",
+    "toastUpdated": "{title} wurde aktualisiert",
+    "fields": {
+      "title": "Titel",
+      "titlePlaceholder": "Die Berghütte",
+      "summary": "Kurzbeschreibung",
+      "summaryHint": "Ein Satz für die Karte. Er erscheint nicht im Prompt.",
+      "summaryPlaceholder": "Wie dieser Ort das Gespräch prägt, in einem Satz.",
+      "description": "Beschreibung",
+      "descriptionHint": "So wird der Schauplatz im Prompt beschrieben. Schreibe {{username}} an die Stellen, an denen dein Name erscheinen soll.",
+      "descriptionPlaceholder": "Ihr sitzt um den Ofen einer Berghütte. Über dem Tal wird es langsam dunkel."
+    },
+    "validation": {
+      "titleRequired": "Bitte gib einen Titel ein.",
+      "titleTaken": "Ein anderer Schauplatz hat bereits diesen Titel.",
+      "iconRequired": "Bitte wähle ein Symbol aus.",
+      "summaryRequired": "Bitte gib eine Kurzbeschreibung ein.",
+      "descriptionRequired": "Bitte gib eine Beschreibung ein."
+    }
+  },
+  "icon": { "label": "Symbol" },
+  "emojiPicker": {
+    "searchPlaceholder": "Suchen: brain, rocket, chart…",
+    "empty": "Keine passenden Symbole gefunden.",
+    "gridLabel": "Verfügbare Symbole",
+    "loading": "Symbole werden geladen…",
+    "loadFailed": "Die Symbole konnten nicht geladen werden. Schließe die Auswahl und öffne sie erneut, um es noch einmal zu versuchen."
+  },
+  "editor": {
+    "close": "Schließen",
+    "deleteConfirm": "{label} endgültig löschen?",
+    "deleted": "{label} wurde aus dem Katalog entfernt",
+    "restore": "Original wiederherstellen",
+    "restored": "Die ursprüngliche Version wurde wiederhergestellt",
+    "delete": "Löschen",
+    "cancel": "Abbrechen",
+    "save": "Speichern"
+  },
+  "custom": {
+    "title": "Zusätzliche Anweisungen",
+    "label": "Zusätzliche Anweisungen (optional)",
+    "optional": "optional",
+    "hint": "Wird automatisch in deinem Browser gespeichert.",
+    "example": "Beispiel",
+    "clear": "Leeren",
+    "placeholder": "Zum Beispiel: gewünschtes Format, Erinnerungen, die berücksichtigt werden sollen, Themen, die du vermeiden möchtest…"
+  },
+  "subject": {
+    "title": "Worum geht es dir?",
+    "label": "Dein Anliegen (optional)",
+    "optional": "optional",
+    "hint": "Wenn du das Feld leer lässt, fragt dich ein Mitglied danach.",
+    "clear": "Leeren",
+    "placeholder": "Zum Beispiel: Ich muss mich zwischen zwei Jobangeboten entscheiden und komme einfach nicht weiter."
+  },
+  "output": {
+    "title": "Dein Prompt",
+    "meta": "{chars} Zeichen · ~{tokens} Tokens",
+    "promptRegion": "Prompt-Vorschau",
+    "warningMissing": "Noch nicht ausgewählt: {items}.",
+    "missingMembers": "mindestens ein Mitglied",
+    "missingEnvironment": "ein Schauplatz",
+    "note": "Füge den Prompt direkt in Claude, ChatGPT, Gemini oder einen anderen Assistenten ein.",
+    "copy": "Prompt kopieren",
+    "copied": "Kopiert!",
+    "copiedToast": "Prompt in die Zwischenablage kopiert",
+    "download": "Herunterladen",
+    "downloadedToast": "Prompt heruntergeladen"
+  },
+  "saves": {
+    "title": "📂 Deine gespeicherten Beraterrunden",
+    "empty": "Hier ist noch nichts gespeichert. Mit „Speichern“ links daneben kannst du die aktuelle Runde ablegen.",
+    "membersCount": { "one": "Mitglied", "other": "Mitglieder" },
+    "deleteAria": "{name} löschen",
+    "deleteConfirm": "„{name}“ endgültig löschen?",
+    "loadedToast": "„{name}“ wurde geladen",
+    "deletedToast": "„{name}“ wurde gelöscht",
+    "dialogTitle": "💾 Diese Beraterrunde speichern",
+    "nameLabel": "Name der gespeicherten Runde",
+    "nameHint": "Dein Name, die Mitgliederprofile, der Schauplatz, deine Anweisungen und dein Anliegen werden in diesem Browser gespeichert. Die Profile werden vollständig übernommen: Wenn du die Runde später lädst, sind sie wieder so wie jetzt, auch wenn du sie inzwischen bearbeitet oder gelöscht hast.",
+    "namePlaceholder": "Produktrunde",
+    "nameRequired": "Gib der Runde einen Namen, damit du sie wiederfindest.",
+    "replaceConfirm": "Die gespeicherte Runde „{name}“ ersetzen?",
+    "maxReached": "Du hast {max} Runden gespeichert. Die älteste wird durch diese ersetzt.",
+    "savedToast": "„{name}“ wurde gespeichert und ist unter „Laden“ verfügbar",
+    "suggestedNamePrefix": "Runde vom {date}"
+  },
+  "backup": {
+    "cardsWord": {
+      "one": "Mitgliederprofil oder Schauplatz",
+      "other": "Mitgliederprofile oder Schauplätze"
+    },
+    "savesWord": {
+      "one": "gespeicherte Beraterrunde",
+      "other": "gespeicherte Beraterrunden"
+    },
+    "export": {
+      "button": "Exportieren",
+      "buttonAria": "Alle meine Daten als JSON exportieren",
+      "title": "📤 Deine Daten exportieren",
+      "confirmLabel": "Datei herunterladen",
+      "intro": "Micro Council speichert alles in deinem Browser. Wenn du dessen Speicher leerst oder den Browser oder Computer wechselst, stehen dir deine Daten dort nicht mehr zur Verfügung. Mit einem Export sicherst du alles in einer einzigen Datei, die du aufbewahren und später wieder importieren kannst.",
+      "sectionTitle": "Das steckt in der Datei",
+      "settingsLine": "Dein Name, deine Anweisungen, dein aktuelles Anliegen und deine Auswahl.",
+      "cardsLine": {
+        "zero": "Selbst erstellte oder bearbeitete Mitgliederprofile und Schauplätze. Bisher gibt es keine.",
+        "one": "{count} selbst erstelltes oder bearbeitetes Mitgliederprofil bzw. ein Schauplatz.",
+        "other": "{count} selbst erstellte oder bearbeitete Mitgliederprofile bzw. Schauplätze."
+      },
+      "savesLine": {
+        "zero": "Deine gespeicherten Beraterrunden. Bisher gibt es keine.",
+        "one": "{count} gespeicherte Beraterrunde mit den zugehörigen Profilen und dem Schauplatz.",
+        "other": "{count} gespeicherte Beraterrunden mit den zugehörigen Profilen und Schauplätzen."
+      },
+      "downloadedToast": "Deine Daten wurden heruntergeladen"
+    },
+    "import": {
+      "button": "Importieren",
+      "buttonAria": "Daten aus einer JSON-Datei importieren",
+      "title": "📥 Daten importieren",
+      "confirmLabel": "Meine Daten ersetzen",
+      "intro": "Die Datei lässt sich lesen. Hier siehst du, was sie enthält. Bisher wurde nichts übernommen. Erst mit dem Button unten ersetzt du deine Daten.",
+      "sectionTitle": "Dateiinhalt",
+      "exportedAtUnknown": "Das Exportdatum konnte nicht gelesen werden.",
+      "exportedAt": "Exportiert am {date}, Formatversion {version}.",
+      "cardsSavesLine": "{cards} {cardsWord} und {saves} {savesWord}.",
+      "settingsLine": "Dein Name, deine Anweisungen, dein Anliegen, deine Auswahl und dein Design zum Zeitpunkt des Exports.",
+      "warningTitle": "Alle Micro-Council-Daten in diesem Browser werden überschrieben",
+      "warning": ": Dein Name, deine Einstellungen, deine Profile, deine Schauplätze und deine gespeicherten Runden werden durch die Daten aus der Datei ersetzt. Das lässt sich nicht rückgängig machen. Exportiere bei Bedarf zuerst deine aktuellen Daten.",
+      "restoredToast": "Deine Daten wurden wiederhergestellt",
+      "localeMismatch": "Diese Datei wurde aus der Sprachversion „{locale}“ von Micro Council exportiert."
+    },
+    "errors": {
+      "unreadableJson": "Diese Datei enthält kein lesbares JSON.",
+      "notABackup": "Diese Datei ist keine Sicherung von Micro Council.",
+      "noVersion": "In dieser Datei fehlt die Versionsnummer.",
+      "versionTooNew": "Diese Datei verwendet eine neuere Formatversion (Version {version}).",
+      "versionUnsupported": "Die Formatversion {version} dieser Datei wird nicht mehr unterstützt.",
+      "noState": "Diese Datei enthält keine Einstellungen.",
+      "noSaves": "Diese Datei enthält keine Liste gespeicherter Runden.",
+      "fileUnreadable": "Diese Datei konnte nicht gelesen werden."
+    }
+  },
+  "skill": {
+    "button": "Skill installieren",
+    "title": "🧩 Der Micro-Council-Skill",
+    "intro": "Deine Beraterrunde direkt im KI-Agenten: Er stellt die Runde zusammen, baut den Prompt und spielt die Szene. Ganz ohne Kopieren und Einfügen.",
+    "overviewTitle": "So funktioniert’s",
+    "overviewBullet1": "Wenn du eine Beraterrunde anforderst, bietet der Agent drei Möglichkeiten: Schritt für Schritt eine neue Runde zusammenstellen, eine gespeicherte laden oder automatisch starten. Im Automatikmodus wählt er die Mitglieder passend zu deinem Thema aus.",
+    "overviewBullet2": "Ein kleines lokales Skript greift auf denselben Katalog von Mitgliedern und Schauplätzen wie diese Website zu und erstellt genau denselben Prompt.",
+    "overviewBullet3": "Jede erstellte Runde wird auf deinem Computer gespeichert: die Mitglieder, der Schauplatz und deine Anweisungen, aber nie das Thema. Mit ihrem Namen kannst du sie genauso wieder aufrufen, etwa mit „Starte die Runde ABC zum Thema …“.",
+    "hermesTitle": "Hermes",
+    "hermesChatIntro": "Im Chat:",
+    "installCommand": "Installiere den Skill jprevo/microcouncil/skill",
+    "hermesCliIntro": "Oder über die Kommandozeile:",
+    "hermesCliCommand": "hermes skills install jprevo/microcouncil/skill --force",
+    "claudeCodeTitle": "Claude Code",
+    "claudeCodeChatIntro": "In einem neuen Chat:",
+    "claudeInstallCommand": "Installiere den Skill https://github.com/jprevo/microcouncil/tree/main/skill",
+    "claudeCodeInvokeIntro": "Danach rufst du die Runde so auf:",
+    "claudeCodeCommand": "/microcouncil Ich möchte besprechen, welche Serie ich als Nächstes schauen soll",
+    "note": "Das Format `SKILL.md` wird von Hermes, Claude Code und agentskills.io verwendet. Den Ordner `skill/` aus dem Repository kannst du unverändert in andere kompatible Agentenumgebungen kopieren."
+  },
+  "tiles": { "added": "hinzugefügt", "modified": "bearbeitet" },
+  "misc": {
+    "copyFailed": "Kopieren fehlgeschlagen. Bitte markiere den Text und kopiere ihn manuell.",
+    "commandCopiedToast": "Befehl in die Zwischenablage kopiert",
+    "commandCopiedAria": "Befehl kopiert",
+    "commandCopyAria": "Befehl kopieren"
+  }
+}

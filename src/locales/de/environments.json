@@ -1,0 +1,37 @@
+{
+  "le-salon-de-the": {
+    "title": "Die Teestube",
+    "summary": "Draußen regnet es. Drinnen sitzt ihr im Trockenen, mit einem heißen Getränk und leiser Musik.",
+    "description": "Ihr sitzt zusammen in einer ruhigen Teestube. Im Hintergrund läuft leise eine Mischung aus Jazz und Hip-Hop. Draußen fällt feiner Regen. Umso gemütlicher ist es hier im Trockenen, mit einem heißen Getränk und einem Stück Kuchen."
+  },
+  "la-salle-de-reunion": {
+    "title": "Der Besprechungsraum",
+    "summary": "Für berufliche Themen oder Gespräche, die einen sachlichen Rahmen brauchen.",
+    "description": "Ihr sitzt an einem großen Tisch in einem schönen, modernen Besprechungsraum. Das Licht ist hell, ohne zu blenden. Auf einem 4K-Bildschirm lässt sich bei Bedarf eine Präsentation zeigen. Durch das Fenster blickt ihr auf die Stadt. Die Atmosphäre ist sachlich, aber nicht steif."
+  },
+  "le-conseil-d-elrond": {
+    "title": "Elronds Rat",
+    "summary": "Eine mittelalterliche Fantasywelt für Entscheidungen von epischer Tragweite.",
+    "description": "Ihr seid in Bruchtal versammelt. Die Aufgabe, die vor euch liegt, ist von größter Bedeutung. Ihr seid Zwerge, Elben und Menschen, gelehrt oder auf der Suche nach Wissen. Spielt eure Rollen in einer mittelalterlichen Fantasywelt."
+  },
+  "la-randonnee": {
+    "title": "Die Wanderung",
+    "summary": "Gemeinsam unterwegs sein und dabei ganz entspannt ins Gespräch kommen.",
+    "description": "Ihr wandert durch einen schönen Wald. Licht fällt durch die Baumkronen auf euren Weg. Ihr geht nebeneinander, ohne euch ständig ansehen oder das Gespräch in Gang halten zu müssen. Während ihr euch unterhaltet, erzählt der Erzähler, wie die Wanderung weitergeht."
+  },
+  "le-podcast": {
+    "title": "Der Podcast",
+    "summary": "Die Mitglieder diskutieren ausführlich miteinander, bis sie zu einem Ergebnis kommen.",
+    "description": "Die Mitglieder nehmen eine Sendung auf, die sich ganz dem Anliegen von {{username}} widmet. Sie diskutieren untereinander so lange, wie es nötig ist, um zu einem zufriedenstellenden Ergebnis zu kommen."
+  },
+  "sur-la-passerelle": {
+    "title": "Auf der Kommandobrücke",
+    "summary": "Eine Raumschiffbrücke als Schauplatz für Gespräche in ferner Zukunft.",
+    "description": "In ferner Zukunft steht ihr auf der Kommandobrücke der Explorer VII. Mit Überlichtgeschwindigkeit reist ihr zu fernen Welten. Aus der Ferne hört ihr Maschinen und vorbeifahrende Roboter. Auch einige von euch sind Androiden."
+  },
+  "la-gare": {
+    "title": "Am Bahnhof",
+    "summary": "Noch fünf Minuten bis zur Abfahrt. Zeit für ein kurzes Gespräch.",
+    "description": "Ihr steht am Bahnsteig. In fünf Minuten steigt ihr in verschiedene Züge. Bis dahin muss das Gespräch abgeschlossen sein. Ein kurzer gemeinsamer Moment, in dem jede Minute zählt."
+  }
+}

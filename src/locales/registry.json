@@ -1,5 +1,6 @@
 [
   { "code": "en", "label": "English", "dir": "ltr", "default": true },
   { "code": "fr", "label": "Français", "dir": "ltr", "default": false },
-  { "code": "es", "label": "Español", "dir": "ltr", "default": false }
+  { "code": "es", "label": "Español", "dir": "ltr", "default": false },
+  { "code": "de", "label": "Deutsch", "dir": "ltr", "default": false }
 ]

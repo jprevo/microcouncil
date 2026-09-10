@@ -1,0 +1,9 @@
+{
+  "title": "Micro Council",
+  "description": "Stelle deine Beraterrunde zusammen, wähle einen Schauplatz und erstelle einen fertigen Prompt für Claude, ChatGPT oder Gemini.",
+  "ogLocale": "de_DE",
+  "numberLocale": "de-DE",
+  "usernameFallback": "Gast",
+  "youWord": "dich",
+  "charsPerToken": 3.6
+}
