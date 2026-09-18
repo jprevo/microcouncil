@@ -3,12 +3,12 @@
 [<img src="https://raw.githubusercontent.com/jprevo/microcouncil/refs/heads/main/assets/screenshot.png" alt="Screenshot of microcouncil.me">](https://microcouncil.me)
 
 Build a prompt for a council of experts who discuss a topic together in your
-AI assistant. Choose the members, a setting, and optional instructions, then copy
+AI assistant. Choose the members, a group dynamic, and optional instructions, then copy
 the prompt into ChatGPT, Claude, Gemini, or another assistant.
 
 **[Try Micro Council](https://microcouncil.me)**
 
-Customize members and settings, save councils, and export or import your data.
+Customize members and group dynamics, save councils, and export or import your data.
 The web app runs entirely in your browser, stores data locally, and needs no
 account or API key. It generates prompts; your chosen assistant runs the council.
 

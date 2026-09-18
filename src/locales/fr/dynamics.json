@@ -6,13 +6,13 @@
   },
   "roleplay": {
     "title": "Jeu de rôle",
-    "summary": "Les membres jouent les personnages que vous leurs indiquez dans le sujet de la demande et vous pouvez débriefer à la fin.",
+    "summary": "Les membres jouent les personnages que vous leur indiquez dans le sujet de la demande et vous pouvez débriefer à la fin.",
     "description": "Parlez depuis la scène : chaque membre adopte la voix, le vocabulaire et les réactions de son rôle. Privilégiez le dialogue direct, accompagné de quelques gestes ou détails sensoriels lorsqu'ils enrichissent la situation.\n\nIncarnez une situation à laquelle {{username}} participe et faites-la évoluer selon ses actions. Les personnages ont leurs propres intentions : ils ne sont pas tous d'accord ni automatiquement coopératifs. Ne décidez jamais de ce que {{username}} fait, pense ou ressent. Sortez de la scène pour expliquer ou débriefer seulement lorsque {{username}} le demande."
   },
   "explain-to-me": {
     "title": "Expliquez-moi",
     "summary": "Un membre explique en profondeur aux autres qui rebondissent et vous aident à comprendre.",
-    "description": "À chaque tour, le membre le plus pertinent sur le point abordé prend le temps de l'expliquer avec clarté et profondeur, dans un langage accessible, avec des exemples concrets et des analogies utiles. Ses interventions peuvent être longues ; celles des autres prennent surtout la forme de questions courtes, d'objections ou de reformulations.\n\nLes autres membres cherchent à comprendre depuis leur propre perspective : ils demandent ce qu'un terme obscure signifie, testent une conséquence ou signalent une étape trop rapide. Le membre qui explique leur répond et adapte son explication aux réactions de {{username}}. Faites progresser la compréhension sans multiplier les questions artificielles ni transformer chaque réponse en cours complet. Le rôle de professeur peut changer avec le sujet."
+    "description": "À chaque tour, le membre le plus pertinent sur le point abordé prend le temps de l'expliquer avec clarté et profondeur, dans un langage accessible, avec des exemples concrets et des analogies utiles. Ses interventions peuvent être longues ; celles des autres prennent surtout la forme de questions courtes, d'objections ou de reformulations.\n\nLes autres membres cherchent à comprendre depuis leur propre perspective : ils demandent ce qu'un terme obscur signifie, testent une conséquence ou signalent une étape trop rapide. Le membre qui explique leur répond et adapte son explication aux réactions de {{username}}. Faites progresser la compréhension sans multiplier les questions artificielles ni transformer chaque réponse en cours complet. Le rôle de professeur peut changer avec le sujet."
   },
   "ca-fuse": {
     "title": "Ça fuse",
@@ -21,7 +21,7 @@
   },
   "change-my-mind": {
     "title": "Changez mon point de vue",
-    "summary": "Donnez une de vos convictions au conseil, et voyez si elles tiennent le coup.",
+    "summary": "Donnez une de vos convictions au conseil et voyez si elle tient le coup.",
     "description": "Exprimez-vous avec une franchise calme et précise. Formulez des objections nettes, utilisez des contre-exemples concrets et posez des questions qui mettent le raisonnement à l'épreuve. Évitez les longs réquisitoires.\n\nCherchez à faire évoluer la conviction de {{username}} en vous attaquant à sa meilleure version, après l'avoir clarifiée si nécessaire. Privilégiez une objection forte à la fois et laissez-lui la possibilité de répondre. Vous pouvez discuter entre vous de la solidité d'un argument ; ne formez pas un front unanime. Reconnaissez les réponses convaincantes, abandonnez les objections réfutées et acceptez que la conviction initiale puisse résister."
   },
   "enquete": {

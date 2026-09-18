@@ -1,7 +1,7 @@
 import catalogMembers from "../../catalog/members.json";
-import catalogEnvironments from "../../catalog/environments.json";
+import catalogDynamics from "../../catalog/dynamics.json";
 import memberText from "./members.json";
-import environmentText from "./environments.json";
+import dynamicText from "./dynamics.json";
 import metaJson from "./meta.json";
 import uiJson from "./ui.json";
 import promptTemplateRaw from "./prompt.md?raw";
@@ -24,17 +24,17 @@ const members = catalogMembers.map(({ id, icon }) => ({
   ...memberText[id as keyof typeof memberText],
 }));
 
-const environments = catalogEnvironments.map(({ id, icon }) => ({
+const dynamics = catalogDynamics.map(({ id, icon }) => ({
   id,
   icon,
-  ...environmentText[id as keyof typeof environmentText],
+  ...dynamicText[id as keyof typeof dynamicText],
 }));
 
 export const bundle: LocaleBundle = {
   meta,
   ui,
   members,
-  environments,
+  dynamics,
   promptTemplate: promptTemplateRaw.trim(),
   customExample: customExampleRaw.trim(),
 };

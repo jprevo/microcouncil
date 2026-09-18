@@ -125,10 +125,10 @@ function build() {
     readJson(`src/locales/${SKILL_LOCALE}/members.json`),
     "member",
   );
-  const environments = withText(
-    readJson("src/catalog/environments.json"),
-    readJson(`src/locales/${SKILL_LOCALE}/environments.json`),
-    "environment",
+  const dynamics = withText(
+    readJson("src/catalog/dynamics.json"),
+    readJson(`src/locales/${SKILL_LOCALE}/dynamics.json`),
+    "dynamic",
   );
 
   resetTarget();
@@ -139,7 +139,7 @@ function build() {
   const tokens = {
     VERSION: version,
     MEMBER_COUNT: String(members.length),
-    ENVIRONMENT_COUNT: String(environments.length),
+    DYNAMIC_COUNT: String(dynamics.length),
   };
   const skillMarkdown = Object.entries(tokens).reduce(
     (text, [token, value]) => text.split(`{{${token}}}`).join(value),
@@ -150,10 +150,7 @@ function build() {
   // Then the generated catalogue, copied from the app's own data so both never drift.
   const written = [
     writeFile("assets/members.json", `${JSON.stringify(members, null, 2)}\n`),
-    writeFile(
-      "assets/environments.json",
-      `${JSON.stringify(environments, null, 2)}\n`,
-    ),
+    writeFile("assets/dynamics.json", `${JSON.stringify(dynamics, null, 2)}\n`),
     writeFile(
       "assets/prompt.md",
       `${readText(join("src", "locales", SKILL_LOCALE, "prompt.md")).trim()}\n`,
@@ -167,9 +164,7 @@ function build() {
   verifyReferences(skillMarkdown);
 
   console.log(`skill v${version} built in ${relative(ROOT, TARGET)}/`);
-  console.log(
-    `  ${members.length} members, ${environments.length} environments`,
-  );
+  console.log(`  ${members.length} members, ${dynamics.length} dynamics`);
   console.log(
     `  assets: ${written.map((path) => path.replace("assets/", "")).join(", ")}`,
   );

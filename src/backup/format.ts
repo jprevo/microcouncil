@@ -5,10 +5,10 @@ import type { AppState, CouncilSave } from "../types";
  * way an older file can no longer express, and teach `migrate` how to bring the
  * previous version up to this one.
  *
- * Version 2 namespaces storage — and this format — by language: version 1 files
- * predate that and carry no `locale`, so they are refused rather than half-read.
+ * Version 2 namespaced storage — and this format — by language. Version 3 replaces
+ * scene-based entries with group dynamics; its reader keeps other version 2 data.
  */
-export const BACKUP_VERSION = 2;
+export const BACKUP_VERSION = 3;
 
 /** Everything this browser holds for one language, in one portable file. */
 export interface Backup {

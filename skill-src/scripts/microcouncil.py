@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Micro Council - assemble, save and reuse role-played advisory council prompts.
 
-Standard library only. The council catalogue (members, settings) and the prompt
+Standard library only. The council catalogue (members, group dynamics) and the prompt
 template live in ../assets/, so this script works from any working directory.
 """
 
@@ -22,7 +22,7 @@ from typing import Any, NoReturn
 SKILL_DIR = Path(__file__).resolve().parent.parent
 ASSETS_DIR = SKILL_DIR / "assets"
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 USERNAME_FALLBACK = "the user"
 # Rough character-based token estimate; actual counts depend on the model.
 CHARS_PER_TOKEN = 4
@@ -101,7 +101,7 @@ def resolve(token: str, entries: list[dict], label: str, title_key: str) -> dict
     if len(matches) > 1:
         names = ", ".join(match["slug"] for match in matches)
         die(f"ambiguous {label} {token!r}: matches {names}")
-    listing = "members" if label == "member" else "environments"
+    listing = "members" if label == "member" else "dynamics"
     die(f"unknown {label} {token!r} - run `{listing}` to see the valid slugs")
 
 
@@ -112,8 +112,8 @@ def load_members() -> list[dict]:
     return read_json(ASSETS_DIR / "members.json", "member catalogue")
 
 
-def load_environments() -> list[dict]:
-    return read_json(ASSETS_DIR / "environments.json", "environment catalogue")
+def load_dynamics() -> list[dict]:
+    return read_json(ASSETS_DIR / "dynamics.json", "dynamic catalogue")
 
 
 def load_template() -> str:
@@ -201,8 +201,8 @@ def render_member(member: dict) -> str:
     return "\n".join(lines)
 
 
-def render_environment(environment: dict) -> str:
-    return f"### {environment['icon']} {environment['title']}\n{environment['description']}"
+def render_dynamic(dynamic: dict) -> str:
+    return f"### {dynamic['icon']} {dynamic['title']}\n{dynamic['description']}"
 
 
 def fill(template: str, placeholder: str, value: str) -> str:
@@ -238,7 +238,7 @@ def drop_section(template: str, placeholder: str) -> str:
 def build_prompt(
     *,
     members: list[dict],
-    environment: dict | None,
+    dynamic: dict | None,
     username: str,
     custom_instructions: str,
     subject: str,
@@ -252,10 +252,10 @@ def build_prompt(
         if members
         else "_No member selected._"
     )
-    rendered_environment = (
-        "_No setting selected._"
-        if environment is None
-        else render_environment(environment)
+    rendered_dynamic = (
+        "_No group dynamic selected._"
+        if dynamic is None
+        else render_dynamic(dynamic)
     )
 
     output = load_template()
@@ -265,10 +265,10 @@ def build_prompt(
         output = drop_section(output, "subject")
 
     output = fill(output, "members", rendered_members)
-    output = fill(output, "environment", rendered_environment)
+    output = fill(output, "dynamic", rendered_dynamic)
     output = fill(output, "custom", custom)
     output = fill(output, "subject", topic)
-    # Last: the name also appears inside member cards and the setting.
+    # Last: the name also appears inside member and dynamic cards.
     output = fill(output, "username", resolved_username)
 
     return output.rstrip() + "\n"
@@ -329,15 +329,15 @@ def council_members(council: dict, catalog: list[dict]) -> list[dict]:
     return members
 
 
-def council_environment(council: dict, catalog: list[dict]) -> dict | None:
-    slug = council.get("environment")
+def council_dynamic(council: dict, catalog: list[dict]) -> dict | None:
+    slug = council.get("dynamic")
     if not slug:
         return None
-    for environment in catalog:
-        if environment["slug"] == slugify(str(slug)):
-            return environment
+    for dynamic in catalog:
+        if dynamic["slug"] == slugify(str(slug)):
+            return dynamic
     print(
-        f"microcouncil: warning: environment {slug!r} left the catalogue, ignored",
+        f"microcouncil: warning: dynamic {slug!r} left the catalogue, ignored",
         file=sys.stderr,
     )
     return None
@@ -376,18 +376,18 @@ def cmd_members(args: argparse.Namespace) -> None:
         print(f"{member['slug']} | {member['name']} | {member['job']}")
 
 
-def cmd_environments(args: argparse.Namespace) -> None:
-    environments = load_environments()
+def cmd_dynamics(args: argparse.Namespace) -> None:
+    dynamics = load_dynamics()
     if args.json:
         compact = [
             {"slug": e["slug"], "title": e["title"], "summary": e["summary"]}
-            for e in environments
+            for e in dynamics
         ]
         print(json.dumps(compact, ensure_ascii=False, indent=2))
         return
     print("slug | title | summary")
-    for environment in environments:
-        print(f"{environment['slug']} | {environment['title']} | {environment['summary']}")
+    for dynamic in dynamics:
+        print(f"{dynamic['slug']} | {dynamic['title']} | {dynamic['summary']}")
 
 
 def cmd_random(args: argparse.Namespace) -> None:
@@ -397,22 +397,22 @@ def cmd_random(args: argparse.Namespace) -> None:
     picked = generator.sample(members, count)
     picked.sort(key=members.index)
     print("members: " + ",".join(member["slug"] for member in picked))
-    if args.environment:
-        print("environment: " + generator.choice(load_environments())["slug"])
+    if args.dynamic:
+        print("dynamic: " + generator.choice(load_dynamics())["slug"])
 
 
 def cmd_save(args: argparse.Namespace) -> None:
     catalog = load_members()
-    environments = load_environments()
+    dynamics = load_dynamics()
 
     tokens = split_list(args.members)
     if not tokens:
         die("a council needs at least one --members entry")
     members = selected_members(tokens, catalog)
 
-    environment = None
-    if args.environment:
-        environment = resolve(args.environment, environments, "environment", "title")
+    dynamic = None
+    if args.dynamic:
+        dynamic = resolve(args.dynamic, dynamics, "dynamic", "title")
 
     slug = slugify(args.slug or args.name)
     if not slug:
@@ -434,7 +434,7 @@ def cmd_save(args: argparse.Namespace) -> None:
         "name": args.name,
         "username": (args.username or "").strip(),
         "members": [member["slug"] for member in members],
-        "environment": environment["slug"] if environment else None,
+        "dynamic": dynamic["slug"] if dynamic else None,
         "customInstructions": custom.strip(),
         "createdAt": created,
         "updatedAt": now(),
@@ -448,7 +448,7 @@ def cmd_save(args: argparse.Namespace) -> None:
     if subject or args.print_prompt:
         prompt = build_prompt(
             members=members,
-            environment=environment,
+            dynamic=dynamic,
             username=council["username"],
             custom_instructions=council["customInstructions"],
             subject=subject,
@@ -468,11 +468,11 @@ def cmd_councils(args: argparse.Namespace) -> None:
     if not councils:
         print(f"no council saved yet (directory: {councils_dir()})")
         return
-    print("slug | name | members | environment")
+    print("slug | name | members | dynamic")
     for council in councils:
         members = ",".join(str(slug) for slug in council.get("members") or [])
         name = council.get("name") or council["slug"]
-        print(f"{council['slug']} | {name} | {members or '-'} | {council.get('environment') or '-'}")
+        print(f"{council['slug']} | {name} | {members or '-'} | {council.get('dynamic') or '-'}")
 
 
 def cmd_show(args: argparse.Namespace) -> None:
@@ -493,7 +493,7 @@ def cmd_delete(args: argparse.Namespace) -> None:
 
 def cmd_build(args: argparse.Namespace) -> None:
     catalog = load_members()
-    environments = load_environments()
+    dynamics = load_dynamics()
 
     tokens = split_list(args.members)
     override_custom = custom_text(args)
@@ -503,10 +503,10 @@ def cmd_build(args: argparse.Namespace) -> None:
         members = (
             selected_members(tokens, catalog) if tokens else council_members(council, catalog)
         )
-        environment = (
-            resolve(args.environment, environments, "environment", "title")
-            if args.environment
-            else council_environment(council, environments)
+        dynamic = (
+            resolve(args.dynamic, dynamics, "dynamic", "title")
+            if args.dynamic
+            else council_dynamic(council, dynamics)
         )
         username = args.username if args.username is not None else council.get("username", "")
         custom = (
@@ -518,9 +518,9 @@ def cmd_build(args: argparse.Namespace) -> None:
         if not tokens:
             die("pass --council <slug>, or --members to build a one-off council")
         members = selected_members(tokens, catalog)
-        environment = (
-            resolve(args.environment, environments, "environment", "title")
-            if args.environment
+        dynamic = (
+            resolve(args.dynamic, dynamics, "dynamic", "title")
+            if args.dynamic
             else None
         )
         username = args.username or ""
@@ -528,7 +528,7 @@ def cmd_build(args: argparse.Namespace) -> None:
 
     prompt = build_prompt(
         members=members,
-        environment=environment,
+        dynamic=dynamic,
         username=username or "",
         custom_instructions=custom or "",
         subject=subject_text(args),
@@ -548,7 +548,7 @@ def cmd_where(args: argparse.Namespace) -> None:
     print(f"assets: {ASSETS_DIR}")
     print(f"councils: {councils_dir()}")
     # Touch the catalogue too, so a path that exists but is not this skill still fails.
-    print(f"catalogue: {len(load_members())} members, {len(load_environments())} environments")
+    print(f"catalogue: {len(load_members())} members, {len(load_dynamics())} dynamics")
     saved = len(stored_councils())
     print(f"saved: {saved} council{'' if saved == 1 else 's'}")
 
@@ -564,7 +564,7 @@ def add_shape_flags(parser: argparse.ArgumentParser) -> None:
         metavar="SLUGS",
         help="comma separated member slugs; repeatable",
     )
-    parser.add_argument("--environment", metavar="SLUG", help="setting slug")
+    parser.add_argument("--dynamic", metavar="SLUG", help="group-dynamic slug")
     parser.add_argument("--username", metavar="NAME", help="how the council addresses the user")
     parser.add_argument("--custom", metavar="TEXT", help="extra standing instructions")
     parser.add_argument("--custom-file", metavar="PATH", help="read --custom from a file")
@@ -588,13 +588,15 @@ def build_parser() -> argparse.ArgumentParser:
     members.add_argument("--json", action="store_true")
     members.set_defaults(handler=cmd_members)
 
-    environments = sub.add_parser("environments", help="list setting slugs, titles and summaries")
-    environments.add_argument("--json", action="store_true")
-    environments.set_defaults(handler=cmd_environments)
+    dynamics = sub.add_parser(
+        "dynamics", help="list group-dynamic slugs, titles and summaries"
+    )
+    dynamics.add_argument("--json", action="store_true")
+    dynamics.set_defaults(handler=cmd_dynamics)
 
     draw = sub.add_parser("random", help="draw a random roster")
     draw.add_argument("--members", type=int, default=4, metavar="N", help="how many members")
-    draw.add_argument("--environment", action="store_true", help="also draw a setting")
+    draw.add_argument("--dynamic", action="store_true", help="also draw a group dynamic")
     draw.add_argument("--seed", type=int, help="make the draw reproducible")
     draw.set_defaults(handler=cmd_random)
 

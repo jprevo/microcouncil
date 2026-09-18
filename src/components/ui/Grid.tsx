@@ -1,7 +1,7 @@
 import type { KeyboardEventHandler, ReactNode } from "react";
 
 interface GridProps {
-  readonly variant: "members" | "environments";
+  readonly variant: "members" | "dynamics";
   readonly children: ReactNode;
   /** Set when the grid is a composite widget the arrow keys walk. */
   readonly role?: "toolbar";

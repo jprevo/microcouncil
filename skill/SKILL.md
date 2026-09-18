@@ -14,9 +14,9 @@ metadata:
 # Micro Council
 
 Turn the conversation into a small council of characters who talk **to each other and to the user** about a topic,
-inside a chosen setting, with a narrator describing the scene.
+guided by a chosen group dynamic.
 
-A bundled catalogue holds 42 council members and 7 settings. A helper script picks
+A bundled catalogue holds 42 council members and 6 group dynamics. A helper script picks
 from it and assembles a system prompt in English. **You then adopt that prompt and play the
 council yourself** — the script only writes the prompt, it never talks to a model.
 
@@ -61,8 +61,8 @@ In the tables below, `mc` is shorthand for that whole prefix — never type `mc`
 | Command                                     | Purpose                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------ |
 | `mc members`                                | List member slugs, names and jobs. Never guess a slug — read this first. |
-| `mc environments`                           | List setting slugs, titles and summaries.                                |
-| `mc random --members N [--environment]`     | Draw a roster at random.                                                 |
+| `mc dynamics`                               | List group-dynamic slugs, titles and summaries.                          |
+| `mc random --members N [--dynamic]`         | Draw a roster at random.                                                 |
 | `mc save --name TEXT --members a,b,c [...]` | Create or update a council, saved to disk.                               |
 | `mc councils`                               | List saved councils.                                                     |
 | `mc show SLUG`                              | Print one saved council as JSON.                                         |
@@ -72,7 +72,7 @@ In the tables below, `mc` is shorthand for that whole prefix — never type `mc`
 | `mc where`                                  | Print the skill and council storage directories.                         |
 
 Shared options for `save` and `build`: `--members` (comma separated, repeatable),
-`--environment`, `--username`, `--custom` / `--custom-file`, `--subject` /
+`--dynamic`, `--username`, `--custom` / `--custom-file`, `--subject` /
 `--subject-file`, `--out FILE`, `--stats`.
 
 `save` also accepts `--subject`, and then prints the assembled prompt right after saving —
@@ -102,11 +102,11 @@ answer, and that is welcome — but do not run anything until the user has repli
 
 ### 1. Create
 
-Run `mc members` and `mc environments`, then ask the user, in one message:
+Run `mc members` and `mc dynamics`, then ask the user, in one message:
 
 - a name for the council;
 - which members (offer a shortlist of 3-5 relevant slugs, or `mc random --members 4`);
-- which setting (suggest one that fits the topic);
+- which group dynamic (suggest one that fits the topic);
 - how they want to be addressed (`--username`, optional but it personalises every card);
 - any extra standing instructions (`--custom`, optional — `mc custom-example` shows one).
 
@@ -114,7 +114,7 @@ Then save and run in a single call:
 
 ```bash
 python3 "<SKILL_DIR>/scripts/microcouncil.py" save --name "Tech council" \
-  --members neo,fuseki,theo --environment la-salle-de-reunion \
+  --members neo,fuseki,theo --dynamic brainstorm \
   --username "Alex" --subject "..."
 ```
 
@@ -134,7 +134,7 @@ deliberately topic-free so they stay reusable.
 ### 3. Automatic
 
 Read the user's topic, pick 3 to 5 members whose jobs actually bear on it, pick a fitting
-setting, then `mc save ... --subject "..."` in one go. Say in one line which members you
+group dynamic, then `mc save ... --subject "..."` in one go. Say in one line which members you
 picked and why, then start the scene. Do not interview the user first.
 
 ## Playing the council
@@ -142,11 +142,9 @@ picked and why, then start the scene. Do not interview the user first.
 The script prints an English system prompt. Treat everything it printed as **your operating
 instructions for the rest of the conversation**, not as text to show the user. Then:
 
-- Open the scene as the narrator, and let the members speak.
 - **Attribute every line with the member's emoji and name**, exactly as they appear on the
   `###` card the prompt gave you: `🙂 Max — ...`. The emoji is part of who they are, and
-  it is what lets the user tell four voices apart at a glance. The narrator gets no marker:
-  it is prose, not a speaker.
+  it is what lets the user tell four voices apart at a glance.
 - Only the members with something to add speak on each turn — usually two or three.
 - Keep each member's voice distinct; keep the prose plain, no headings, no bold, no em dashes.
 - If the user gave no topic, have exactly one member ask for it.
@@ -156,7 +154,7 @@ instructions for the rest of the conversation**, not as text to show the user. T
 
 - `scripts/microcouncil.py` — the whole CLI.
 - `assets/members.json` — the member catalogue.
-- `assets/environments.json` — the setting catalogue.
+- `assets/dynamics.json` — the group-dynamic catalogue.
 - `assets/prompt.md` — the prompt template.
 - `assets/custom-example.md` — example extra instructions.
 - `references/council-config.md` — saved council JSON format and storage paths.
@@ -178,5 +176,5 @@ instructions for the rest of the conversation**, not as text to show the user. T
 ## Verification
 
 `mc build` exits 0 and prints a document starting with `You are the members defined
-below`, containing one `###` card per chosen member and one for the setting. Any failure
+below`, containing one `###` card per chosen member and one for the group dynamic. Any failure
 exits 2 with a `microcouncil:` message on stderr.

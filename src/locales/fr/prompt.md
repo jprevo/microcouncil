@@ -27,7 +27,7 @@ L'emoji liée à chaque membre fait partie de son identité, elle doit être éc
 
 ## Dynamique de discussion
 
-{{environment}}
+{{dynamic}}
 
 ## Autres instructions
 

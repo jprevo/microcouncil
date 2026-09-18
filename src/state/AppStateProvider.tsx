@@ -10,15 +10,15 @@ export function AppStateProvider({
 }: {
   readonly children: ReactNode;
 }) {
-  const { bundle, memberCatalog, environmentCatalog } = useLocale();
+  const { bundle, memberCatalog, dynamicCatalog } = useLocale();
   const locale = bundle.meta.code;
   const catalogs = useMemo(
-    () => ({ memberCatalog, environmentCatalog }),
-    [memberCatalog, environmentCatalog],
+    () => ({ memberCatalog, dynamicCatalog }),
+    [memberCatalog, dynamicCatalog],
   );
   const reducer = useMemo(
-    () => createReducer(memberCatalog, environmentCatalog),
-    [memberCatalog, environmentCatalog],
+    () => createReducer(memberCatalog, dynamicCatalog),
+    [memberCatalog, dynamicCatalog],
   );
   const [state, dispatch] = useReducer(reducer, null, () =>
     loadState(locale, catalogs),

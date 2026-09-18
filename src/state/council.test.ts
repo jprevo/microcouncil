@@ -5,7 +5,7 @@ import { buildPrompt } from "../prompt";
 import type { CouncilSave } from "../types";
 import {
   catalogs,
-  environment,
+  dynamic,
   initialState,
   member,
   promptStrings,
@@ -13,10 +13,7 @@ import {
   template,
 } from "../test/fixtures";
 
-const reducer = createReducer(
-  catalogs.memberCatalog,
-  catalogs.environmentCatalog,
-);
+const reducer = createReducer(catalogs.memberCatalog, catalogs.dynamicCatalog);
 
 describe("saved council restoration", () => {
   it("restores untouched built-ins after renames and preserves the current theme", () => {
@@ -26,9 +23,9 @@ describe("saved council restoration", () => {
       member: { ...member, name: "Renamed", description: "Changed" },
     });
     state = reducer(state, {
-      type: "saveEnvironment",
-      target: { kind: "builtin", id: "workshop" },
-      environment: { ...environment, title: "Renamed room" },
+      type: "saveDynamic",
+      target: { kind: "builtin", id: "brainstorm" },
+      dynamic: { ...dynamic, title: "Renamed dynamic" },
     });
     state = reducer(state, { type: "toggleTheme" });
     const before = structuredClone(state);
@@ -43,7 +40,7 @@ describe("saved council restoration", () => {
       subject: savedCouncil.subject,
       customInstructions: savedCouncil.customInstructions,
       selectedMembers: [member.name],
-      selectedEnvironment: environment.title,
+      selectedDynamic: dynamic.title,
     });
     expect(state).toEqual(before);
   });
@@ -76,10 +73,10 @@ describe("saved council restoration", () => {
       name: "Custom expert",
       description: "Original expertise",
     };
-    const customEnvironment = {
-      ...environment,
-      title: "Custom room",
-      description: "Original atmosphere",
+    const customDynamic = {
+      ...dynamic,
+      title: "Custom dynamic",
+      description: "Original interaction rules",
     };
     const council: CouncilSave = {
       ...savedCouncil,
@@ -90,9 +87,9 @@ describe("saved council restoration", () => {
           edited: false,
         },
       ],
-      environment: {
-        target: { kind: "custom", name: customEnvironment.title },
-        item: customEnvironment,
+      dynamic: {
+        target: { kind: "custom", name: customDynamic.title },
+        item: customDynamic,
         edited: false,
       },
     };
@@ -102,14 +99,14 @@ describe("saved council restoration", () => {
       member: customMember,
     });
     state = reducer(state, {
-      type: "saveEnvironment",
+      type: "saveDynamic",
       target: null,
-      environment: customEnvironment,
+      dynamic: customDynamic,
     });
     state = reducer(state, { type: "members", names: [customMember.name] });
     state = reducer(state, {
-      type: "environment",
-      title: customEnvironment.title,
+      type: "dynamic",
+      title: customDynamic.title,
     });
     const [saved] = parseSaves(JSON.parse(JSON.stringify([council])));
     if (saved === undefined) throw new Error("The serialized council was lost");
@@ -118,30 +115,30 @@ describe("saved council restoration", () => {
       target: { kind: "custom", name: customMember.name },
     });
     state = reducer(state, {
-      type: "deleteEnvironment",
-      target: { kind: "custom", name: customEnvironment.title },
+      type: "deleteDynamic",
+      target: { kind: "custom", name: customDynamic.title },
     });
     expect(state.selectedMembers).toEqual([]);
-    expect(state.selectedEnvironment).toBeNull();
+    expect(state.selectedDynamic).toBeNull();
     const restored = reducer(state, { type: "loadCouncil", council: saved });
     const members = catalogs.memberCatalog
       .build(restored.memberLibrary)
       .filter((entry) => restored.selectedMembers.includes(entry.name));
-    const setting =
-      catalogs.environmentCatalog
-        .build(restored.environmentLibrary)
-        .find((entry) => entry.title === restored.selectedEnvironment) ?? null;
+    const restoredDynamic =
+      catalogs.dynamicCatalog
+        .build(restored.dynamicLibrary)
+        .find((entry) => entry.title === restored.selectedDynamic) ?? null;
     expect(restored.memberLibrary.custom).toEqual([customMember]);
-    expect(restored.environmentLibrary.custom).toEqual([customEnvironment]);
+    expect(restored.dynamicLibrary.custom).toEqual([customDynamic]);
     expect(
       buildPrompt(
-        { ...restored, members, environment: setting },
+        { ...restored, members, dynamic: restoredDynamic },
         template,
         promptStrings,
       ),
     ).toBe(
       buildPrompt(
-        { ...council, members: [customMember], environment: customEnvironment },
+        { ...council, members: [customMember], dynamic: customDynamic },
         template,
         promptStrings,
       ),
@@ -149,15 +146,15 @@ describe("saved council restoration", () => {
   });
 
   it("recreates a saved built-in after its id leaves the shipped catalog", () => {
-    const retiredEnvironment = {
-      ...environment,
-      title: "Retired setting",
+    const retiredDynamic = {
+      ...dynamic,
+      title: "Retired dynamic",
     };
     const council: CouncilSave = {
       ...savedCouncil,
-      environment: {
-        target: { kind: "builtin", id: "retired-setting" },
-        item: retiredEnvironment,
+      dynamic: {
+        target: { kind: "builtin", id: "retired-dynamic" },
+        item: retiredDynamic,
         edited: false,
       },
     };
@@ -167,8 +164,8 @@ describe("saved council restoration", () => {
       council,
     });
 
-    expect(restored.selectedEnvironment).toBe(retiredEnvironment.title);
-    expect(restored.environmentLibrary.custom).toEqual([retiredEnvironment]);
+    expect(restored.selectedDynamic).toBe(retiredDynamic.title);
+    expect(restored.dynamicLibrary.custom).toEqual([retiredDynamic]);
   });
 
   it("preserves conflicting entries and selects the restored entry under a free name", () => {
@@ -201,13 +198,13 @@ describe("saved council restoration", () => {
     });
   });
 
-  it("clears the previous setting when the saved council has none", () => {
-    const state = { ...initialState(), selectedEnvironment: environment.title };
+  it("clears the previous dynamic when the saved council has none", () => {
+    const state = { ...initialState(), selectedDynamic: dynamic.title };
     expect(
       reducer(state, {
         type: "loadCouncil",
-        council: { ...savedCouncil, environment: null },
-      }).selectedEnvironment,
+        council: { ...savedCouncil, dynamic: null },
+      }).selectedDynamic,
     ).toBeNull();
   });
 });

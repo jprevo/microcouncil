@@ -1,6 +1,6 @@
 import { createCatalog } from "../lib/library";
 import { parseState } from "../storage";
-import type { CouncilSave, Environment, Member } from "../types";
+import type { CouncilSave, Dynamic, Member } from "../types";
 
 export const member: Member = {
   name: "Ada",
@@ -11,11 +11,11 @@ export const member: Member = {
   tags: ["hidden-search-tag"],
 };
 
-export const environment: Environment = {
-  title: "Workshop",
-  icon: "🏠",
-  summary: "hidden-summary",
-  description: "A quiet room for {{username}}.",
+export const dynamic: Dynamic = {
+  title: "Brainstorm",
+  icon: "💡",
+  summary: "Develop an idea together.",
+  description: "Build on one another's ideas with {{username}}.",
 };
 
 export const catalogs = {
@@ -24,8 +24,8 @@ export const catalogs = {
     (item) => item.name,
     (item, name) => ({ ...item, name }),
   ),
-  environmentCatalog: createCatalog(
-    [{ id: "workshop", item: environment }],
+  dynamicCatalog: createCatalog(
+    [{ id: "brainstorm", item: dynamic }],
     (item) => item.title,
     (item, title) => ({ ...item, title }),
   ),
@@ -41,9 +41,9 @@ export const savedCouncil: CouncilSave = {
   members: [
     { target: { kind: "builtin", id: "ada" }, item: member, edited: false },
   ],
-  environment: {
-    target: { kind: "builtin", id: "workshop" },
-    item: environment,
+  dynamic: {
+    target: { kind: "builtin", id: "brainstorm" },
+    item: dynamic,
     edited: false,
   },
   customInstructions: "Give concrete examples.",
@@ -55,8 +55,8 @@ export const template = `# Council for {{username}}
 ## Members
 {{members}}
 
-## Environment
-{{environment}}
+## Dynamic
+{{dynamic}}
 
 ## Instructions
 {{custom}}
@@ -67,6 +67,6 @@ export const template = `# Council for {{username}}
 export const promptStrings = {
   usernameFallback: "the user",
   noMembers: "Choose experts.",
-  noEnvironment: "Choose a setting.",
+  noDynamic: "Choose a group dynamic.",
   personalityLabel: "Personality: ",
 };

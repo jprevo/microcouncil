@@ -9,7 +9,7 @@ interface RadioGridProps {
 export function RadioGrid({ labelledBy, onKeyDown, children }: RadioGridProps) {
   return (
     <div
-      className="grid grid--environments"
+      className="grid grid--dynamics"
       role="radiogroup"
       aria-labelledby={labelledBy}
       onKeyDown={onKeyDown}

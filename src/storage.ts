@@ -2,10 +2,10 @@ import { asRecord, asStringArray, readJson, writeJson } from "./lib/json";
 import { EMPTY_LIBRARY } from "./lib/library";
 import type { Catalog } from "./lib/library";
 import type { Catalogs } from "./lib/catalogs";
-import { asEnvironment, asMember } from "./lib/parse";
+import { asDynamic, asMember } from "./lib/parse";
 import type {
   AppState,
-  EnvironmentLibrary,
+  DynamicLibrary,
   Library,
   MemberLibrary,
   Theme,
@@ -37,12 +37,12 @@ function defaultState(): AppState {
   return {
     username: "",
     selectedMembers: [],
-    selectedEnvironment: null,
+    selectedDynamic: null,
     customInstructions: "",
     subject: "",
     theme: preferredTheme(),
     memberLibrary: EMPTY_LIBRARY,
-    environmentLibrary: EMPTY_LIBRARY,
+    dynamicLibrary: EMPTY_LIBRARY,
   };
 }
 
@@ -93,21 +93,19 @@ export function parseState(value: unknown, catalogs: Catalogs): AppState {
     catalogs.memberCatalog,
     asMember,
   );
-  const environmentLibrary: EnvironmentLibrary = asLibrary(
-    record["environmentLibrary"],
-    catalogs.environmentCatalog,
-    asEnvironment,
+  const dynamicLibrary: DynamicLibrary = asLibrary(
+    record["dynamicLibrary"],
+    catalogs.dynamicCatalog,
+    asDynamic,
   );
 
   const knownMembers = new Set(
     catalogs.memberCatalog.build(memberLibrary).map((entry) => entry.label),
   );
-  const knownEnvironments = new Set(
-    catalogs.environmentCatalog
-      .build(environmentLibrary)
-      .map((entry) => entry.label),
+  const knownDynamics = new Set(
+    catalogs.dynamicCatalog.build(dynamicLibrary).map((entry) => entry.label),
   );
-  const environment = record["selectedEnvironment"];
+  const dynamic = record["selectedDynamic"];
 
   return {
     username:
@@ -117,9 +115,9 @@ export function parseState(value: unknown, catalogs: Catalogs): AppState {
     selectedMembers: asStringArray(record["selectedMembers"]).filter((name) =>
       knownMembers.has(name),
     ),
-    selectedEnvironment:
-      typeof environment === "string" && knownEnvironments.has(environment)
-        ? environment
+    selectedDynamic:
+      typeof dynamic === "string" && knownDynamics.has(dynamic)
+        ? dynamic
         : null,
     customInstructions:
       typeof record["customInstructions"] === "string"
@@ -131,7 +129,7 @@ export function parseState(value: unknown, catalogs: Catalogs): AppState {
         : fallback.subject,
     theme: isTheme(record["theme"]) ? record["theme"] : fallback.theme,
     memberLibrary,
-    environmentLibrary,
+    dynamicLibrary,
   };
 }
 

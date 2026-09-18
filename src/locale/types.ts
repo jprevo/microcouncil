@@ -1,4 +1,4 @@
-import type { Environment, Member } from "../types";
+import type { Dynamic, Member } from "../types";
 
 /** CLDR-lite plural rule: enough categories for the locales this app ships today. */
 export interface PluralForms {
@@ -39,7 +39,7 @@ export interface UiStrings {
   readonly lede: string;
   readonly prompt: {
     readonly noMembers: string;
-    readonly noEnvironment: string;
+    readonly noDynamic: string;
     readonly personalityLabel: string;
   };
   readonly footer: {
@@ -109,7 +109,7 @@ export interface UiStrings {
       readonly descriptionRequired: string;
     };
   };
-  readonly environments: {
+  readonly dynamics: {
     readonly title: string;
     readonly hint: string;
     readonly clear: string;
@@ -180,7 +180,7 @@ export interface UiStrings {
     readonly promptRegion: string;
     readonly warningMissing: string;
     readonly missingMembers: string;
-    readonly missingEnvironment: string;
+    readonly missingDynamic: string;
     readonly note: string;
     readonly copy: string;
     readonly copied: string;
@@ -285,7 +285,7 @@ export interface LocaleBundle {
   readonly meta: LocaleMeta;
   readonly ui: UiStrings;
   readonly members: readonly (Member & { readonly id: string })[];
-  readonly environments: readonly (Environment & { readonly id: string })[];
+  readonly dynamics: readonly (Dynamic & { readonly id: string })[];
   readonly promptTemplate: string;
   readonly customExample: string;
 }

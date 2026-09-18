@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { buildPrompt } from "./prompt";
 import type { PromptInput } from "./prompt";
-import { environment, member, promptStrings, template } from "./test/fixtures";
+import { dynamic, member, promptStrings, template } from "./test/fixtures";
 
 const input: PromptInput = {
   username: " Camille ",
   members: [member],
-  environment,
+  dynamic,
   customInstructions: " Give examples. ",
   subject: " A garden. ",
 };
@@ -21,9 +21,9 @@ describe("buildPrompt", () => {
 Scientist. Help Camille question assumptions.
 Personality: Curious, Precise
 
-## Environment
-### 🏠 Workshop
-A quiet room for Camille.
+## Dynamic
+### 💡 Brainstorm
+Build on one another's ideas with Camille.
 
 ## Instructions
 Give examples.
@@ -34,21 +34,21 @@ A garden.
     );
   });
 
-  it("uses fallback wording when the name, members and environment are absent", () => {
+  it("uses fallback wording when the name, members and dynamic are absent", () => {
     const output = buildPrompt(
-      { ...input, username: " \n ", members: [], environment: null },
+      { ...input, username: " \n ", members: [], dynamic: null },
       template,
       promptStrings,
     );
     expect(output).toContain("# Council for the user");
     expect(output).toContain("## Members\nChoose experts.");
-    expect(output).toContain("## Environment\nChoose a setting.");
+    expect(output).toContain("## Dynamic\nChoose a group dynamic.");
   });
 
   it.each([
     ["", "A garden.", "## Instructions", "## Subject\nA garden."],
     ["Give examples.", " \n ", "## Subject", "## Instructions\nGive examples."],
-    [" \t ", "", "## Instructions", "## Environment"],
+    [" \t ", "", "## Instructions", "## Dynamic"],
   ])(
     "omits empty optional sections (%j, %j)",
     (customInstructions, subject, absent, retained) => {

@@ -19,7 +19,6 @@ export function summarize(
   return {
     saves: saves.length,
     cards:
-      countLibrary(state.memberLibrary) +
-      countLibrary(state.environmentLibrary),
+      countLibrary(state.memberLibrary) + countLibrary(state.dynamicLibrary),
   };
 }

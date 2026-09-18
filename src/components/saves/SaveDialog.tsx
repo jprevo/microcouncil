@@ -12,10 +12,7 @@ import { useT } from "../../locale/useT";
 import { MAX_SAVES } from "../../saves/storage";
 import { useSaves } from "../../saves/useSaves";
 import { useAppState } from "../../state/hooks";
-import {
-  useSelectedEnvironment,
-  useSelectedMembers,
-} from "../../state/selectors";
+import { useSelectedDynamic, useSelectedMembers } from "../../state/selectors";
 import { useToast } from "../../toast/useToast";
 
 const NAME_LIMIT = 48;
@@ -23,7 +20,7 @@ const NAME_LIMIT = 48;
 export function SaveDialog({ onClose }: { readonly onClose: () => void }) {
   const state = useAppState();
   const members = useSelectedMembers();
-  const environment = useSelectedEnvironment();
+  const dynamic = useSelectedDynamic();
   const { saves, save, findByName } = useSaves();
   const toast = useToast();
   const { numberLocale } = useLocale().bundle.meta;
@@ -69,13 +66,13 @@ export function SaveDialog({ onClose }: { readonly onClose: () => void }) {
         item: stripOrigin(member),
         edited: member.edited,
       })),
-      environment:
-        environment === null
+      dynamic:
+        dynamic === null
           ? null
           : {
-              target: environment.target,
-              item: stripOrigin(environment),
-              edited: environment.edited,
+              target: dynamic.target,
+              item: stripOrigin(dynamic),
+              edited: dynamic.edited,
             },
       customInstructions: state.customInstructions,
       subject: state.subject,

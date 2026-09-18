@@ -1,6 +1,6 @@
 import { asNumber, asRecord, asString, readJson, writeJson } from "../lib/json";
-import { asEnvironment, asMember, asTarget } from "../lib/parse";
-import type { CouncilSave, Environment, Member, SavedEntry } from "../types";
+import { asDynamic, asMember, asTarget } from "../lib/parse";
+import type { CouncilSave, Dynamic, Member, SavedEntry } from "../types";
 
 const STORAGE_VERSION = "v3";
 
@@ -43,9 +43,9 @@ function asSave(value: unknown): CouncilSave | null {
     if (entry !== null) members.push(entry);
   }
 
-  const environment: SavedEntry<Environment> | null = asEntry(
-    record["environment"],
-    asEnvironment,
+  const dynamic: SavedEntry<Dynamic> | null = asEntry(
+    record["dynamic"],
+    asDynamic,
   );
 
   return {
@@ -53,7 +53,7 @@ function asSave(value: unknown): CouncilSave | null {
     name,
     savedAt,
     members,
-    environment,
+    dynamic,
     username: asString(record["username"]),
     customInstructions: asString(record["customInstructions"]),
     subject: asString(record["subject"]),

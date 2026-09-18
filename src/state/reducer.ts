@@ -2,8 +2,8 @@ import type { Catalog } from "../lib/library";
 import type {
   AppState,
   CouncilConfig,
-  Environment,
-  EnvironmentLibrary,
+  Dynamic,
+  DynamicLibrary,
   Library,
   LibraryTarget,
   Member,
@@ -14,8 +14,8 @@ export type AppAction =
   | { readonly type: "username"; readonly value: string }
   | { readonly type: "members"; readonly names: readonly string[] }
   | { readonly type: "toggleMember"; readonly name: string }
-  | { readonly type: "environment"; readonly title: string | null }
-  | { readonly type: "toggleEnvironment"; readonly title: string }
+  | { readonly type: "dynamic"; readonly title: string | null }
+  | { readonly type: "toggleDynamic"; readonly title: string }
   | { readonly type: "custom"; readonly value: string }
   | { readonly type: "subject"; readonly value: string }
   | { readonly type: "toggleTheme" }
@@ -31,14 +31,14 @@ export type AppAction =
     }
   | { readonly type: "deleteMember"; readonly target: LibraryTarget }
   | { readonly type: "restoreMember"; readonly target: LibraryTarget }
-  /** A null `target` creates a new setting; otherwise the entry it points to is rewritten. */
+  /** A null `target` creates a new dynamic; otherwise the entry it points to is rewritten. */
   | {
-      readonly type: "saveEnvironment";
+      readonly type: "saveDynamic";
       readonly target: LibraryTarget | null;
-      readonly environment: Environment;
+      readonly dynamic: Dynamic;
     }
-  | { readonly type: "deleteEnvironment"; readonly target: LibraryTarget }
-  | { readonly type: "restoreEnvironment"; readonly target: LibraryTarget };
+  | { readonly type: "deleteDynamic"; readonly target: LibraryTarget }
+  | { readonly type: "restoreDynamic"; readonly target: LibraryTarget };
 
 /** The name an entry carried before, then after, a change to the library. */
 interface Rename {
@@ -96,7 +96,7 @@ function renameSelectedOne(
  */
 export function createReducer(
   memberCatalog: Catalog<Member>,
-  environmentCatalog: Catalog<Environment>,
+  dynamicCatalog: Catalog<Dynamic>,
 ): (state: AppState, action: AppAction) => AppState {
   /** The selection sorted into catalog order, so the prompt stays stable. */
   function ordered(library: MemberLibrary, names: readonly string[]): string[] {
@@ -123,22 +123,22 @@ export function createReducer(
     };
   }
 
-  /** Applies a change to the setting catalog, keeping the selection in step. */
-  function withEnvironments(
+  /** Applies a change to the group-dynamic catalog, keeping the selection in step. */
+  function withDynamics(
     state: AppState,
     target: LibraryTarget | null,
-    apply: (library: EnvironmentLibrary) => EnvironmentLibrary,
+    apply: (library: DynamicLibrary) => DynamicLibrary,
   ): AppState {
     const edit = applyChange(
-      environmentCatalog,
-      state.environmentLibrary,
+      dynamicCatalog,
+      state.dynamicLibrary,
       target,
       apply,
     );
     return {
       ...state,
-      environmentLibrary: edit.library,
-      selectedEnvironment: renameSelectedOne(state.selectedEnvironment, edit),
+      dynamicLibrary: edit.library,
+      selectedDynamic: renameSelectedOne(state.selectedDynamic, edit),
     };
   }
 
@@ -157,26 +157,26 @@ export function createReducer(
       selected.push(back.label);
     }
 
-    let environmentLibrary = state.environmentLibrary;
-    let selectedEnvironment: string | null = null;
-    if (council.environment !== null) {
-      const back = environmentCatalog.reinstate(
-        environmentLibrary,
-        council.environment.target,
-        council.environment.item,
-        council.environment.edited,
+    let dynamicLibrary = state.dynamicLibrary;
+    let selectedDynamic: string | null = null;
+    if (council.dynamic !== null) {
+      const back = dynamicCatalog.reinstate(
+        dynamicLibrary,
+        council.dynamic.target,
+        council.dynamic.item,
+        council.dynamic.edited,
       );
-      environmentLibrary = back.library;
-      selectedEnvironment = back.label;
+      dynamicLibrary = back.library;
+      selectedDynamic = back.label;
     }
 
     return {
       ...state,
       username: council.username,
       memberLibrary,
-      environmentLibrary,
+      dynamicLibrary,
       selectedMembers: ordered(memberLibrary, selected),
-      selectedEnvironment,
+      selectedDynamic,
       customInstructions: council.customInstructions,
       subject: council.subject,
     };
@@ -201,13 +201,13 @@ export function createReducer(
               : [...state.selectedMembers, action.name],
           ),
         };
-      case "environment":
-        return { ...state, selectedEnvironment: action.title };
-      case "toggleEnvironment":
+      case "dynamic":
+        return { ...state, selectedDynamic: action.title };
+      case "toggleDynamic":
         return {
           ...state,
-          selectedEnvironment:
-            state.selectedEnvironment === action.title ? null : action.title,
+          selectedDynamic:
+            state.selectedDynamic === action.title ? null : action.title,
         };
       case "custom":
         return { ...state, customInstructions: action.value };
@@ -231,17 +231,17 @@ export function createReducer(
         return withMembers(state, action.target, (library) =>
           memberCatalog.restore(library, action.target),
         );
-      case "saveEnvironment":
-        return withEnvironments(state, action.target, (library) =>
-          environmentCatalog.save(library, action.target, action.environment),
+      case "saveDynamic":
+        return withDynamics(state, action.target, (library) =>
+          dynamicCatalog.save(library, action.target, action.dynamic),
         );
-      case "deleteEnvironment":
-        return withEnvironments(state, action.target, (library) =>
-          environmentCatalog.remove(library, action.target),
+      case "deleteDynamic":
+        return withDynamics(state, action.target, (library) =>
+          dynamicCatalog.remove(library, action.target),
         );
-      case "restoreEnvironment":
-        return withEnvironments(state, action.target, (library) =>
-          environmentCatalog.restore(library, action.target),
+      case "restoreDynamic":
+        return withDynamics(state, action.target, (library) =>
+          dynamicCatalog.restore(library, action.target),
         );
     }
   };

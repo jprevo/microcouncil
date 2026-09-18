@@ -5,7 +5,7 @@ import { BACKUP_VERSION } from "./format";
 import ui from "../locales/en/ui.json";
 import {
   catalogs,
-  environment,
+  dynamic,
   initialState,
   member,
   savedCouncil,
@@ -22,19 +22,30 @@ describe("backup export/import", () => {
       customInstructions: "$& and accents: été",
       theme: "dark" as const,
       selectedMembers: ["Ada edited", "Custom"],
-      selectedEnvironment: "Custom room",
+      selectedDynamic: "Custom dynamic",
       memberLibrary: {
         custom: [{ ...member, name: "Custom" }],
         overrides: { ada: { ...member, name: "Ada edited" } },
       },
-      environmentLibrary: {
-        custom: [{ ...environment, title: "Custom room" }],
-        overrides: { workshop: { ...environment, description: "Edited room" } },
+      dynamicLibrary: {
+        custom: [{ ...dynamic, title: "Custom dynamic" }],
+        overrides: {
+          brainstorm: { ...dynamic, description: "Edited instructions" },
+        },
       },
     };
     const backup = buildBackup(state, [savedCouncil], "fr", 1700000000000);
     expect(backup.exportedAt).toBe("2023-11-14T22:13:20.000Z");
     expect(parse(serializeBackup(backup))).toEqual({ ok: true, backup });
+  });
+
+  it("upgrades version 2 backups while preserving compatible data", () => {
+    const backup = buildBackup(initialState(), [savedCouncil], "en", 0);
+    const result = parse(JSON.stringify({ ...backup, version: 2 }));
+    expect(result).toEqual({
+      ok: true,
+      backup: { ...backup, version: BACKUP_VERSION },
+    });
   });
 
   it.each([
@@ -74,7 +85,7 @@ describe("backup export/import", () => {
           ...backup.state,
           username: 42,
           selectedMembers: [member.name, "Missing"],
-          selectedEnvironment: "Missing",
+          selectedDynamic: "Missing",
           memberLibrary: {
             custom: [null, { ...member, name: "Valid custom" }],
             overrides: { missing: member },

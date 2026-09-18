@@ -7,7 +7,7 @@
   "lede": "Crea un prompt para conversar con un grupo de especialistas en tu IA favorita.",
   "prompt": {
     "noMembers": "_No has seleccionado ningún miembro._",
-    "noEnvironment": "_No has seleccionado ningún escenario._",
+    "noDynamic": "_No has seleccionado ninguna dinámica de grupo._",
     "personalityLabel": "Personalidad: "
   },
   "footer": {
@@ -76,28 +76,28 @@
       "descriptionRequired": "Añade una descripción."
     }
   },
-  "environments": {
-    "title": "El escenario",
-    "hint": "El lugar donde transcurre la conversación.",
+  "dynamics": {
+    "title": "La dinámica del consejo",
+    "hint": "La forma en que los miembros piensan, hablan e interactúan.",
     "clear": "Quitar selección",
-    "add": "Añadir un escenario",
+    "add": "Añadir una dinámica",
     "edit": "Editar {title}",
-    "editorCreateTitle": "Nuevo escenario",
-    "toastCreated": "Se ha añadido el escenario «{title}»",
+    "editorCreateTitle": "Nueva dinámica",
+    "toastCreated": "Se ha añadido la dinámica «{title}»",
     "toastUpdated": "Se ha actualizado «{title}»",
     "fields": {
       "title": "Título",
-      "titlePlaceholder": "El refugio de montaña",
+      "titlePlaceholder": "El diálogo socrático",
       "summary": "Resumen",
       "summaryHint": "Una frase que aparece en la ficha. No se incluye en el prompt.",
-      "summaryPlaceholder": "Describe en una frase cómo influye este escenario en la conversación.",
+      "summaryPlaceholder": "Describe en una frase cómo cambia esta dinámica la conversación.",
       "description": "Descripción",
-      "descriptionHint": "La descripción del lugar que se incluirá en el prompt. Escribe {{username}} donde quieras que aparezca tu nombre.",
-      "descriptionPlaceholder": "Estáis reunidos junto a la estufa de un refugio mientras cae la noche sobre el valle."
+      "descriptionHint": "Las formas de pensar, comportarse y expresarse que se incluirán en el prompt. Escribe {{username}} donde quieras que aparezca tu nombre.",
+      "descriptionPlaceholder": "Plantead preguntas breves que pongan a prueba las ideas antes de llegar a una conclusión."
     },
     "validation": {
       "titleRequired": "Introduce un título.",
-      "titleTaken": "Ya hay otro escenario con ese título.",
+      "titleTaken": "Ya hay otra dinámica con ese título.",
       "iconRequired": "Elige un icono.",
       "summaryRequired": "Añade un resumen.",
       "descriptionRequired": "Añade una descripción."
@@ -144,7 +144,7 @@
     "promptRegion": "Vista previa del prompt",
     "warningMissing": "Te falta seleccionar {items}.",
     "missingMembers": "al menos un miembro",
-    "missingEnvironment": "un escenario",
+    "missingDynamic": "una dinámica de grupo",
     "note": "Pégalo tal cual en Claude, ChatGPT, Gemini o cualquier otro asistente.",
     "copy": "Copiar el prompt",
     "copied": "¡Copiado!",
@@ -162,7 +162,7 @@
     "deletedToast": "Se ha eliminado «{name}»",
     "dialogTitle": "💾 Guardar este consejo",
     "nameLabel": "Nombre del consejo",
-    "nameHint": "Tu nombre, las fichas de los miembros, el escenario, las instrucciones y el tema se guardan en este navegador. Las fichas se conservan completas: al cargar el consejo, se recuperarán tal como están ahora, aunque después las hayas editado o eliminado.",
+    "nameHint": "Tu nombre, las fichas de los miembros, la dinámica, las instrucciones y el tema se guardan en este navegador. Las fichas se conservan completas: al cargar el consejo, se recuperarán tal como están ahora, aunque después las hayas editado o eliminado.",
     "namePlaceholder": "Consejo de producto",
     "nameRequired": "Ponle un nombre para encontrarlo después.",
     "replaceConfirm": "¿Reemplazar el consejo guardado «{name}»?",
@@ -172,8 +172,8 @@
   },
   "backup": {
     "cardsWord": {
-      "one": "ficha de miembro o escenario",
-      "other": "fichas de miembros o escenarios"
+      "one": "ficha de miembro o dinámica",
+      "other": "fichas de miembros o dinámicas"
     },
     "savesWord": { "one": "consejo guardado", "other": "consejos guardados" },
     "export": {
@@ -186,8 +186,8 @@
       "settingsLine": "Tu nombre, tus instrucciones, el tema actual y tu selección.",
       "cardsLine": {
         "zero": "Las fichas que crees o edites. Por ahora no hay ninguna.",
-        "one": "{count} ficha de miembro o escenario creada o editada.",
-        "other": "{count} fichas de miembros o escenarios creadas o editadas."
+        "one": "{count} ficha de miembro o dinámica creada o editada.",
+        "other": "{count} fichas de miembros o dinámicas creadas o editadas."
       },
       "savesLine": {
         "zero": "Tus consejos guardados. Por ahora no hay ninguno.",
@@ -229,8 +229,8 @@
     "intro": "El mismo consejo, directamente en tu agente: reúne a los miembros, prepara el prompt e interpreta la escena, sin que tengas que copiar y pegar.",
     "overviewTitle": "Cómo funciona",
     "overviewBullet1": "Pides un consejo y el agente te ofrece tres opciones: crearlo paso a paso, cargar uno guardado o dejar que elija los miembros según el tema que quieras tratar.",
-    "overviewBullet2": "Un pequeño script local utiliza el mismo catálogo de miembros y escenarios que esta web y genera exactamente el mismo prompt.",
-    "overviewBullet3": "Cada consejo se guarda en tu equipo con sus miembros, su escenario y tus instrucciones, pero nunca con el tema de la conversación. Después basta con pedirlo por su nombre, por ejemplo «reúne al consejo ABC para hablar de…», para recuperarlo tal como estaba.",
+    "overviewBullet2": "Un pequeño script local utiliza el mismo catálogo de miembros y dinámicas de grupo que esta web y genera exactamente el mismo prompt.",
+    "overviewBullet3": "Cada consejo se guarda en tu equipo con sus miembros, su dinámica y tus instrucciones, pero nunca con el tema de la conversación. Después basta con pedirlo por su nombre, por ejemplo «reúne al consejo ABC para hablar de…», para recuperarlo tal como estaba.",
     "hermesTitle": "Hermes",
     "hermesChatIntro": "En un chat:",
     "installCommand": "Instala el skill jprevo/microcouncil/skill",

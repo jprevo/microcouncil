@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useAppState } from "./hooks";
 import { useLocale } from "../locale/useLocale";
-import type { CatalogEnvironment, CatalogMember } from "../types";
+import type { CatalogDynamic, CatalogMember } from "../types";
 
 /** The member catalog as it actually stands, with the user's edits applied. */
 export function useMemberCatalog(): readonly CatalogMember[] {
@@ -13,13 +13,13 @@ export function useMemberCatalog(): readonly CatalogMember[] {
   );
 }
 
-/** The setting catalog as it actually stands, with the user's edits applied. */
-export function useEnvironmentCatalog(): readonly CatalogEnvironment[] {
-  const { environmentLibrary } = useAppState();
-  const { environmentCatalog } = useLocale();
+/** The group-dynamic catalog as it actually stands, with the user's edits applied. */
+export function useDynamicCatalog(): readonly CatalogDynamic[] {
+  const { dynamicLibrary } = useAppState();
+  const { dynamicCatalog } = useLocale();
   return useMemo(
-    () => environmentCatalog.build(environmentLibrary),
-    [environmentCatalog, environmentLibrary],
+    () => dynamicCatalog.build(dynamicLibrary),
+    [dynamicCatalog, dynamicLibrary],
   );
 }
 
@@ -37,14 +37,11 @@ export function useIsMemberSelected(name: string): boolean {
   return useAppState().selectedMembers.includes(name);
 }
 
-export function useSelectedEnvironment(): CatalogEnvironment | null {
-  const { selectedEnvironment } = useAppState();
-  const catalog = useEnvironmentCatalog();
+export function useSelectedDynamic(): CatalogDynamic | null {
+  const { selectedDynamic } = useAppState();
+  const catalog = useDynamicCatalog();
   return useMemo(
-    () =>
-      catalog.find(
-        (environment) => environment.title === selectedEnvironment,
-      ) ?? null,
-    [catalog, selectedEnvironment],
+    () => catalog.find((dynamic) => dynamic.title === selectedDynamic) ?? null,
+    [catalog, selectedDynamic],
   );
 }

@@ -1,28 +1,28 @@
 import { useMemo } from "react";
 import { buildPrompt } from "../prompt";
 import { useAppState } from "./hooks";
-import { useSelectedEnvironment, useSelectedMembers } from "./selectors";
+import { useSelectedDynamic, useSelectedMembers } from "./selectors";
 import { useLocale } from "../locale/useLocale";
 
 /** The final prompt, recomputed whenever the state changes. */
 export function usePrompt(): string {
   const { username, customInstructions, subject } = useAppState();
   const members = useSelectedMembers();
-  const environment = useSelectedEnvironment();
+  const dynamic = useSelectedDynamic();
   const { bundle } = useLocale();
 
   return useMemo(
     () =>
       buildPrompt(
-        { username, members, environment, customInstructions, subject },
+        { username, members, dynamic, customInstructions, subject },
         bundle.promptTemplate,
         {
           usernameFallback: bundle.meta.usernameFallback,
           noMembers: bundle.ui.prompt.noMembers,
-          noEnvironment: bundle.ui.prompt.noEnvironment,
+          noDynamic: bundle.ui.prompt.noDynamic,
           personalityLabel: bundle.ui.prompt.personalityLabel,
         },
       ),
-    [username, members, environment, customInstructions, subject, bundle],
+    [username, members, dynamic, customInstructions, subject, bundle],
   );
 }

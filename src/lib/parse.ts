@@ -1,5 +1,5 @@
 import { asRecord, asString, asStringArray } from "./json";
-import type { Environment, LibraryTarget, Member } from "../types";
+import type { Dynamic, LibraryTarget, Member } from "../types";
 
 /** Reads a stored member back, or null when it does not have the expected shape. */
 export function asMember(value: unknown): Member | null {
@@ -16,19 +16,17 @@ export function asMember(value: unknown): Member | null {
   return member.name === "" || member.icon === "" ? null : member;
 }
 
-/** Reads a stored setting back, or null when it does not have the expected shape. */
-export function asEnvironment(value: unknown): Environment | null {
+/** Reads a stored group dynamic back, or null when it lacks the expected shape. */
+export function asDynamic(value: unknown): Dynamic | null {
   const record = asRecord(value);
   if (record === null) return null;
-  const environment: Environment = {
+  const dynamic: Dynamic = {
     title: asString(record["title"]).trim(),
     icon: asString(record["icon"]).trim(),
     summary: asString(record["summary"]).trim(),
     description: asString(record["description"]).trim(),
   };
-  return environment.title === "" || environment.icon === ""
-    ? null
-    : environment;
+  return dynamic.title === "" || dynamic.icon === "" ? null : dynamic;
 }
 
 /** Reads back the catalog slot an entry used to fill, or null when it is unreadable. */

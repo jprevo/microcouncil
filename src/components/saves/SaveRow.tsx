@@ -28,7 +28,7 @@ export function SaveRow({ save, onLoaded }: SaveRowProps) {
   const count = save.members.length;
   const meta = [
     `${count} ${pluralize(count, t.saves.membersCount, numberLocale)}`,
-    save.environment?.item.title ?? null,
+    save.dynamic?.item.title ?? null,
     formatDate(save.savedAt, numberLocale),
   ].filter((part): part is string => part !== null);
 

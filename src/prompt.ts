@@ -1,4 +1,4 @@
-import type { Environment, Member } from "./types";
+import type { Dynamic, Member } from "./types";
 
 /** The name as the prompt will read it: what was typed, or a neutral stand-in when nothing was. */
 export function resolveUsername(username: string, fallback: string): string {
@@ -32,14 +32,14 @@ function renderMember(member: Member, personalityLabel: string): string {
   return lines.join("\n");
 }
 
-function renderEnvironment(environment: Environment): string {
-  return `### ${environment.icon} ${environment.title}\n${environment.description}`;
+function renderDynamic(dynamic: Dynamic): string {
+  return `### ${dynamic.icon} ${dynamic.title}\n${dynamic.description}`;
 }
 
 export interface PromptInput {
   readonly username: string;
   readonly members: readonly Member[];
-  readonly environment: Environment | null;
+  readonly dynamic: Dynamic | null;
   readonly customInstructions: string;
   readonly subject: string;
 }
@@ -48,7 +48,7 @@ export interface PromptInput {
 export interface PromptStrings {
   readonly usernameFallback: string;
   readonly noMembers: string;
-  readonly noEnvironment: string;
+  readonly noDynamic: string;
   /** Precedes the comma-separated trait list, e.g. "Personality: " / "Personnalité : ". */
   readonly personalityLabel: string;
 }
@@ -93,20 +93,18 @@ export function buildPrompt(
           .map((member) => renderMember(member, strings.personalityLabel))
           .join("\n\n")
       : strings.noMembers;
-  const environmentSection =
-    input.environment === null
-      ? strings.noEnvironment
-      : renderEnvironment(input.environment);
+  const dynamicSection =
+    input.dynamic === null ? strings.noDynamic : renderDynamic(input.dynamic);
 
   let output = template;
   if (custom === "") output = dropSection(output, "custom");
   if (subject === "") output = dropSection(output, "subject");
 
   output = fill(output, "members", memberSection);
-  output = fill(output, "environment", environmentSection);
+  output = fill(output, "dynamic", dynamicSection);
   output = fill(output, "custom", custom);
   output = fill(output, "subject", subject);
-  // Last, because the name can also appear inside the entries and the setting.
+  // Last, because the name can also appear inside member and dynamic entries.
   output = fill(output, "username", username);
 
   return `${output.trimEnd()}\n`;

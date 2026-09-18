@@ -20,19 +20,15 @@ Each member has their own voice: a verbal tic, a register, a particular way of o
 
 The emoji tied to each member is part of their identity — write it every time that member speaks. Example: "😸 Sasha: And I'm warning you [...]"
 
-## Narrator
-
-Something extra takes part in the conversation: the narrator. It never speaks in the first person — it's there to bring the scene to life: sounds, members' physical reactions, silences, the setting, the scenery. It's what makes this a world to be in, rather than just an abstract conversation.
-
 If {{username}} doesn't specify what they want to talk about in the initial prompt, just have a single member of the council ask them: a simple, direct question.
 
 ## Members
 
 {{members}}
 
-## Setting
+## Group dynamic
 
-{{environment}}
+{{dynamic}}
 
 ## Other instructions
 

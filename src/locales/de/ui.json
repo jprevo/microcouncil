@@ -7,7 +7,7 @@
   "lede": "Erstelle einen Prompt für deine Lieblings-KI und tausche dich mit einer Runde von Fachleuten aus.",
   "prompt": {
     "noMembers": "_Keine Mitglieder ausgewählt._",
-    "noEnvironment": "_Kein Schauplatz ausgewählt._",
+    "noDynamic": "_Keine Gesprächsdynamik ausgewählt._",
     "personalityLabel": "Persönlichkeit: "
   },
   "footer": {
@@ -76,28 +76,28 @@
       "descriptionRequired": "Bitte gib eine Beschreibung ein."
     }
   },
-  "environments": {
-    "title": "Der Schauplatz",
-    "hint": "Die Umgebung, in der euer Gespräch stattfindet.",
+  "dynamics": {
+    "title": "Dynamik der Runde",
+    "hint": "Wie die Mitglieder denken, sprechen und miteinander umgehen.",
     "clear": "Auswahl aufheben",
-    "add": "Schauplatz hinzufügen",
+    "add": "Dynamik hinzufügen",
     "edit": "{title} bearbeiten",
-    "editorCreateTitle": "Neuer Schauplatz",
-    "toastCreated": "{title} wurde zu den Schauplätzen hinzugefügt",
+    "editorCreateTitle": "Neue Dynamik",
+    "toastCreated": "{title} wurde zu den Dynamiken hinzugefügt",
     "toastUpdated": "{title} wurde aktualisiert",
     "fields": {
       "title": "Titel",
-      "titlePlaceholder": "Die Berghütte",
+      "titlePlaceholder": "Sokratischer Dialog",
       "summary": "Kurzbeschreibung",
       "summaryHint": "Ein Satz für die Karte. Er erscheint nicht im Prompt.",
-      "summaryPlaceholder": "Wie dieser Ort das Gespräch prägt, in einem Satz.",
+      "summaryPlaceholder": "Wie diese Dynamik den Austausch prägt, in einem Satz.",
       "description": "Beschreibung",
-      "descriptionHint": "So wird der Schauplatz im Prompt beschrieben. Schreibe {{username}} an die Stellen, an denen dein Name erscheinen soll.",
-      "descriptionPlaceholder": "Ihr sitzt um den Ofen einer Berghütte. Über dem Tal wird es langsam dunkel."
+      "descriptionHint": "Diese Denk-, Verhaltens- und Sprechweisen werden in den Prompt übernommen. Schreibe {{username}} an die Stellen, an denen dein Name erscheinen soll.",
+      "descriptionPlaceholder": "Stellt kurze Fragen, die Ideen prüfen, bevor ihr eine Schlussfolgerung zieht."
     },
     "validation": {
       "titleRequired": "Bitte gib einen Titel ein.",
-      "titleTaken": "Ein anderer Schauplatz hat bereits diesen Titel.",
+      "titleTaken": "Eine andere Dynamik hat bereits diesen Titel.",
       "iconRequired": "Bitte wähle ein Symbol aus.",
       "summaryRequired": "Bitte gib eine Kurzbeschreibung ein.",
       "descriptionRequired": "Bitte gib eine Beschreibung ein."
@@ -144,7 +144,7 @@
     "promptRegion": "Prompt-Vorschau",
     "warningMissing": "Noch nicht ausgewählt: {items}.",
     "missingMembers": "mindestens ein Mitglied",
-    "missingEnvironment": "ein Schauplatz",
+    "missingDynamic": "eine Gesprächsdynamik",
     "note": "Füge den Prompt direkt in Claude, ChatGPT, Gemini oder einen anderen Assistenten ein.",
     "copy": "Prompt kopieren",
     "copied": "Kopiert!",
@@ -162,7 +162,7 @@
     "deletedToast": "„{name}“ wurde gelöscht",
     "dialogTitle": "💾 Diese Beraterrunde speichern",
     "nameLabel": "Name der gespeicherten Runde",
-    "nameHint": "Dein Name, die Mitgliederprofile, der Schauplatz, deine Anweisungen und dein Anliegen werden in diesem Browser gespeichert. Die Profile werden vollständig übernommen: Wenn du die Runde später lädst, sind sie wieder so wie jetzt, auch wenn du sie inzwischen bearbeitet oder gelöscht hast.",
+    "nameHint": "Dein Name, die Mitgliederprofile, die Gesprächsdynamik, deine Anweisungen und dein Anliegen werden in diesem Browser gespeichert. Die Profile werden vollständig übernommen: Wenn du die Runde später lädst, sind sie wieder so wie jetzt, auch wenn du sie inzwischen bearbeitet oder gelöscht hast.",
     "namePlaceholder": "Produktrunde",
     "nameRequired": "Gib der Runde einen Namen, damit du sie wiederfindest.",
     "replaceConfirm": "Die gespeicherte Runde „{name}“ ersetzen?",
@@ -172,8 +172,8 @@
   },
   "backup": {
     "cardsWord": {
-      "one": "Mitgliederprofil oder Schauplatz",
-      "other": "Mitgliederprofile oder Schauplätze"
+      "one": "Mitglieder- oder Dynamikprofil",
+      "other": "Mitglieder- oder Dynamikprofile"
     },
     "savesWord": {
       "one": "gespeicherte Beraterrunde",
@@ -188,14 +188,14 @@
       "sectionTitle": "Das steckt in der Datei",
       "settingsLine": "Dein Name, deine Anweisungen, dein aktuelles Anliegen und deine Auswahl.",
       "cardsLine": {
-        "zero": "Selbst erstellte oder bearbeitete Mitgliederprofile und Schauplätze. Bisher gibt es keine.",
-        "one": "{count} selbst erstelltes oder bearbeitetes Mitgliederprofil bzw. ein Schauplatz.",
-        "other": "{count} selbst erstellte oder bearbeitete Mitgliederprofile bzw. Schauplätze."
+        "zero": "Selbst erstellte oder bearbeitete Mitglieder- und Dynamikprofile. Bisher gibt es keine.",
+        "one": "{count} selbst erstelltes oder bearbeitetes Mitglieder- oder Dynamikprofil.",
+        "other": "{count} selbst erstellte oder bearbeitete Mitglieder- oder Dynamikprofile."
       },
       "savesLine": {
         "zero": "Deine gespeicherten Beraterrunden. Bisher gibt es keine.",
-        "one": "{count} gespeicherte Beraterrunde mit den zugehörigen Profilen und dem Schauplatz.",
-        "other": "{count} gespeicherte Beraterrunden mit den zugehörigen Profilen und Schauplätzen."
+        "one": "{count} gespeicherte Beraterrunde mit den zugehörigen Profilen und der Gesprächsdynamik.",
+        "other": "{count} gespeicherte Beraterrunden mit den zugehörigen Profilen und Gesprächsdynamiken."
       },
       "downloadedToast": "Deine Daten wurden heruntergeladen"
     },
@@ -232,8 +232,8 @@
     "intro": "Deine Beraterrunde direkt im KI-Agenten: Er stellt die Runde zusammen, baut den Prompt und spielt die Szene. Ganz ohne Kopieren und Einfügen.",
     "overviewTitle": "So funktioniert’s",
     "overviewBullet1": "Wenn du eine Beraterrunde anforderst, bietet der Agent drei Möglichkeiten: Schritt für Schritt eine neue Runde zusammenstellen, eine gespeicherte laden oder automatisch starten. Im Automatikmodus wählt er die Mitglieder passend zu deinem Thema aus.",
-    "overviewBullet2": "Ein kleines lokales Skript greift auf denselben Katalog von Mitgliedern und Schauplätzen wie diese Website zu und erstellt genau denselben Prompt.",
-    "overviewBullet3": "Jede erstellte Runde wird auf deinem Computer gespeichert: die Mitglieder, der Schauplatz und deine Anweisungen, aber nie das Thema. Mit ihrem Namen kannst du sie genauso wieder aufrufen, etwa mit „Starte die Runde ABC zum Thema …“.",
+    "overviewBullet2": "Ein kleines lokales Skript greift auf denselben Katalog von Mitgliedern und Gesprächsdynamiken wie diese Website zu und erstellt genau denselben Prompt.",
+    "overviewBullet3": "Jede erstellte Runde wird auf deinem Computer gespeichert: die Mitglieder, die Gesprächsdynamik und deine Anweisungen, aber nie das Thema. Mit ihrem Namen kannst du sie genauso wieder aufrufen, etwa mit „Starte die Runde ABC zum Thema …“.",
     "hermesTitle": "Hermes",
     "hermesChatIntro": "Im Chat:",
     "installCommand": "Installiere den Skill jprevo/microcouncil/skill",

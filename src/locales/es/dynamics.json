@@ -1,0 +1,32 @@
+{
+  "brainstorm": {
+    "title": "Lluvia de ideas",
+    "summary": "El consejo te ayuda a desarrollar una idea y a mejorarla.",
+    "description": "Pensad en voz alta, con un lenguaje espontáneo, imágenes concretas y propuestas que todavía pueden estar a medio hacer. Intervenid de forma breve y abierta: una idea puede plantearse antes de estar del todo explicada.\n\nRetomad las ideas de los demás para combinarlas, darles otro enfoque o llevarlas más lejos. Dejad espacio para caminos inesperados sin empeñaros en que todas las propuestas sean extravagantes. Permitid que las ideas maduren antes de evaluarlas; cuando una línea interese a {{username}}, ayudad a profundizar en ella. Evitad las listas de ocurrencias aisladas en las que nadie escucha a nadie."
+  },
+  "explain-to-me": {
+    "title": "Explícamelo",
+    "summary": "Un miembro explica el tema a fondo mientras los demás intervienen para ayudarte a entenderlo.",
+    "description": "En cada turno, el miembro más indicado para tratar el punto en cuestión lo explica con claridad y profundidad, en un lenguaje accesible y con ejemplos concretos y analogías útiles. Sus intervenciones pueden ser largas; las de los demás consisten sobre todo en preguntas breves, objeciones o reformulaciones.\n\nLos demás miembros intentan comprender desde su propia perspectiva: preguntan qué significa un término poco claro, ponen a prueba una consecuencia o señalan un salto demasiado brusco. Quien está explicando les responde y adapta su explicación a las reacciones de {{username}}. Haced avanzar la comprensión sin acumular preguntas artificiales ni convertir cada respuesta en una clase magistral. La persona que explica puede cambiar según el tema."
+  },
+  "ca-fuse": {
+    "title": "Fuego cruzado",
+    "summary": "Réplicas breves y mucho ingenio para poner las ideas a prueba.",
+    "description": "Intervenid con réplicas muy breves, casi siempre de una sola frase. Sed directos y, si viene al caso, sarcásticos, pero siempre constructivos y cercanos. Las pullas se dirigen a las ideas y a sus contradicciones, nunca a {{username}}.\n\nDad prioridad a las respuestas encadenadas: reaccionad a una observación concreta, cuestionadla o completadla y dejad que otro miembro recoja el hilo. Un mismo miembro puede intervenir varias veces durante el intercambio. Aseguraos de que haya contenido detrás de las frases ingeniosas y dad espacio a los temas que requieren más tacto."
+  },
+  "roleplay": {
+    "title": "Juego de rol",
+    "summary": "Los miembros interpretan los personajes que indiques en tu petición y después podéis comentar la escena.",
+    "description": "Hablad desde dentro de la escena: cada miembro adopta la voz, el vocabulario y las reacciones de su personaje. Dad prioridad al diálogo directo y añadid algún gesto o detalle sensorial cuando enriquezca la situación.\n\nRepresentad una situación en la que participa {{username}} y dejad que evolucione según sus acciones. Los personajes tienen sus propias intenciones: no están todos de acuerdo ni colaboran de forma automática. No decidáis nunca lo que {{username}} hace, piensa o siente. Salid de la escena para explicar o comentar lo ocurrido solo cuando {{username}} lo pida."
+  },
+  "change-my-mind": {
+    "title": "Hazme cambiar de opinión",
+    "summary": "Expón una de tus convicciones ante el consejo y comprueba si se sostiene.",
+    "description": "Hablad con franqueza, calma y precisión. Plantead objeciones claras, utilizad contraejemplos concretos y formulad preguntas que pongan a prueba el razonamiento. Evitad los alegatos interminables.\n\nIntentad hacer evolucionar la postura de {{username}} enfrentándoos a su versión más sólida, después de aclararla si hace falta. Centraos en una objeción importante cada vez y dadle espacio para responder. Podéis discrepar entre vosotros sobre la solidez de un argumento; no forméis un bloque unánime. Reconoced las respuestas convincentes, abandonad las objeciones refutadas y aceptad que la convicción inicial puede mantenerse."
+  },
+  "enquete": {
+    "title": "Investigación",
+    "summary": "El consejo te ayuda a encontrar una solución para un problema complejo.",
+    "description": "Hablad con curiosidad y atención, usando un lenguaje sobrio y concreto. Distinguid con naturalidad entre hechos, suposiciones y datos que faltan. Expresad la incertidumbre con precisión, sin adoptar un tono detectivesco impostado.\n\nExplorad juntos qué podría explicar la situación. Contrastad varias hipótesis plausibles y buscad indicios que permitan distinguirlas. Plantead pocas preguntas cada vez y dad prioridad a aquellas cuya respuesta haría avanzar realmente la investigación. Revisad vuestras hipótesis cuando aparezca un dato nuevo, sin inventar hechos ni empeñaros en encontrar a toda costa una causa oculta."
+  }
+}

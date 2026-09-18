@@ -7,7 +7,7 @@
   "lede": "Créez un prompt à copier dans votre IA préférée pour discuter avec un panel de spécialistes.",
   "prompt": {
     "noMembers": "_Aucun membre sélectionné._",
-    "noEnvironment": "_Aucune dynamique sélectionnée._",
+    "noDynamic": "_Aucune dynamique sélectionnée._",
     "personalityLabel": "Personnalité : "
   },
   "footer": {
@@ -76,7 +76,7 @@
       "descriptionRequired": "La description est obligatoire."
     }
   },
-  "environments": {
+  "dynamics": {
     "title": "La dynamique du conseil",
     "hint": "La manière dont les membres réfléchissent, parlent et échangent.",
     "clear": "Effacer",
@@ -146,7 +146,7 @@
     "promptRegion": "Aperçu du prompt",
     "warningMissing": "Il manque {items}.",
     "missingMembers": "au moins un membre",
-    "missingEnvironment": "une dynamique de discussion",
+    "missingDynamic": "une dynamique de discussion",
     "note": "Collez-le tel quel dans Claude, ChatGPT, Gemini ou tout autre assistant.",
     "copy": "Copier le prompt",
     "copied": "Copié !",
@@ -234,8 +234,8 @@
     "intro": "Le même conseil, mais directement dans votre agent : il compose le conseil, assemble le prompt et joue la scène, sans copier-coller.",
     "overviewTitle": "En deux mots",
     "overviewBullet1": "Vous demandez un conseil, l'agent propose trois entrées : créer un conseil pas à pas, charger un conseil déjà enregistré, ou automatique — il choisit les membres lui-même d'après votre sujet.",
-    "overviewBullet2": "Un petit script local pioche dans le même catalogue de compagnons et d'environnements que ce site, et produit exactement le même prompt.",
-    "overviewBullet3": "Chaque conseil créé est enregistré sur votre machine : les membres, l'environnement, vos instructions — mais jamais le sujet. Il suffit ensuite de le rappeler par son nom, « lance le conseil ABC sur… », pour le retrouver à l'identique.",
+    "overviewBullet2": "Un petit script local pioche dans le même catalogue de membres et de dynamiques de groupe que ce site, et produit exactement le même prompt.",
+    "overviewBullet3": "Chaque conseil créé est enregistré sur votre machine : les membres, la dynamique, vos instructions — mais jamais le sujet. Il suffit ensuite de le rappeler par son nom, « lance le conseil ABC sur… », pour le retrouver à l'identique.",
     "hermesTitle": "Hermes",
     "hermesChatIntro": "Dans un chat :",
     "installCommand": "Installe le skill jprevo/microcouncil/skill",

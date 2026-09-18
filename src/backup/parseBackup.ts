@@ -18,15 +18,15 @@ function invalid(reason: string): BackupParse {
 
 /**
  * Brings a file written by an older version up to the current shape. Version 1
- * predates per-language storage and carries no `locale`, so there is nothing
- * sound to upgrade it to: every future bump adds a real step here, while a file
- * from a newer version is refused rather than half-read.
+ * predates per-language storage and cannot be upgraded safely. Version 2 data is
+ * accepted: the current guarded readers preserve compatible fields and discard
+ * the scene-based field that group dynamics replaced.
  */
 function migrate(
   record: Record<string, unknown>,
   version: number,
 ): Record<string, unknown> | null {
-  return version === BACKUP_VERSION ? record : null;
+  return version === 2 || version === BACKUP_VERSION ? record : null;
 }
 
 /**

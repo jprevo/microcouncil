@@ -630,7 +630,7 @@ p {
   grid-template-columns: repeat(auto-fill, minmax(212px, 1fr));
 }
 
-.grid--environments {
+.grid--dynamics {
   grid-template-columns: repeat(auto-fill, minmax(212px, 1fr));
 }
 
@@ -642,7 +642,7 @@ p {
  */
 @media (min-width: 1440px) {
   .grid--members,
-  .grid--environments {
+  .grid--dynamics {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 }
@@ -1462,7 +1462,7 @@ button.footer-link {
   }
 
   .grid--members,
-  .grid--environments {
+  .grid--dynamics {
     grid-template-columns: 1fr;
   }
 

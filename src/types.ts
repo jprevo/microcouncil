@@ -8,7 +8,7 @@ export interface Member {
   readonly tags: readonly string[];
 }
 
-export interface Environment {
+export interface Dynamic {
   readonly title: string;
   readonly icon: string;
   readonly summary: string;
@@ -36,7 +36,7 @@ export interface Library<T> {
 
 /** Where a displayed entry comes from, whatever the field carrying its name. */
 export interface CatalogOrigin {
-  /** The entry's current name — `name` for a member, `title` for an environment. */
+  /** The entry's current name — `name` for a member, `title` for a dynamic. */
   readonly label: string;
   readonly target: LibraryTarget;
   /** True for a built-in carrying a local edit, which can therefore be reverted. */
@@ -49,8 +49,8 @@ export type CatalogEntry<T> = T & CatalogOrigin;
 export type MemberLibrary = Library<Member>;
 export type CatalogMember = CatalogEntry<Member>;
 
-export type EnvironmentLibrary = Library<Environment>;
-export type CatalogEnvironment = CatalogEntry<Environment>;
+export type DynamicLibrary = Library<Dynamic>;
+export type CatalogDynamic = CatalogEntry<Dynamic>;
 
 export type Theme = "light" | "dark";
 
@@ -58,15 +58,15 @@ export interface AppState {
   username: string;
   /** Names of the selected members, in catalog order. */
   selectedMembers: string[];
-  /** Title of the selected setting, or null when none is picked. */
-  selectedEnvironment: string | null;
+  /** Title of the selected group dynamic, or null when none is picked. */
+  selectedDynamic: string | null;
   customInstructions: string;
   subject: string;
   theme: Theme;
   /** Locally added or edited members, layered over the shipped catalog. */
   memberLibrary: MemberLibrary;
-  /** Locally added or edited settings, layered over the shipped catalog. */
-  environmentLibrary: EnvironmentLibrary;
+  /** Locally added or edited group dynamics, layered over the shipped catalog. */
+  dynamicLibrary: DynamicLibrary;
 }
 
 /**
@@ -92,7 +92,7 @@ export interface SavedEntry<T> {
 export interface CouncilConfig {
   readonly username: string;
   readonly members: readonly SavedEntry<Member>[];
-  readonly environment: SavedEntry<Environment> | null;
+  readonly dynamic: SavedEntry<Dynamic> | null;
   readonly customInstructions: string;
   readonly subject: string;
 }

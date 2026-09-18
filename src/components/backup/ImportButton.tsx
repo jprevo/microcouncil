@@ -11,7 +11,7 @@ import { useToast } from "../../toast/useToast";
 export function ImportButton() {
   const input = useRef<HTMLInputElement>(null);
   const toast = useToast();
-  const { memberCatalog, environmentCatalog } = useLocale();
+  const { memberCatalog, dynamicCatalog } = useLocale();
   const t = useT();
   /** The validated file waiting for a yes; nothing is written until then. */
   const [pending, setPending] = useState<Backup | null>(null);
@@ -27,7 +27,7 @@ export function ImportButton() {
     // An unreadable file is turned away here: only a valid one reaches the dialog.
     const parsed = await readBackupFile(
       file,
-      { memberCatalog, environmentCatalog },
+      { memberCatalog, dynamicCatalog },
       t.backup.errors,
     );
     if (parsed.ok) setPending(parsed.backup);

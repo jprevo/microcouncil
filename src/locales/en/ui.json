@@ -7,7 +7,7 @@
   "lede": "Create a prompt to paste into your favorite AI, and talk with a panel of specialists.",
   "prompt": {
     "noMembers": "_No member selected._",
-    "noEnvironment": "_No setting selected._",
+    "noDynamic": "_No group dynamic selected._",
     "personalityLabel": "Personality: "
   },
   "footer": {
@@ -76,28 +76,28 @@
       "descriptionRequired": "Description is required."
     }
   },
-  "environments": {
-    "title": "The setting",
-    "hint": "The setting the conversation takes place in.",
+  "dynamics": {
+    "title": "Council dynamic",
+    "hint": "How the members think, speak and interact.",
     "clear": "Clear",
-    "add": "Add a setting",
+    "add": "Add a dynamic",
     "edit": "Edit {title}",
-    "editorCreateTitle": "New setting",
-    "toastCreated": "{title} joins the settings",
+    "editorCreateTitle": "New dynamic",
+    "toastCreated": "{title} joins the dynamics",
     "toastUpdated": "{title} is up to date",
     "fields": {
       "title": "Title",
-      "titlePlaceholder": "The mountain refuge",
+      "titlePlaceholder": "Socratic dialogue",
       "summary": "Summary",
       "summaryHint": "One sentence, shown on the card. Not included in the prompt.",
-      "summaryPlaceholder": "What this setting changes about the conversation, in one sentence.",
+      "summaryPlaceholder": "How this dynamic changes the exchange, in one sentence.",
       "description": "Description",
-      "descriptionHint": "The setting exactly as it appears in the prompt. Write {{username}} where your name should appear.",
-      "descriptionPlaceholder": "You're gathered around the stove in a mountain refuge, night falling over the valley."
+      "descriptionHint": "The ways of thinking, behaving and speaking added to the prompt. Write {{username}} where your name should appear.",
+      "descriptionPlaceholder": "Ask short questions that test ideas before drawing a conclusion."
     },
     "validation": {
       "titleRequired": "Title is required.",
-      "titleTaken": "This title is already taken by another setting.",
+      "titleTaken": "This title is already taken by another dynamic.",
       "iconRequired": "Choose an icon.",
       "summaryRequired": "Summary is required.",
       "descriptionRequired": "Description is required."
@@ -146,7 +146,7 @@
     "promptRegion": "Prompt preview",
     "warningMissing": "Still missing {items}.",
     "missingMembers": "at least one member",
-    "missingEnvironment": "a setting",
+    "missingDynamic": "a group dynamic",
     "note": "Paste it as-is into Claude, ChatGPT, Gemini or any other assistant.",
     "copy": "Copy prompt",
     "copied": "Copied!",
@@ -164,7 +164,7 @@
     "deletedToast": "\"{name}\" is deleted",
     "dialogTitle": "💾 Save this council",
     "nameLabel": "Save name",
-    "nameHint": "Your name, the member cards, the setting, your instructions and the topic are stored in this browser. Cards travel whole: reloading this council restores them exactly as they are now, even if you change or delete them later.",
+    "nameHint": "Your name, the member cards, the group dynamic, your instructions and the topic are stored in this browser. Cards travel whole: reloading this council restores them exactly as they are now, even if you change or delete them later.",
     "namePlaceholder": "Product council",
     "nameRequired": "Give this save a name so you can find it again.",
     "replaceConfirm": "Replace the save \"{name}\"?",
@@ -174,8 +174,8 @@
   },
   "backup": {
     "cardsWord": {
-      "one": "member or setting card",
-      "other": "member or setting cards"
+      "one": "member or dynamic card",
+      "other": "member or dynamic cards"
     },
     "savesWord": { "one": "saved council", "other": "saved councils" },
     "export": {
@@ -188,8 +188,8 @@
       "settingsLine": "Your name, your instructions, the current topic, your selection.",
       "cardsLine": {
         "zero": "The cards you'll create or edit — none for now.",
-        "one": "{count} member or setting card created or modified.",
-        "other": "{count} member or setting cards created or modified."
+        "one": "{count} member or dynamic card created or modified.",
+        "other": "{count} member or dynamic cards created or modified."
       },
       "savesLine": {
         "zero": "Your saved councils — none for now.",
@@ -231,8 +231,8 @@
     "intro": "The same council, but directly in your agent: it composes the council, assembles the prompt and plays out the scene, no copy-pasting required.",
     "overviewTitle": "In short",
     "overviewBullet1": "You ask for a council, and the agent offers three options: create a council step by step, load one you've already saved, or go automatic — it picks the members itself based on your topic.",
-    "overviewBullet2": "A small local script draws from the same catalog of companions and settings as this site, and produces exactly the same prompt.",
-    "overviewBullet3": "Every council you create is saved on your machine: the members, the setting, your instructions — but never the topic. Afterwards, just call it back by name, \"run council ABC about…\", to get it back exactly as it was.",
+    "overviewBullet2": "A small local script draws from the same catalog of members and group dynamics as this site, and produces exactly the same prompt.",
+    "overviewBullet3": "Every council you create is saved on your machine: the members, the group dynamic, your instructions — but never the topic. Afterwards, just call it back by name, \"run council ABC about…\", to get it back exactly as it was.",
     "hermesTitle": "Hermes",
     "hermesChatIntro": "In a chat:",
     "installCommand": "Install the skill jprevo/microcouncil/skill",

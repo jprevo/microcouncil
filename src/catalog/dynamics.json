@@ -1,0 +1,26 @@
+[
+  {
+    "id": "brainstorm",
+    "icon": "💡"
+  },
+  {
+    "id": "explain-to-me",
+    "icon": "🧑‍🏫"
+  },
+  {
+    "id": "ca-fuse",
+    "icon": "⚡"
+  },
+  {
+    "id": "roleplay",
+    "icon": "🎭"
+  },
+  {
+    "id": "change-my-mind",
+    "icon": "🧠"
+  },
+  {
+    "id": "enquete",
+    "icon": "🔎"
+  }
+]

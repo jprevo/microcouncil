@@ -90,7 +90,7 @@ export interface Catalog<T> {
 
 /**
  * Builds the operations of one catalog. `nameOf` reads the field an entry is named
- * by — `name` for a member, `title` for an environment — `withName` rewrites it,
+ * by — `name` for a member, `title` for an dynamic — `withName` rewrites it,
  * and nothing else here needs to know which of the two it is working on. Each
  * built-in carries a stable `id`, locale-independent, that never changes even when
  * the entry is renamed or its text rewritten by a local override.

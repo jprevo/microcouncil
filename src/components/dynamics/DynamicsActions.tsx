@@ -2,16 +2,16 @@ import { Button } from "../ui/Button";
 import { useT } from "../../locale/useT";
 import { useAppDispatch } from "../../state/hooks";
 
-export function EnvironmentsActions() {
+export function DynamicsActions() {
   const dispatch = useAppDispatch();
   const t = useT();
 
   return (
     <Button
       variant="quiet"
-      onClick={() => dispatch({ type: "environment", title: null })}
+      onClick={() => dispatch({ type: "dynamic", title: null })}
     >
-      {t.environments.clear}
+      {t.dynamics.clear}
     </Button>
   );
 }

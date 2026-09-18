@@ -10,25 +10,25 @@ import { format } from "../../locale/i18n";
 import { useLocale } from "../../locale/useLocale";
 import { useT } from "../../locale/useT";
 import { useAppDispatch, useAppState } from "../../state/hooks";
-import type { CatalogEnvironment } from "../../types";
+import type { CatalogDynamic } from "../../types";
 
-interface EnvironmentTileProps {
-  readonly environment: CatalogEnvironment;
+interface DynamicTileProps {
+  readonly dynamic: CatalogDynamic;
   readonly tabIndex: number;
   readonly buttonRef: Ref<HTMLButtonElement>;
   readonly onFocus: () => void;
-  readonly onEdit: (environment: CatalogEnvironment) => void;
+  readonly onEdit: (dynamic: CatalogDynamic) => void;
 }
 
-/** A setting's tile: a radio button (single selection) and an edit pencil. */
-export function EnvironmentTile({
-  environment,
+/** A group dynamic's tile: a radio button (single selection) and an edit pencil. */
+export function DynamicTile({
+  dynamic,
   tabIndex,
   buttonRef,
   onFocus,
   onEdit,
-}: EnvironmentTileProps) {
-  const selected = useAppState().selectedEnvironment === environment.title;
+}: DynamicTileProps) {
+  const selected = useAppState().selectedDynamic === dynamic.title;
   const dispatch = useAppDispatch();
   const { bundle } = useLocale();
   const t = useT();
@@ -37,28 +37,28 @@ export function EnvironmentTile({
     <TileSlot
       action={
         <TileEditButton
-          label={format(t.environments.edit, { title: environment.title })}
+          label={format(t.dynamics.edit, { title: dynamic.title })}
           tabIndex={tabIndex}
           onFocus={onFocus}
-          onClick={() => onEdit(environment)}
+          onClick={() => onEdit(dynamic)}
         />
       }
     >
       <Tile
         radio
-        icon={environment.icon}
+        icon={dynamic.icon}
         selected={selected}
         tabIndex={tabIndex}
         buttonRef={buttonRef}
         onFocus={onFocus}
         onClick={() =>
-          dispatch({ type: "toggleEnvironment", title: environment.title })
+          dispatch({ type: "toggleDynamic", title: dynamic.title })
         }
       >
-        <TileName>{environment.title}</TileName>
-        <OriginBadge origin={environment} />
+        <TileName>{dynamic.title}</TileName>
+        <OriginBadge origin={dynamic} />
         <TileDescription>
-          {humanizeUsernameToken(environment.summary, bundle.meta.youWord)}
+          {humanizeUsernameToken(dynamic.summary, bundle.meta.youWord)}
         </TileDescription>
       </Tile>
     </TileSlot>

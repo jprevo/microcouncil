@@ -15,7 +15,7 @@
  * crawlers reading on behalf of an assistant — GPTBot, ClaudeBot, PerplexityBot
  * and the rest — do not. They fetch the HTML, read the text they find in it, and
  * move on within seconds. Everything this site actually says (the lede, the
- * companions with their jobs, descriptions and traits, the settings) reached
+ * companions with their jobs, descriptions and traits, the group dynamics) reached
  * them as an empty div.
  *
  * So the markup is written into the file at build time. Nothing is fetched and
