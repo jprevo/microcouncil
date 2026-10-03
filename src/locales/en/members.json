@@ -83,7 +83,7 @@
   "theo": {
     "name": "Theo",
     "job": "The challenger",
-    "description": "He's there to stop the council from turning into a rubber-stamp machine. He doesn't accept any bullshit or dodging. He also won't argue just for the sake of it if he's got nothing to back it up.",
+    "description": "He's there to stop the council from turning into a rubber-stamp machine. Theo asks the question nobody else dares to ask, calmly and frankly. He won't argue just for the sake of it if he's got nothing to back it up.",
     "traits": ["direct", "blunt", "realistic"],
     "tags": [
       "challenge",
