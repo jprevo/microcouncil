@@ -11,8 +11,10 @@
     "personalityLabel": "Personality: "
   },
   "footer": {
-    "license": "© 2026 Micro Council · Open source project available on {github}",
-    "githubLinkText": "GitHub",
+    "copyright": "© 2026 Micro Council",
+    "support": "Micro Council is free and {openSource}. Help others discover it by giving it {star}.",
+    "openSourceLinkText": "open source",
+    "starLinkText": "a star on GitHub",
     "privacy": "No cookies are used. Your settings never leave your browser.",
     "language": "Language"
   },
@@ -26,7 +28,9 @@
     "saveAria": "Save this council",
     "load": "Load",
     "loadAria": "Load a saved council",
-    "loadAriaWithCount": "Load a saved council ({count})"
+    "loadAriaWithCount": "Load a saved council ({count})",
+    "star": "Star on GitHub",
+    "starAria": "Star Micro Council on GitHub (opens in a new tab)"
   },
   "identity": {
     "title": "Your name",

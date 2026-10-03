@@ -43,8 +43,11 @@ export interface UiStrings {
     readonly personalityLabel: string;
   };
   readonly footer: {
-    readonly license: string;
-    readonly githubLinkText: string;
+    readonly copyright: string;
+    /** The ask for a star; `{openSource}` and `{star}` both link to the repository. */
+    readonly support: string;
+    readonly openSourceLinkText: string;
+    readonly starLinkText: string;
     readonly privacy: string;
     /** Accessible name of the language picker; the options name themselves. */
     readonly language: string;
@@ -61,6 +64,9 @@ export interface UiStrings {
     readonly load: string;
     readonly loadAria: string;
     readonly loadAriaWithCount: string;
+    readonly star: string;
+    /** Says where the link goes, and that it opens in a new tab. */
+    readonly starAria: string;
   };
   readonly identity: {
     readonly title: string;

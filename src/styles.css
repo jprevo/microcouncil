@@ -605,6 +605,11 @@ p {
   border-color: var(--border-strong);
 }
 
+/* The same pill when it leads elsewhere: a link, without the underline. */
+a.icon-button {
+  text-decoration: none;
+}
+
 /* With no label, the pill tightens around its icon. */
 .icon-button--bare {
   padding-inline: 10px;

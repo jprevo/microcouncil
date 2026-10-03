@@ -11,8 +11,10 @@
     "personalityLabel": "Personalidad: "
   },
   "footer": {
-    "license": "© 2026 Micro Council · Proyecto de código abierto disponible en {github}",
-    "githubLinkText": "GitHub",
+    "copyright": "© 2026 Micro Council",
+    "support": "Micro Council es gratis y de {openSource}. Ayuda a que otros lo descubran dándole {star}.",
+    "openSourceLinkText": "código abierto",
+    "starLinkText": "una estrella en GitHub",
     "privacy": "No usamos cookies. Tus ajustes se quedan en tu navegador.",
     "language": "Idioma"
   },
@@ -26,7 +28,9 @@
     "saveAria": "Guardar este consejo",
     "load": "Cargar",
     "loadAria": "Cargar un consejo guardado",
-    "loadAriaWithCount": "Cargar un consejo guardado ({count})"
+    "loadAriaWithCount": "Cargar un consejo guardado ({count})",
+    "star": "Dar una estrella en GitHub",
+    "starAria": "Dale una estrella a Micro Council en GitHub (se abre en una pestaña nueva)"
   },
   "identity": {
     "title": "Tu nombre",

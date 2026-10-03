@@ -11,8 +11,10 @@
     "personalityLabel": "Persönlichkeit: "
   },
   "footer": {
-    "license": "© 2026 Micro Council · Open-Source-Projekt auf {github}",
-    "githubLinkText": "GitHub",
+    "copyright": "© 2026 Micro Council",
+    "support": "Micro Council ist kostenlos und {openSource}. Hilf anderen, es zu entdecken, indem du ihm {star} gibst.",
+    "openSourceLinkText": "Open Source",
+    "starLinkText": "einen Stern auf GitHub",
     "privacy": "Diese Website verwendet keine Cookies. Deine Einstellungen bleiben in deinem Browser.",
     "language": "Sprache"
   },
@@ -26,7 +28,9 @@
     "saveAria": "Diese Beraterrunde speichern",
     "load": "Laden",
     "loadAria": "Eine gespeicherte Beraterrunde laden",
-    "loadAriaWithCount": "Eine gespeicherte Beraterrunde laden ({count})"
+    "loadAriaWithCount": "Eine gespeicherte Beraterrunde laden ({count})",
+    "star": "Auf GitHub einen Stern geben",
+    "starAria": "Micro Council auf GitHub einen Stern geben (öffnet sich in einem neuen Tab)"
   },
   "identity": {
     "title": "Dein Name",
