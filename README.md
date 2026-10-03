@@ -1,6 +1,6 @@
 # Micro Council
 
-[<img src="https://raw.githubusercontent.com/jprevo/microcouncil/refs/heads/main/assets/screenshot.png" alt="Screenshot of microcouncil.me">](https://microcouncil.me)
+[<img src="https://raw.githubusercontent.com/jprevo/microcouncil/refs/heads/main/assets/demo.gif" alt="Demo: three members picked on microcouncil.me, the prompt pasted into Claude, and the council planning the week's groceries">](https://microcouncil.me)
 
 Build a prompt for a council of experts who discuss a topic together in your
 AI assistant. Choose the members, a group dynamic, and optional instructions, then copy
